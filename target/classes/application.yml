@@ -1,0 +1,26 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data-mall?serverTimezone=UTC
+    username: root
+    password: ${mysql.password}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    hiddenmethod:
+      filter:
+        enabled: true
+  mail:
+    host: smtp.163.com
+    username: ${mail.username}
+    password: ${mail.password}
+    default-encoding: UTF-8
+  main:
+    allow-circular-references: true
+  data:
+    redis:
+      host: ${redis.host}
+      port: 6379
+      password: ${redis.password}
