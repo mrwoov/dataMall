@@ -3,6 +3,7 @@ package com.example.datamall.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -51,6 +52,7 @@ public class Goods implements Serializable {
     /**
      * 价格，单位分
      */
+    @JsonIgnore(value = true)
     private Integer price;
 
     /**

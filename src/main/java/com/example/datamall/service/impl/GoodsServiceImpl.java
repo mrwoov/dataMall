@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.Goods;
+import com.example.datamall.entity.UserBase;
 import com.example.datamall.mapper.GoodsMapper;
 import com.example.datamall.service.GoodsCategoriesService;
 import com.example.datamall.service.GoodsService;
@@ -75,8 +76,11 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             queryWrapper.eq("categories_id", categoriesId);
         }
         if (username != null && !username.isEmpty()) {
-            Integer uid = userBaseService.getOneByOption("name", username).getId();
-            queryWrapper.eq("uid", uid);
+            UserBase userBase = userBaseService.getOneByOption("user_name", username);
+            if (userBase == null){
+                return new Page<>();
+            }
+            queryWrapper.eq("uid", userBase.getId());
         }
         IPage<Goods> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (Goods goods : page.getRecords()) {

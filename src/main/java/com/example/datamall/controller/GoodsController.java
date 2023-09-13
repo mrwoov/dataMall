@@ -88,7 +88,6 @@ public class GoodsController {
         if (!admin) {
             return ResultData.fail("无权限");
         }
-
         return ResultData.state(goodsService.adminUpdateGoodsState(goodsId, -1));
     }
 
