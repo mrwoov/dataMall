@@ -129,7 +129,7 @@ public class GoodsController {
         return ResultData.success(page);
     }
 
-    // 查询用户发布的商品列表
+    // 查询单个用户发布的商品列表
     @GetMapping("/list/{uid}")
     public ResultData getUserGoodsList(@PathVariable("uid") String uid) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
