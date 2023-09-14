@@ -65,7 +65,7 @@ public class GoodsCommentController {
         //评论er删除评论逻辑
         boolean sender = goodsCommentService.isSender(uid, commentId);
         //管理员删除逻辑
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!(owner || sender || admin)) {
             return ResultData.fail();
         }

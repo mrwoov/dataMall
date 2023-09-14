@@ -51,7 +51,7 @@ public class AccountController {
      **/
     @PatchMapping("/admin")
     public ResultData save(@RequestBody Account account, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -70,7 +70,7 @@ public class AccountController {
      **/
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -89,7 +89,7 @@ public class AccountController {
      **/
     @PostMapping("/admin/del_batch")
     public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -110,7 +110,7 @@ public class AccountController {
      **/
     @PostMapping("admin/query")
     public ResultData queryUserInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -134,7 +134,7 @@ public class AccountController {
      **/
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }

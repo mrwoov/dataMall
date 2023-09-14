@@ -35,7 +35,7 @@ public class AuthController {
      **/
     @PatchMapping("/admin")
     public ResultData save(@RequestBody Auth auth, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -54,7 +54,7 @@ public class AuthController {
      **/
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -72,7 +72,7 @@ public class AuthController {
      **/
     @GetMapping("/admin")
     public ResultData getTree(@RequestHeader("token") String token) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }

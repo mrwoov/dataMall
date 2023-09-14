@@ -5,21 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.Account;
-import com.example.datamall.entity.Auth;
-import com.example.datamall.entity.Role;
-import com.example.datamall.entity.RoleToAuth;
 import com.example.datamall.mapper.AccountMapper;
-import com.example.datamall.service.AccountService;
-import com.example.datamall.service.AuthService;
-import com.example.datamall.service.RoleService;
-import com.example.datamall.service.RoleToAuthService;
+import com.example.datamall.service.*;
 import com.example.datamall.utils.Sha256;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +35,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     private RoleService roleService;
     @Resource
     private RoleToAuthService roleToAuthService;
+    @Resource
+    private AdminService adminService;
 
     @Override
     public String login(String userName, String passWord) {
@@ -87,26 +82,18 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
 
     @Override
-    public boolean checkUserHavaAuth(String pathNow, String token) {
+    public boolean checkAdminHavaAuth(String pathNow, String token) {
         if (token == null || token.isEmpty()) {
             return false;
         }
         try {
-//            Account account = getOneByOption("token", token);
-//            int roleId = account.getRole();
-//            QueryWrapper<RoleToAuth> roleToAuthQueryWrapper = new QueryWrapper<>();
-//            roleToAuthQueryWrapper.eq("role_id", roleId);
-//            List<RoleToAuth> roleToAuthList = roleToAuthService.list(roleToAuthQueryWrapper);
-//            for (RoleToAuth tempRoleToAuth : roleToAuthList) {
-//                int authId = tempRoleToAuth.getAuthId();
-//                Auth auth = authService.getById(authId);
-//                String authPath = auth.getPath();
-//                if (Objects.equals(authPath, "/") || Objects.equals(authPath, pathNow)) {
-//                    return true;
-//                }
-//            }
-            //todo: 重写逻辑
-            return false;
+            Account account = getOneByOption("token", token);
+            Integer accountId = account.getId();
+            if (!adminService.isAdmin(accountId)){
+                return false;
+            }
+            System.out.println(pathNow);
+            return true;
         } catch (Exception e) {
             return false;
         }

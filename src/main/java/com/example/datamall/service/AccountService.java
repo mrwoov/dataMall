@@ -19,7 +19,8 @@ public interface AccountService extends IService<Account> {
 
     boolean checkTokenByRedis(String token);
 
-    boolean checkUserHavaAuth(String pathNow, String token);
+
+    boolean checkAdminHavaAuth(String pathNow, String token);
 
     IPage<Account> queryUserPageByOption(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
 

@@ -85,7 +85,7 @@ public class GoodsController {
     // 管理员冻结商品
     @PostMapping("/admin/freeze")
     public ResultData freeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -95,7 +95,7 @@ public class GoodsController {
     // 管理员解冻商品
     @PostMapping("/admin/unfreeze")
     public ResultData unfreeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -115,7 +115,7 @@ public class GoodsController {
     // 管理员分页查询商品列表
     @PostMapping("/admin/page")
     public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody Goods goods) {
-        boolean admin = accountService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
