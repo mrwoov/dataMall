@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class Goods implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
@@ -52,7 +54,7 @@ public class Goods implements Serializable {
     /**
      * 价格，单位分
      */
-    @JsonIgnore(value = true)
+    @JsonIgnore()
     private Integer price;
 
     /**
@@ -83,6 +85,9 @@ public class Goods implements Serializable {
 
     @TableField(exist = false)
     private double money;
+
+    @TableField(exist = false)
+    private Long collection;
 
     private Goods(Integer goodsId, String name, Integer categoriesId, String detail, String picIndex, Integer price) {
         this.setId(goodsId);

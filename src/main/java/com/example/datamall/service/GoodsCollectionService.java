@@ -12,5 +12,5 @@ import com.example.datamall.entity.GoodsCollection;
  * @since 2023-08-29
  */
 public interface GoodsCollectionService extends IService<GoodsCollection> {
-
+    Long goodsCollectionNum(Integer goodsId);
 }

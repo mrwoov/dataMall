@@ -8,10 +8,13 @@ import com.example.datamall.entity.Goods;
 import com.example.datamall.entity.UserBase;
 import com.example.datamall.mapper.GoodsMapper;
 import com.example.datamall.service.GoodsCategoriesService;
+import com.example.datamall.service.GoodsCollectionService;
 import com.example.datamall.service.GoodsService;
 import com.example.datamall.service.UserBaseService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,6 +32,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
     private UserBaseService userBaseService;
+    @Resource
+    private GoodsCollectionService goodsCollectionService;
 
     @Override
     public boolean isOwner(Integer uid, Integer goodsId) {
@@ -89,6 +94,18 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             goods.priceToMoney();
         }
         return page;
+    }
+
+    @Override
+    public List<Goods> getGoodsList(QueryWrapper<Goods> queryWrapper) {
+        List<Goods> goodsList = list(queryWrapper);
+        for (Goods goods:goodsList){
+            goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
+            goods.setUsername(userBaseService.getById(goods.getUid()).getUserName());
+            goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
+            goods.priceToMoney();
+        }
+        return goodsList;
     }
 
     public Goods dealResponseGoods(Goods goods) {

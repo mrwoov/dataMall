@@ -3,6 +3,7 @@ package com.example.datamall.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.datamall.entity.Goods;
+import com.example.datamall.entity.GoodsCategories;
 import com.example.datamall.service.GoodsCategoriesService;
 import com.example.datamall.service.GoodsService;
 import com.example.datamall.service.UserBaseService;
@@ -30,7 +31,6 @@ public class GoodsController {
 
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
-
     // 用户发布商品
     @PatchMapping("/")
     public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
@@ -158,5 +158,26 @@ public class GoodsController {
     }
 
     // TODO: 2023/8/31 搜索功能
+    @GetMapping("/search")
+    public ResultData search(@RequestParam("keyword") String keyword){
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name",keyword);
+        List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
+        return ResultData.success(goodsList);
+    }
+    // TODO: 2023/9/14 获取类别下商品
+    @GetMapping("/categories")
+    public ResultData categoriesGoods(@RequestParam("categories") String categories){
+        GoodsCategories goodsCategories = goodsCategoriesService.getOneByOption("url",categories);
+        if (goodsCategories==null){
+            return ResultData.fail();
+        }
+        Integer categoriesId = goodsCategories.getId();
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("categories_id",categoriesId);
+        List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
+        return ResultData.success(goodsList);
+    }
+
 }
 
