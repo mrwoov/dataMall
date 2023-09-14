@@ -58,7 +58,6 @@ public class GoodsPicController {
         return ResultData.state(state);
     }
 
-
     //管理员冻结商品图片
     @DeleteMapping("/admin")
     public ResultData freeze(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
