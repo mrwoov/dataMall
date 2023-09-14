@@ -164,7 +164,8 @@ public class AccountController {
         operations.set(token, account1.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
         Map<String, String> res = new HashMap<>();
         res.put("token", token);
-        res.put("role", String.valueOf(account1.getRole()));
+        // TODO: 2023/9/14 这里放入isAdmin字段
+//        res.put("role", String.valueOf(account1.getRole()));
         return ResultData.success(res);
     }
 
@@ -263,7 +264,8 @@ public class AccountController {
         Integer uid = accountService.tokenToUid(token);
         Account account = accountService.getById(uid);
         Map<String, String> res = new HashMap<>();
-        res.put("role", String.valueOf(account.getRole()));
+//        res.put("role", String.valueOf(account.getRole()));
+        //todo:这里放入isAdmin字段
         res.put("userName", account.getUsername());
         return ResultData.success(res);
     }

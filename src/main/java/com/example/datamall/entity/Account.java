@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class Account implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -57,11 +59,6 @@ public class Account implements Serializable {
      */
     private Integer state;
 
-    /**
-     * 角色id
-     */
-    private Integer role;
-
     @TableField(exist = false)
     private String roleName;
 
@@ -73,6 +70,6 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", userName='" + username + '\'' + ", passWord='" + password + '\'' + ", email='" + email + '\'' + ", token='" + token + '\'' + ", state=" + state + ", role=" + role + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
+        return "Account{" + "id=" + id + ", userName='" + username + '\'' + ", passWord='" + password + '\'' + ", email='" + email + '\'' + ", token='" + token + '\'' + ", state=" + state + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
     }
 }

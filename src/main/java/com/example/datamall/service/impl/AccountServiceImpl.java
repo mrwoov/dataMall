@@ -92,19 +92,20 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
             return false;
         }
         try {
-            Account account = getOneByOption("token", token);
-            int roleId = account.getRole();
-            QueryWrapper<RoleToAuth> roleToAuthQueryWrapper = new QueryWrapper<>();
-            roleToAuthQueryWrapper.eq("role_id", roleId);
-            List<RoleToAuth> roleToAuthList = roleToAuthService.list(roleToAuthQueryWrapper);
-            for (RoleToAuth tempRoleToAuth : roleToAuthList) {
-                int authId = tempRoleToAuth.getAuthId();
-                Auth auth = authService.getById(authId);
-                String authPath = auth.getPath();
-                if (Objects.equals(authPath, "/") || Objects.equals(authPath, pathNow)) {
-                    return true;
-                }
-            }
+//            Account account = getOneByOption("token", token);
+//            int roleId = account.getRole();
+//            QueryWrapper<RoleToAuth> roleToAuthQueryWrapper = new QueryWrapper<>();
+//            roleToAuthQueryWrapper.eq("role_id", roleId);
+//            List<RoleToAuth> roleToAuthList = roleToAuthService.list(roleToAuthQueryWrapper);
+//            for (RoleToAuth tempRoleToAuth : roleToAuthList) {
+//                int authId = tempRoleToAuth.getAuthId();
+//                Auth auth = authService.getById(authId);
+//                String authPath = auth.getPath();
+//                if (Objects.equals(authPath, "/") || Objects.equals(authPath, pathNow)) {
+//                    return true;
+//                }
+//            }
+            //todo: 重写逻辑
             return false;
         } catch (Exception e) {
             return false;
@@ -123,12 +124,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         if (email != null && !email.isEmpty()) {
             queryWrapper.like("email", email);
         }
-        IPage<Account> page = page(new Page<>(pageNum, pageSize), queryWrapper);
-        for (Account userBase : page.getRecords()) {
-            Role role = roleService.getById(userBase.getRole());
-            userBase.setRoleName(role.getRoleName());
-        }
-        return page;
+        return page(new Page<>(pageNum, pageSize), queryWrapper);
     }
 
     @Override
