@@ -30,7 +30,7 @@ public class GoodsPicController {
     @Resource
     private GoodsService goodsService;
 
-    //新增商品图片
+    //用户新增商品图片
     @PatchMapping("/")
     public ResultData save(@RequestHeader("token") String token, @RequestBody GoodsPic goodsPic) {
         Integer uid = accountService.tokenToUid(token);
@@ -41,7 +41,7 @@ public class GoodsPicController {
         return ResultData.state(state);
     }
 
-    //删除商品图片
+    //用户删除商品图片
     @DeleteMapping("/")
     public ResultData del(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
         Integer uid = accountService.tokenToUid(token);
@@ -58,7 +58,6 @@ public class GoodsPicController {
         return ResultData.state(state);
     }
 
-    // TODO: 2023/9/14 用户上传图片，删除图片
 
     //管理员冻结商品图片
     @DeleteMapping("/admin")
