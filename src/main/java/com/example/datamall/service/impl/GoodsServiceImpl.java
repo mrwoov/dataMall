@@ -107,11 +107,4 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
         return goodsList;
     }
-
-    public Goods dealResponseGoods(Goods goods) {
-        goods.setUsername(userBaseService.getById(goods.getUid()).getUserName());
-        goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-        goods.priceToMoney();
-        return goods;
-    }
 }
