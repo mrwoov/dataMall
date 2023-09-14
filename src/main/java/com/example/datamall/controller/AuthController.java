@@ -62,7 +62,14 @@ public class AuthController {
         boolean childState = authService.delChildId(id);
         return ResultData.state(state && childState);
     }
-
+    /**
+     * description:
+     *
+     * @param token：具有权限的token
+     * @return com.example.datamall.vo.ResultData
+     * @author woov
+     * @create 2023/9/14
+     **/
     @GetMapping("/admin")
     public ResultData getTree(@RequestHeader("token") String token) {
         boolean admin = accountService.checkUserHavaAuth("/admin", token);
