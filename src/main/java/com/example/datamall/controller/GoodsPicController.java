@@ -58,6 +58,8 @@ public class GoodsPicController {
         return ResultData.state(state);
     }
 
+    // TODO: 2023/9/14 用户上传图片，删除图片
+
     //管理员冻结商品图片
     @DeleteMapping("/admin")
     public ResultData freeze(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
