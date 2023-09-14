@@ -46,8 +46,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Override
     public String login(String userName, String passWord) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_name", userName);
-        queryWrapper.eq("pass_word", passWord);
+        queryWrapper.eq("username", userName);
+        queryWrapper.eq("password", passWord);
         Account account;
         try {
             account = getOne(queryWrapper);
@@ -134,7 +134,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Override
     public void forget(String email, String password) {
         Account account = getOneByOption("email", email);
-        account.setPassWord(password);
+        account.setPassword(password);
         updateById(account);
     }
 

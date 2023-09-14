@@ -112,7 +112,7 @@ public class AccountController {
             return ResultData.fail("无权限");
         }
         String email = account.getEmail();
-        String userName = account.getUserName();
+        String userName = account.getUsername();
         Integer id = account.getId();
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("缺少参数");
@@ -148,8 +148,8 @@ public class AccountController {
      **/
     @PostMapping("/login")
     public ResultData login(@RequestBody Account account) {
-        String username = account.getUserName();
-        String password = account.getPassWord();
+        String username = account.getUsername();
+        String password = account.getPassword();
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             return ResultData.fail("缺少参数");
         }
@@ -200,8 +200,8 @@ public class AccountController {
      **/
     @PostMapping("/reg/{code}")
     public ResultData reg(@PathVariable String code, @RequestBody Account account) {
-        String userName = account.getUserName();
-        String passWord = account.getPassWord();
+        String userName = account.getUsername();
+        String passWord = account.getPassword();
         String email = account.getEmail();
         if (Objects.equals(userName, "") || userName == null || Objects.equals(passWord, "") || passWord == null || Objects.equals(email, "") || email == null || code == null) {
             return ResultData.fail("参数缺少");
@@ -210,8 +210,8 @@ public class AccountController {
             return ResultData.fail("验证码错误");
         }
         Account accountInsert = new Account();
-        accountInsert.setUserName(userName);
-        accountInsert.setPassWord(passWord);
+        accountInsert.setUsername(userName);
+        accountInsert.setPassword(passWord);
         accountInsert.setEmail(email);
         accountService.save(accountInsert);
         return ResultData.success();
@@ -232,7 +232,7 @@ public class AccountController {
 
     @PostMapping("/forget/{code}")
     public ResultData forget(@PathVariable String code, @RequestBody Account account) {
-        String password = account.getPassWord();
+        String password = account.getPassword();
         String email = account.getEmail();
         if (code == null || code.isEmpty() || password == null || password.isEmpty()) {
             return ResultData.fail("缺少参数");
@@ -264,7 +264,7 @@ public class AccountController {
         Account account = accountService.getById(uid);
         Map<String, String> res = new HashMap<>();
         res.put("role", String.valueOf(account.getRole()));
-        res.put("userName", account.getUserName());
+        res.put("userName", account.getUsername());
         return ResultData.success(res);
     }
 }

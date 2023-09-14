@@ -81,7 +81,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             queryWrapper.eq("categories_id", categoriesId);
         }
         if (username != null && !username.isEmpty()) {
-            Account account = accountService.getOneByOption("user_name", username);
+            Account account = accountService.getOneByOption("username", username);
             if (account == null) {
                 return new Page<>();
             }
@@ -89,7 +89,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
         IPage<Goods> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (Goods goods : page.getRecords()) {
-            goods.setUsername(accountService.getById(goods.getUid()).getUserName());
+            goods.setUsername(accountService.getById(goods.getUid()).getUsername());
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
             goods.priceToMoney();
         }
@@ -101,7 +101,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         List<Goods> goodsList = list(queryWrapper);
         for (Goods goods : goodsList) {
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-            goods.setUsername(accountService.getById(goods.getUid()).getUserName());
+            goods.setUsername(accountService.getById(goods.getUid()).getUsername());
             goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
             goods.priceToMoney();
         }

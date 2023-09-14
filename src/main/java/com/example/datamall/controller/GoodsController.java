@@ -106,7 +106,7 @@ public class GoodsController {
     @GetMapping("/info/{goodsId}")
     public ResultData getInfo(@PathVariable("goodsId") Integer goodsId) {
         Goods goods = goodsService.getById(goodsId);
-        goods.setUsername(accountService.getById(goods.getUid()).getUserName());
+        goods.setUsername(accountService.getById(goods.getUid()).getUsername());
         goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
         goods.priceToMoney();
         return ResultData.success(goods);
@@ -136,7 +136,7 @@ public class GoodsController {
         queryWrapper.eq("uid", uid);
         List<Goods> list = goodsService.list(queryWrapper);
         for (Goods goods : list) {
-            goods.setUsername(accountService.getById(goods.getUid()).getUserName());
+            goods.setUsername(accountService.getById(goods.getUid()).getUsername());
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
             goods.priceToMoney();
         }

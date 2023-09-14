@@ -35,12 +35,12 @@ public class Account implements Serializable {
     /**
      * 用户名
      */
-    private String userName;
+    private String username;
 
     /**
      * 密码
      */
-    private String passWord;
+    private String password;
 
     /**
      * 邮箱
@@ -73,6 +73,6 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", userName='" + userName + '\'' + ", passWord='" + passWord + '\'' + ", email='" + email + '\'' + ", token='" + token + '\'' + ", state=" + state + ", role=" + role + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
+        return "Account{" + "id=" + id + ", userName='" + username + '\'' + ", passWord='" + password + '\'' + ", email='" + email + '\'' + ", token='" + token + '\'' + ", state=" + state + ", role=" + role + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
     }
 }
