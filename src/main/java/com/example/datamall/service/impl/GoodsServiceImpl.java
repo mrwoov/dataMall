@@ -82,7 +82,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
         if (username != null && !username.isEmpty()) {
             UserBase userBase = userBaseService.getOneByOption("user_name", username);
-            if (userBase == null){
+            if (userBase == null) {
                 return new Page<>();
             }
             queryWrapper.eq("uid", userBase.getId());
@@ -99,7 +99,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Override
     public List<Goods> getGoodsList(QueryWrapper<Goods> queryWrapper) {
         List<Goods> goodsList = list(queryWrapper);
-        for (Goods goods:goodsList){
+        for (Goods goods : goodsList) {
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
             goods.setUsername(userBaseService.getById(goods.getUid()).getUserName());
             goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
