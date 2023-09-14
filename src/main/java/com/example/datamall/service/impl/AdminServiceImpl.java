@@ -1,10 +1,10 @@
 package com.example.datamall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.Admin;
 import com.example.datamall.mapper.AdminMapper;
 import com.example.datamall.service.AdminService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,15 +20,15 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public boolean isAdmin(Integer accountId) {
-        Admin admin = getOneByOption("account_id",accountId);
+        Admin admin = getOneByOption("account_id", accountId);
         return admin != null;
     }
 
 
     @Override
-    public Admin getOneByOption(String column, Object value){
+    public Admin getOneByOption(String column, Object value) {
         QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(column,value);
+        queryWrapper.eq(column, value);
         return getOne(queryWrapper);
     }
 }

@@ -62,6 +62,7 @@ public class AuthController {
         boolean childState = authService.delChildId(id);
         return ResultData.state(state && childState);
     }
+
     /**
      * description:
      *

@@ -89,7 +89,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         try {
             Account account = getOneByOption("token", token);
             Integer accountId = account.getId();
-            if (!adminService.isAdmin(accountId)){
+            if (!adminService.isAdmin(accountId)) {
                 return false;
             }
             System.out.println(pathNow);

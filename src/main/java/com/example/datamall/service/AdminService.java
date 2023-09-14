@@ -1,7 +1,7 @@
 package com.example.datamall.service;
 
-import com.example.datamall.entity.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.datamall.entity.Admin;
 
 /**
  * <p>
