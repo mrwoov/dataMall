@@ -3,6 +3,7 @@ package com.example.datamall.controller;
 
 import com.example.datamall.entity.Account;
 import com.example.datamall.service.AccountService;
+import com.example.datamall.service.AdminService;
 import com.example.datamall.utils.EmailCode;
 import com.example.datamall.utils.MailService;
 import com.example.datamall.vo.ResultData;
@@ -30,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 public class AccountController {
     @Resource
     private AccountService accountService;
+    @Resource
+    private AdminService adminService;
     @Resource
     private RedisTemplate<String, String> redisTemplate;
     @Resource
@@ -164,8 +167,7 @@ public class AccountController {
         operations.set(token, account1.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
         Map<String, String> res = new HashMap<>();
         res.put("token", token);
-        // TODO: 2023/9/14 这里放入isAdmin字段
-//        res.put("role", String.valueOf(account1.getRole()));
+        res.put("admin", String.valueOf(adminService.isAdmin(uid)));
         return ResultData.success(res);
     }
 
@@ -264,8 +266,7 @@ public class AccountController {
         Integer uid = accountService.tokenToUid(token);
         Account account = accountService.getById(uid);
         Map<String, String> res = new HashMap<>();
-//        res.put("role", String.valueOf(account.getRole()));
-        //todo:这里放入isAdmin字段
+        res.put("admin", String.valueOf(adminService.isAdmin(uid)));
         res.put("userName", account.getUsername());
         return ResultData.success(res);
     }

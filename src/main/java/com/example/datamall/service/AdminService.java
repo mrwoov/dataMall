@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-09-14
  */
 public interface AdminService extends IService<Admin> {
+    boolean isAdmin(Integer accountId);
 
+    Admin getOneByOption(String column, Object value);
 }
