@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.datamall.entity.GoodsComment;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCommentService;
 import com.example.datamall.service.GoodsService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/goodsComment")
 public class GoodsCommentController {
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
     @Resource
     private GoodsCommentService goodsCommentService;
     @Resource
@@ -33,7 +33,7 @@ public class GoodsCommentController {
     //发起或回复评论
     @PostMapping("/send")
     public ResultData send(@RequestHeader("token") String token, @RequestBody GoodsComment goodsComment) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登陆过期");
         }
@@ -52,7 +52,7 @@ public class GoodsCommentController {
     // 删除评论：发评论er，商品所有者，管理员
     @DeleteMapping("/del")
     public ResultData del(@RequestHeader("token") String token, @RequestParam("commentId") Integer commentId) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登陆过期");
         }
@@ -65,7 +65,7 @@ public class GoodsCommentController {
         //评论er删除评论逻辑
         boolean sender = goodsCommentService.isSender(uid, commentId);
         //管理员删除逻辑
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!(owner || sender || admin)) {
             return ResultData.fail();
         }

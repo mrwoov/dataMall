@@ -3,9 +3,9 @@ package com.example.datamall.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.datamall.entity.GoodsPic;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsPicService;
 import com.example.datamall.service.GoodsService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/goodsPic")
 public class GoodsPicController {
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
     @Resource
     private GoodsPicService goodsPicService;
     @Resource
@@ -33,7 +33,7 @@ public class GoodsPicController {
     //新增商品图片
     @PatchMapping("/")
     public ResultData save(@RequestHeader("token") String token, @RequestBody GoodsPic goodsPic) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登录过期");
         }
@@ -44,7 +44,7 @@ public class GoodsPicController {
     //删除商品图片
     @DeleteMapping("/")
     public ResultData del(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登陆过期");
         }
@@ -61,7 +61,7 @@ public class GoodsPicController {
     //管理员冻结商品图片
     @DeleteMapping("/admin")
     public ResultData freeze(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }

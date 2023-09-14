@@ -4,15 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.datamall.entity.Account;
 import com.example.datamall.entity.Auth;
 import com.example.datamall.entity.Role;
 import com.example.datamall.entity.RoleToAuth;
-import com.example.datamall.entity.UserBase;
-import com.example.datamall.mapper.UserBaseMapper;
+import com.example.datamall.mapper.AccountMapper;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.AuthService;
 import com.example.datamall.service.RoleService;
 import com.example.datamall.service.RoleToAuthService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.utils.Sha256;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,19 +26,18 @@ import java.util.regex.Pattern;
 
 /**
  * <p>
- * 基础用户表 服务实现类
+ * 账号表 服务实现类
  * </p>
  *
  * @author woov
- * @since 2023-06-03
+ * @since 2023-09-14
  */
 @Service
-public class UserBaseServiceImpl extends ServiceImpl<UserBaseMapper, UserBase> implements UserBaseService {
-
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
     @Resource
     private AuthService authService;
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
     @Resource
     private RoleService roleService;
     @Resource
@@ -46,27 +45,27 @@ public class UserBaseServiceImpl extends ServiceImpl<UserBaseMapper, UserBase> i
 
     @Override
     public String login(String userName, String passWord) {
-        QueryWrapper<UserBase> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_name", userName);
         queryWrapper.eq("pass_word", passWord);
-        UserBase userBase;
+        Account account;
         try {
-            userBase = getOne(queryWrapper);
-            if (userBase == null) {
+            account = getOne(queryWrapper);
+            if (account == null) {
                 return "";
             }
         } catch (Exception e) {
             return "";
         }
         String token = Sha256.getSha256Str(userName + passWord + System.currentTimeMillis());
-        userBase.setToken(token);
-        update(userBase, queryWrapper);
+        account.setToken(token);
+        update(account, queryWrapper);
         return token;
     }
 
     @Override
-    public UserBase getOneByOption(String column, Object value) {
-        QueryWrapper<UserBase> queryWrapper = new QueryWrapper<>();
+    public Account getOneByOption(String column, Object value) {
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(column, value);
         return getOne(queryWrapper);
     }
@@ -93,8 +92,8 @@ public class UserBaseServiceImpl extends ServiceImpl<UserBaseMapper, UserBase> i
             return false;
         }
         try {
-            UserBase userBase = getOneByOption("token", token);
-            int roleId = userBase.getRole();
+            Account account = getOneByOption("token", token);
+            int roleId = account.getRole();
             QueryWrapper<RoleToAuth> roleToAuthQueryWrapper = new QueryWrapper<>();
             roleToAuthQueryWrapper.eq("role_id", roleId);
             List<RoleToAuth> roleToAuthList = roleToAuthService.list(roleToAuthQueryWrapper);
@@ -113,8 +112,8 @@ public class UserBaseServiceImpl extends ServiceImpl<UserBaseMapper, UserBase> i
     }
 
     @Override
-    public IPage<UserBase> queryUserPageByOption(Integer id, String userName, String email, Integer pageNum, Integer pageSize) {
-        QueryWrapper<UserBase> queryWrapper = new QueryWrapper<>();
+    public IPage<Account> queryUserPageByOption(Integer id, String userName, String email, Integer pageNum, Integer pageSize) {
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         if (id != null) {
             queryWrapper.eq("id", id);
         }
@@ -124,8 +123,8 @@ public class UserBaseServiceImpl extends ServiceImpl<UserBaseMapper, UserBase> i
         if (email != null && !email.isEmpty()) {
             queryWrapper.like("email", email);
         }
-        IPage<UserBase> page = page(new Page<>(pageNum, pageSize), queryWrapper);
-        for (UserBase userBase : page.getRecords()) {
+        IPage<Account> page = page(new Page<>(pageNum, pageSize), queryWrapper);
+        for (Account userBase : page.getRecords()) {
             Role role = roleService.getById(userBase.getRole());
             userBase.setRoleName(role.getRoleName());
         }
@@ -134,9 +133,9 @@ public class UserBaseServiceImpl extends ServiceImpl<UserBaseMapper, UserBase> i
 
     @Override
     public void forget(String email, String password) {
-        UserBase userBase = getOneByOption("email", email);
-        userBase.setPassWord(password);
-        updateById(userBase);
+        Account account = getOneByOption("email", email);
+        account.setPassWord(password);
+        updateById(account);
     }
 
 

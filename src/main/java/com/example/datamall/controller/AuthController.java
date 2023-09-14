@@ -1,8 +1,8 @@
 package com.example.datamall.controller;
 
 import com.example.datamall.entity.Auth;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.AuthService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class AuthController {
     @Resource
     private AuthService authService;
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
 
     /**
      * description:新增或修改权限
@@ -35,7 +35,7 @@ public class AuthController {
      **/
     @PatchMapping("/admin")
     public ResultData save(@RequestBody Auth auth, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -54,7 +54,7 @@ public class AuthController {
      **/
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -65,7 +65,7 @@ public class AuthController {
 
     @GetMapping("/admin")
     public ResultData getTree(@RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }

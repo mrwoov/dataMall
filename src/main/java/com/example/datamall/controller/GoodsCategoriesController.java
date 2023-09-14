@@ -2,8 +2,8 @@ package com.example.datamall.controller;
 
 
 import com.example.datamall.entity.GoodsCategories;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCategoriesService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/goodsCategories")
 public class GoodsCategoriesController {
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
 
@@ -30,7 +30,7 @@ public class GoodsCategoriesController {
     //管理员新建或修改商品分类
     @PatchMapping("/admin")
     public ResultData save(@RequestBody GoodsCategories goodsCategories, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -41,7 +41,7 @@ public class GoodsCategoriesController {
     //管理员删除商品分类
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("admin", token);
+        boolean admin = accountService.checkUserHavaAuth("admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -52,7 +52,7 @@ public class GoodsCategoriesController {
     //管理员批量删除商品分类
     @PostMapping("/admin/del_batch")
     public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("admin", token);
+        boolean admin = accountService.checkUserHavaAuth("admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -63,7 +63,7 @@ public class GoodsCategoriesController {
     //管理员分页查询商品分类：名称，url（模糊查询）
     @PostMapping("/admin/query")
     public ResultData queryGoodsCategoriesInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody GoodsCategories goodsCategories) {
-        boolean admin = userBaseService.checkUserHavaAuth("admin", token);
+        boolean admin = accountService.checkUserHavaAuth("admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }

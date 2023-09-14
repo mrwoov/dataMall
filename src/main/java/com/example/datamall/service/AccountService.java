@@ -1,28 +1,27 @@
 package com.example.datamall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.datamall.entity.Account;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.datamall.entity.UserBase;
 
 /**
  * <p>
- * 基础用户表 服务类
+ * 账号表 服务类
  * </p>
  *
  * @author woov
- * @since 2023-06-03
+ * @since 2023-09-14
  */
-public interface UserBaseService extends IService<UserBase> {
-
+public interface AccountService extends IService<Account> {
     String login(String userName, String passWord);
 
-    UserBase getOneByOption(String column, Object value);
+    Account getOneByOption(String column, Object value);
 
     boolean checkTokenByRedis(String token);
 
     boolean checkUserHavaAuth(String pathNow, String token);
 
-    IPage<UserBase> queryUserPageByOption(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
+    IPage<Account> queryUserPageByOption(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
 
     void forget(String email, String password);
 

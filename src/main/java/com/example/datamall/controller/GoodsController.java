@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.datamall.entity.Goods;
 import com.example.datamall.entity.GoodsCategories;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCategoriesService;
 import com.example.datamall.service.GoodsService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/goods")
 public class GoodsController {
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
     @Resource
     private GoodsService goodsService;
 
@@ -35,7 +35,7 @@ public class GoodsController {
     // 用户发布商品
     @PatchMapping("/")
     public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登录过期");
         }
@@ -48,7 +48,7 @@ public class GoodsController {
     // 用户下架商品
     @PostMapping("/release_off")
     public ResultData releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登录过期");
         }
@@ -59,7 +59,7 @@ public class GoodsController {
     // 用户上架商品
     @PostMapping("release_on")
     public ResultData releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登录过期");
         }
@@ -70,7 +70,7 @@ public class GoodsController {
     // 用户删除商品
     @DeleteMapping("/")
     public ResultData del(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登录过期");
         }
@@ -85,7 +85,7 @@ public class GoodsController {
     // 管理员冻结商品
     @PostMapping("/admin/freeze")
     public ResultData freeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -95,7 +95,7 @@ public class GoodsController {
     // 管理员解冻商品
     @PostMapping("/admin/unfreeze")
     public ResultData unfreeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -106,7 +106,7 @@ public class GoodsController {
     @GetMapping("/info/{goodsId}")
     public ResultData getInfo(@PathVariable("goodsId") Integer goodsId) {
         Goods goods = goodsService.getById(goodsId);
-        goods.setUsername(userBaseService.getById(goods.getUid()).getUserName());
+        goods.setUsername(accountService.getById(goods.getUid()).getUserName());
         goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
         goods.priceToMoney();
         return ResultData.success(goods);
@@ -115,7 +115,7 @@ public class GoodsController {
     // 管理员分页查询商品列表
     @PostMapping("/admin/page")
     public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody Goods goods) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -136,7 +136,7 @@ public class GoodsController {
         queryWrapper.eq("uid", uid);
         List<Goods> list = goodsService.list(queryWrapper);
         for (Goods goods : list) {
-            goods.setUsername(userBaseService.getById(goods.getUid()).getUserName());
+            goods.setUsername(accountService.getById(goods.getUid()).getUserName());
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
             goods.priceToMoney();
         }
@@ -146,7 +146,7 @@ public class GoodsController {
     // 用户修改商品信息
     @PostMapping("/update")
     public ResultData updateGoods(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登录过期");
         }

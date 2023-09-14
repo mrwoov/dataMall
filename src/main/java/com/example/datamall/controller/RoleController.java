@@ -2,8 +2,8 @@ package com.example.datamall.controller;
 
 
 import com.example.datamall.entity.Role;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.RoleService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +24,12 @@ public class RoleController {
     @Resource
     private RoleService roleService;
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
 
     //新增或修改
     @PatchMapping("/admin")
     public ResultData save(@RequestBody Role role, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -40,7 +40,7 @@ public class RoleController {
     //删除by id
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -51,7 +51,7 @@ public class RoleController {
     //批量删除
     @PostMapping("/admin/del_batch")
     public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -63,7 +63,7 @@ public class RoleController {
     //查找单个
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
@@ -77,7 +77,7 @@ public class RoleController {
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("参数缺少");
         }
-        boolean admin = userBaseService.checkUserHavaAuth("/admin", token);
+        boolean admin = accountService.checkUserHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }

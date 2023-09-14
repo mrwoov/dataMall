@@ -3,8 +3,8 @@ package com.example.datamall.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.datamall.entity.GoodsCollection;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCollectionService;
-import com.example.datamall.service.UserBaseService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +23,12 @@ public class GoodsCollectionController {
     @Resource
     private GoodsCollectionService goodsCollectionService;
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
 
     //收藏商品
     @GetMapping("/follow")
     public ResultData follow(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登陆过期");
         }
@@ -42,7 +42,7 @@ public class GoodsCollectionController {
     //取消收藏商品
     @GetMapping("/unfollow")
     public ResultData unfollow(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = userBaseService.tokenToUid(token);
+        Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
             return ResultData.fail("登陆过期");
         }

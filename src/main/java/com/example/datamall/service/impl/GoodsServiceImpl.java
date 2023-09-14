@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.datamall.entity.Account;
 import com.example.datamall.entity.Goods;
-import com.example.datamall.entity.UserBase;
 import com.example.datamall.mapper.GoodsMapper;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCategoriesService;
 import com.example.datamall.service.GoodsCollectionService;
 import com.example.datamall.service.GoodsService;
-import com.example.datamall.service.UserBaseService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
-    private UserBaseService userBaseService;
+    private AccountService accountService;
     @Resource
     private GoodsCollectionService goodsCollectionService;
 
@@ -81,15 +81,15 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             queryWrapper.eq("categories_id", categoriesId);
         }
         if (username != null && !username.isEmpty()) {
-            UserBase userBase = userBaseService.getOneByOption("user_name", username);
-            if (userBase == null) {
+            Account account = accountService.getOneByOption("user_name", username);
+            if (account == null) {
                 return new Page<>();
             }
-            queryWrapper.eq("uid", userBase.getId());
+            queryWrapper.eq("uid", account.getId());
         }
         IPage<Goods> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (Goods goods : page.getRecords()) {
-            goods.setUsername(userBaseService.getById(goods.getUid()).getUserName());
+            goods.setUsername(accountService.getById(goods.getUid()).getUserName());
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
             goods.priceToMoney();
         }
@@ -101,7 +101,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         List<Goods> goodsList = list(queryWrapper);
         for (Goods goods : goodsList) {
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-            goods.setUsername(userBaseService.getById(goods.getUid()).getUserName());
+            goods.setUsername(accountService.getById(goods.getUid()).getUserName());
             goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
             goods.priceToMoney();
         }
