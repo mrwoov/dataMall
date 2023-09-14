@@ -64,7 +64,7 @@ public class AuthController {
     }
 
     /**
-     * description:
+     * description:获取权限树
      *
      * @param token：具有权限的token
      * @return com.example.datamall.vo.ResultData

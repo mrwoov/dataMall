@@ -39,7 +39,7 @@ public class AccountController {
     private EmailCode emailCode;
 
     /**
-     * description:管理员分页条件查询用户信息
+     * description:管理员分页条件查询账号信息
      *
      * @param token：token
      * @param account：用户基础类
