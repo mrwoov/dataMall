@@ -1,7 +1,7 @@
 package com.example.datamall.mapper;
 
-import com.example.datamall.entity.Account;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.datamall.entity.Account;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

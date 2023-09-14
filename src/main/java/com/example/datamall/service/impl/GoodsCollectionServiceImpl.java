@@ -21,7 +21,7 @@ public class GoodsCollectionServiceImpl extends ServiceImpl<GoodsCollectionMappe
     @Override
     public Long goodsCollectionNum(Integer goodsId) {
         QueryWrapper<GoodsCollection> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("goods_id",goodsId);
+        queryWrapper.eq("goods_id", goodsId);
         return count(queryWrapper);
     }
 }

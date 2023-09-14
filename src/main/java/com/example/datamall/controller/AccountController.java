@@ -262,9 +262,9 @@ public class AccountController {
         }
         Integer uid = accountService.tokenToUid(token);
         Account account = accountService.getById(uid);
-        Map<String,String> res = new HashMap<>();
+        Map<String, String> res = new HashMap<>();
         res.put("role", String.valueOf(account.getRole()));
-        res.put("userName",account.getUserName());
+        res.put("userName", account.getUserName());
         return ResultData.success(res);
     }
 }
