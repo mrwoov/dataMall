@@ -69,7 +69,6 @@ public class GoodsCategoriesController {
         }
         String name = goodsCategories.getName();
         String url = goodsCategories.getUrl();
-
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("缺少参数");
         }

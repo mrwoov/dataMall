@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,6 +56,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         String token = Sha256.getSha256Str(userName + passWord + System.currentTimeMillis());
         account.setToken(token);
         update(account, queryWrapper);
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        operations.set(String.valueOf(account.getId()), token, 60 * 60 * 24, TimeUnit.SECONDS);
+        operations.set(token, account.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
         return token;
     }
 
@@ -140,5 +144,14 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
             return -1;
         }
         return findUidInStrByRegex(res);
+    }
+
+    @Override
+    public boolean reg(String username, String password, String email) {
+        Account accountInsert = new Account();
+        accountInsert.setUsername(username);
+        accountInsert.setPassword(password);
+        accountInsert.setEmail(email);
+        return save(accountInsert);
     }
 }

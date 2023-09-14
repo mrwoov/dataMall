@@ -24,4 +24,20 @@ public class GoodsCollectionServiceImpl extends ServiceImpl<GoodsCollectionMappe
         queryWrapper.eq("goods_id", goodsId);
         return count(queryWrapper);
     }
+
+    @Override
+    public boolean follow(Integer accountId, Integer goodsId) {
+        GoodsCollection goodsCollection = new GoodsCollection();
+        goodsCollection.setGoodsId(goodsId);
+        goodsCollection.setUid(accountId);
+        return save(goodsCollection);
+    }
+
+    @Override
+    public boolean unfollow(Integer accountId, Integer goodsId) {
+        QueryWrapper<GoodsCollection> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid", accountId);
+        queryWrapper.eq("goods_id", goodsId);
+        return remove(queryWrapper);
+    }
 }

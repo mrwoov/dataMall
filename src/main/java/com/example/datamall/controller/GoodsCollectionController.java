@@ -1,8 +1,6 @@
 package com.example.datamall.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.datamall.entity.GoodsCollection;
 import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCollectionService;
 import com.example.datamall.vo.ResultData;
@@ -28,38 +26,27 @@ public class GoodsCollectionController {
     //收藏商品
     @GetMapping("/follow")
     public ResultData follow(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
-        if (uid == -1) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
-        GoodsCollection goodsCollection = new GoodsCollection();
-        goodsCollection.setGoodsId(goodsId);
-        goodsCollection.setUid(uid);
-        boolean state = goodsCollectionService.save(goodsCollection);
-        return ResultData.state(state);
+        return ResultData.state(goodsCollectionService.follow(accountId, goodsId));
     }
 
     //取消收藏商品
     @GetMapping("/unfollow")
     public ResultData unfollow(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
-        if (uid == -1) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
-        QueryWrapper<GoodsCollection> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("uid", uid);
-        queryWrapper.eq("goods_id", goodsId);
-        boolean state = goodsCollectionService.remove(queryWrapper);
-        return ResultData.state(state);
+        return ResultData.state(goodsCollectionService.unfollow(accountId, goodsId));
     }
 
     //获取商品收藏数
     @GetMapping("/getNum")
     public ResultData getFollowNum(@RequestParam("goodsId") String goodsId) {
-        QueryWrapper<GoodsCollection> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("goods_id", goodsId);
-        long count = goodsCollectionService.count(queryWrapper);
-        return ResultData.success(count);
+        return ResultData.success(goodsCollectionService.goodsCollectionNum(Integer.valueOf(goodsId)));
     }
 }
 

@@ -13,4 +13,8 @@ import com.example.datamall.entity.GoodsCollection;
  */
 public interface GoodsCollectionService extends IService<GoodsCollection> {
     Long goodsCollectionNum(Integer goodsId);
+
+    boolean follow(Integer accountId, Integer goodsId);
+
+    boolean unfollow(Integer accountId, Integer goodsId);
 }

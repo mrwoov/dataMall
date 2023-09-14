@@ -7,14 +7,11 @@ import com.example.datamall.utils.EmailCode;
 import com.example.datamall.utils.MailService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -31,8 +28,6 @@ public class AccountController {
     private AccountService accountService;
     @Resource
     private AdminService adminService;
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
     @Resource
     private MailService mailService;
     @Resource
@@ -101,14 +96,10 @@ public class AccountController {
         if (token.isEmpty()) {
             return ResultData.fail("账号或密码错误");
         }
-        Account account1 = accountService.getOneByOption("token", token);
-        int uid = account1.getId();
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.set(String.valueOf(uid), token, 60 * 60 * 24, TimeUnit.SECONDS);
-        operations.set(token, account1.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
+        account = accountService.getOneByOption("token", token);
         Map<String, String> res = new HashMap<>();
         res.put("token", token);
-        res.put("admin", String.valueOf(adminService.isAdmin(uid)));
+        res.put("admin", String.valueOf(adminService.isAdmin(account.getId())));
         return ResultData.success(res);
     }
 
@@ -144,21 +135,16 @@ public class AccountController {
      **/
     @PostMapping("/reg/{code}")
     public ResultData reg(@PathVariable String code, @RequestBody Account account) {
-        String userName = account.getUsername();
-        String passWord = account.getPassword();
+        String username = account.getUsername();
+        String password = account.getPassword();
         String email = account.getEmail();
-        if (Objects.equals(userName, "") || userName == null || Objects.equals(passWord, "") || passWord == null || Objects.equals(email, "") || email == null || code == null) {
+        if (Objects.equals(username, "") || username == null || Objects.equals(password, "") || password == null || Objects.equals(email, "") || email == null || code == null) {
             return ResultData.fail("参数缺少");
         }
         if (emailCode.use(email, code)) {
             return ResultData.fail("验证码错误");
         }
-        Account accountInsert = new Account();
-        accountInsert.setUsername(userName);
-        accountInsert.setPassword(passWord);
-        accountInsert.setEmail(email);
-        accountService.save(accountInsert);
-        return ResultData.success();
+        return ResultData.success(accountService.reg(username, password, email));
     }
 
     //用户忘记密码-发送验证码
