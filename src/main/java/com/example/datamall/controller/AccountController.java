@@ -33,17 +33,7 @@ public class AccountController {
     @Resource
     private EmailCode emailCode;
 
-    /**
-     * description:管理员分页条件查询账号信息
-     *
-     * @param token：token
-     * @param account：用户基础类
-     * @param pageNum：页号
-     * @param pageSize：页面大小
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/10
-     **/
+    //管理员分页查账号信息
     @PostMapping("admin/query")
     public ResultData queryUserInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
         boolean admin = accountService.checkAdminHavaAuth("/admin", token);
@@ -59,15 +49,7 @@ public class AccountController {
         return ResultData.success(accountService.queryUserPageByOption(id, userName, email, pageNum, pageSize));
     }
 
-    /**
-     * description:管理员通过用户基础账号id查找用户信息
-     *
-     * @param id：用户基础id
-     * @param token：具有/admin路径权限的用户token
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
+    //管理员通过账号id查单个信息
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
         boolean admin = accountService.checkAdminHavaAuth("/admin", token);
@@ -78,13 +60,7 @@ public class AccountController {
         return ResultData.success(account);
     }
 
-    /**
-     * description:用户登录
-     *
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
+    //用户登录
     @PostMapping("/login")
     public ResultData login(@RequestBody Account account) {
         String username = account.getUsername();
@@ -103,14 +79,7 @@ public class AccountController {
         return ResultData.success(res);
     }
 
-    /**
-     * description:用户请求发送注册验证码
-     *
-     * @param email：用户接收验证码的邮箱
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
+    //用户注册-验证码
     @GetMapping("/reg/send_code/{email}")
     public ResultData sendRegAuthCode(@PathVariable String email) {
         if (email == null || email.isEmpty()) {
@@ -124,15 +93,7 @@ public class AccountController {
         return ResultData.success();
     }
 
-    /**
-     * description:用户注册
-     *
-     * @param code：用户通过/user/reg/send_code/{email}请求的验证码
-     * @param account：一个具有userName、passWord和email的一个用户基础Bean
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
+    //用户注册
     @PostMapping("/reg/{code}")
     public ResultData reg(@PathVariable String code, @RequestBody Account account) {
         String username = account.getUsername();
@@ -161,7 +122,7 @@ public class AccountController {
         return ResultData.success();
     }
 
-    //用户重置验证码
+    //用户重置密码
     @PostMapping("/forget/{code}")
     public ResultData forget(@PathVariable String code, @RequestBody Account account) {
         String password = account.getPassword();
@@ -176,14 +137,7 @@ public class AccountController {
         return ResultData.success();
     }
 
-    /**
-     * description:校验用户token是否存在或过期
-     *
-     * @param token：用户token
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
+    //校验用户token是否存在或过期
     @GetMapping("/token")
     public ResultData checkToken(@RequestHeader("token") String token) {
         if (token == null || token.isEmpty()) {
