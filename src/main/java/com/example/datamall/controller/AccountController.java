@@ -1,6 +1,5 @@
 package com.example.datamall.controller;
 
-
 import com.example.datamall.entity.Account;
 import com.example.datamall.service.AccountService;
 import com.example.datamall.service.AdminService;
@@ -13,7 +12,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -39,63 +37,6 @@ public class AccountController {
     private MailService mailService;
     @Resource
     private EmailCode emailCode;
-
-    /**
-     * description:管理员新增或修改用户
-     *
-     * @param account：传入需要修改的用户基础Bean
-     * @param token：具有/admin路径权限的用户token
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
-    @PatchMapping("/admin")
-    public ResultData save(@RequestBody Account account, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
-            return ResultData.fail("无权限");
-        }
-        boolean state = accountService.saveOrUpdate(account);
-        return ResultData.state(state);
-    }
-
-    /**
-     * description:管理员删除用户
-     *
-     * @param id：需要删除的用户id
-     * @param token：具有/admin路径权限的用户token
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
-    @DeleteMapping("/admin/{id}")
-    public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
-            return ResultData.fail("无权限");
-        }
-        boolean state = accountService.removeById(id);
-        return ResultData.state(state);
-    }
-
-    /**
-     * description:管理员批量删除用户
-     *
-     * @param ids：由需要删除的用户的id组成的list
-     * @param token：具有/admin路径权限的用户token
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/4
-     **/
-    @PostMapping("/admin/del_batch")
-    public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
-            return ResultData.fail("无权限");
-        }
-        boolean state = accountService.removeByIds(ids);
-        return ResultData.state(state);
-    }
 
     /**
      * description:管理员分页条件查询用户信息
@@ -220,6 +161,7 @@ public class AccountController {
         return ResultData.success();
     }
 
+    //用户忘记密码-发送验证码
     @GetMapping("/forget/send_code/{email}")
     public ResultData sendForgetAUthCOde(@PathVariable String email) {
         if (email == null || email.isEmpty()) {
@@ -233,6 +175,7 @@ public class AccountController {
         return ResultData.success();
     }
 
+    //用户重置验证码
     @PostMapping("/forget/{code}")
     public ResultData forget(@PathVariable String code, @RequestBody Account account) {
         String password = account.getPassword();
