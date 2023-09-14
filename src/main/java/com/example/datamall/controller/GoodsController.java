@@ -31,6 +31,7 @@ public class GoodsController {
 
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
+
     // 用户发布商品
     @PatchMapping("/")
     public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
@@ -157,24 +158,25 @@ public class GoodsController {
         return ResultData.state(state);
     }
 
-    // TODO: 2023/8/31 搜索功能
+    //搜索商品
     @GetMapping("/search")
-    public ResultData search(@RequestParam("keyword") String keyword){
+    public ResultData search(@RequestParam("keyword") String keyword) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("name",keyword);
+        queryWrapper.like("name", keyword);
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
         return ResultData.success(goodsList);
     }
-    // TODO: 2023/9/14 获取类别下商品
+
+    //获取类别下的商品
     @GetMapping("/categories")
-    public ResultData categoriesGoods(@RequestParam("categories") String categories){
-        GoodsCategories goodsCategories = goodsCategoriesService.getOneByOption("url",categories);
-        if (goodsCategories==null){
+    public ResultData categoriesGoods(@RequestParam("categories") String categories) {
+        GoodsCategories goodsCategories = goodsCategoriesService.getOneByOption("url", categories);
+        if (goodsCategories == null) {
             return ResultData.fail();
         }
         Integer categoriesId = goodsCategories.getId();
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("categories_id",categoriesId);
+        queryWrapper.eq("categories_id", categoriesId);
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
         return ResultData.success(goodsList);
     }
