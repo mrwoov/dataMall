@@ -100,9 +100,11 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public List<Goods> getGoodsList(QueryWrapper<Goods> queryWrapper) {
         List<Goods> goodsList = list(queryWrapper);
         for (Goods goods : goodsList) {
+            Account account = accountService.getById(goods.getUid());
             goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-            goods.setUsername(accountService.getById(goods.getUid()).getUsername());
+            goods.setUsername(account.getUsername());
             goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
+            goods.setAvatar(account.getAvatar());
             goods.priceToMoney();
         }
         return goodsList;

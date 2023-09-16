@@ -89,6 +89,9 @@ public class Goods implements Serializable {
     @TableField(exist = false)
     private Long collection;
 
+    @TableField(exist = false)
+    private String avatar;
+
     private Goods(Integer goodsId, String name, Integer categoriesId, String detail, String picIndex, Integer price) {
         this.setId(goodsId);
         this.setName(name);
