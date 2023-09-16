@@ -10,6 +10,10 @@ dataMall前端：https://github.com/mrwoov/dataMallUi
 
 datamall是一个基于区块链技术的数据交易与鉴权平台
 
+# 系统架构图
+
+![img.png](img.png)
+
 # 技术选型
 
 | 技术         | 说明        | 官网                                     |
