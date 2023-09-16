@@ -150,7 +150,7 @@ public class AccountController {
         Account account = accountService.getById(uid);
         Map<String, String> res = new HashMap<>();
         res.put("admin", String.valueOf(adminService.isAdmin(uid)));
-        res.put("userName", account.getUsername());
+        res.put("username", account.getUsername());
         return ResultData.success(res);
     }
 }
