@@ -58,6 +58,8 @@ public class Account implements Serializable {
      * 用户状态（0正常1冻结2假删）
      */
     private Integer state;
+    //头像
+    private String avatar;
 
     @TableField(exist = false)
     private String roleName;

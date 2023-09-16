@@ -6,6 +6,7 @@ import com.example.datamall.entity.Goods;
 import com.example.datamall.entity.GoodsCategories;
 import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCategoriesService;
+import com.example.datamall.service.GoodsCollectionService;
 import com.example.datamall.service.GoodsService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
@@ -31,6 +32,8 @@ public class GoodsController {
 
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
+    @Resource
+    private GoodsCollectionService goodsCollectionService;
 
     // 用户发布商品
     @PatchMapping("/")
@@ -109,6 +112,7 @@ public class GoodsController {
         goods.setUsername(accountService.getById(goods.getUid()).getUsername());
         goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
         goods.priceToMoney();
+        goods.setCollection(goodsCollectionService.goodsCollectionNum(goodsId));
         return ResultData.success(goods);
     }
 
