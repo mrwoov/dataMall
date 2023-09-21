@@ -31,7 +31,6 @@ public class GoodsController {
     @Resource
     private GoodsService goodsService;
 
-
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
