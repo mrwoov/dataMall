@@ -27,6 +27,7 @@ import java.util.List;
 public class GoodsController {
     @Resource
     private AccountService accountService;
+
     @Resource
     private GoodsService goodsService;
 
