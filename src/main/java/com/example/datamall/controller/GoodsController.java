@@ -169,6 +169,7 @@ public class GoodsController {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("name", keyword);
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
+        goodsList.removeIf(goods -> goods.getState() != 0);
         return ResultData.success(goodsList);
     }
 
@@ -182,6 +183,7 @@ public class GoodsController {
         Integer categoriesId = goodsCategories.getId();
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("categories_id", categoriesId);
+        queryWrapper.eq("state", 0);
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
         return ResultData.success(goodsList);
     }

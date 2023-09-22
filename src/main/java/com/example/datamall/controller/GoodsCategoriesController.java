@@ -78,7 +78,9 @@ public class GoodsCategoriesController {
     //查询商品分类
     @GetMapping("/")
     public ResultData getList() {
-        return ResultData.success(goodsCategoriesService.list());
+        List<GoodsCategories> list = goodsCategoriesService.list();
+        list.removeIf(goodsCategories -> goodsCategories.getState() != 0);
+        return ResultData.success(list);
     }
 }
 
