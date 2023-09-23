@@ -24,15 +24,8 @@ public class AuthController {
     @Resource
     private AccountService accountService;
 
-    /**
-     * description:新增或修改权限
-     *
-     * @param auth:具有auth的entity的json  post请求
-     * @param token:具有/admin权限的用户token
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/17
-     **/
+
+    //管理员新增或修改权限
     @PatchMapping("/admin")
     public ResultData save(@RequestBody Auth auth, @RequestHeader("token") String token) {
         boolean admin = accountService.checkAdminHavaAuth("/admin", token);
@@ -43,34 +36,17 @@ public class AuthController {
         return ResultData.state(state);
     }
 
-    /**
-     * description:删除权限表中的权限
-     *
-     * @param id:权限id
-     * @param token:具有/admin权限的用户token
-     * @return com.example.datamall.vo.DataView
-     * @author woov
-     * @create 2023/6/17
-     **/
+    //管理员删除权限表中的权限
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
         boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {
             return ResultData.fail("无权限");
         }
-        boolean state = authService.removeById(id);
-        boolean childState = authService.delChildId(id);
-        return ResultData.state(state && childState);
+        return ResultData.state(authService.del(id));
     }
 
-    /**
-     * description:获取权限树
-     *
-     * @param token：具有权限的token
-     * @return com.example.datamall.vo.ResultData
-     * @author woov
-     * @create 2023/9/14
-     **/
+    //管理员获取权限树
     @GetMapping("/admin")
     public ResultData getTree(@RequestHeader("token") String token) {
         boolean admin = accountService.checkAdminHavaAuth("/admin", token);

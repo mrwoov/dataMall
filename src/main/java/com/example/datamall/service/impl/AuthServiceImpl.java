@@ -1,8 +1,6 @@
 package com.example.datamall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.Auth;
 import com.example.datamall.mapper.AuthMapper;
@@ -31,18 +29,11 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, Auth> implements Au
     }
 
     @Override
-    public IPage<Auth> queryAuthInfoPageByOption(Integer pageNum, Integer pageSize, Integer id, String path, String name) {
-        QueryWrapper<Auth> queryWrapper = new QueryWrapper<>();
-        if (id != null) {
-            queryWrapper.eq("id", id);
-        }
-        if (path != null && !path.isEmpty()) {
-            queryWrapper.like("path", path);
-        }
-        if (name != null && !name.isEmpty()) {
-            queryWrapper.like("name", name);
-        }
-        return page(new Page<>(pageNum, pageSize), queryWrapper);
+    public Boolean del(Integer id) {
+        //先删二级评论，再删一级
+        boolean childState = delChildId(id);
+        boolean state = removeById(id);
+        return state && childState;
     }
 
     @Override

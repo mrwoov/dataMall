@@ -1,6 +1,5 @@
 package com.example.datamall.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.datamall.entity.Auth;
 
@@ -18,7 +17,7 @@ public interface AuthService extends IService<Auth> {
 
     Auth getOneByOption(String column, Object value);
 
-    IPage<Auth> queryAuthInfoPageByOption(Integer pageNum, Integer pageSize, Integer id, String path, String name);
+    Boolean del(Integer id);
 
     Boolean delChildId(Integer pid);
 
