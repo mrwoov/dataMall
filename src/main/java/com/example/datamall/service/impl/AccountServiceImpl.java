@@ -104,7 +104,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
 
     @Override
-    public IPage<Account> queryUserPageByOption(Integer id, String userName, String email, Integer pageNum, Integer pageSize) {
+    public IPage<Account> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         if (id != null) {
             queryWrapper.eq("id", id);

@@ -13,19 +13,27 @@ import com.example.datamall.entity.Account;
  * @since 2023-09-14
  */
 public interface AccountService extends IService<Account> {
+    //登录
     String login(String userName, String passWord);
 
-    Account getOneByOption(String column, Object value);
-
-    boolean checkTokenByRedis(String token);
-
-    boolean checkAdminHavaAuth(String pathNow, String token);
-
-    IPage<Account> queryUserPageByOption(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
-
+    //忘记密码
     void forget(String email, String password);
 
-    Integer tokenToUid(String token);
+    //注册
+    boolean reg(String username, String password, String email);
 
-    boolean reg(String username,String password,String email);
+    //根据一个条件查找
+    Account getOneByOption(String column, Object value);
+
+    //通过redis检查token
+    boolean checkTokenByRedis(String token);
+
+    //检查管理员是否有权限
+    boolean checkAdminHavaAuth(String pathNow, String token);
+
+    //
+    IPage<Account> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
+
+    //token转accountId
+    Integer tokenToUid(String token);
 }

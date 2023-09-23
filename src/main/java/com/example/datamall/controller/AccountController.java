@@ -46,7 +46,7 @@ public class AccountController {
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("缺少参数");
         }
-        return ResultData.success(accountService.queryUserPageByOption(id, userName, email, pageNum, pageSize));
+        return ResultData.success(accountService.query(id, userName, email, pageNum, pageSize));
     }
 
     //管理员通过账号id查单个信息
