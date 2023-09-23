@@ -1,5 +1,6 @@
 package com.example.datamall.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.datamall.entity.GoodsComment;
 
@@ -18,4 +19,6 @@ public interface GoodsCommentService extends IService<GoodsComment> {
     Integer commentIdToGoodsId(Integer commentId);
 
     boolean isSender(Integer uid, Integer commentsId);
+
+    IPage<GoodsComment> query(Integer goodsId, Integer pageNum, Integer pageSize);
 }

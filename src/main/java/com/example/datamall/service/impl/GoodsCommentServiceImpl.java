@@ -1,10 +1,15 @@
 package com.example.datamall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.datamall.entity.Account;
 import com.example.datamall.entity.GoodsComment;
 import com.example.datamall.mapper.GoodsCommentMapper;
+import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCommentService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,6 +22,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GoodsCommentServiceImpl extends ServiceImpl<GoodsCommentMapper, GoodsComment> implements GoodsCommentService {
+    @Resource
+    private AccountService accountService;
     @Override
     public GoodsComment getOneByOption(String column, Object value) {
         QueryWrapper<GoodsComment> queryWrapper = new QueryWrapper<>();
@@ -40,5 +47,18 @@ public class GoodsCommentServiceImpl extends ServiceImpl<GoodsCommentMapper, Goo
             return false;
         }
         return uid.equals(uid_temp);
+    }
+
+    @Override
+    public IPage<GoodsComment> query(Integer goodsId, Integer pageNum, Integer pageSize) {
+        QueryWrapper<GoodsComment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("goods_id", goodsId);
+        IPage<GoodsComment> page = page(new Page<>(pageNum, pageSize), queryWrapper);
+        for (GoodsComment goodsComment : page.getRecords()) {
+            Account account = accountService.getById(goodsComment.getUid());
+            goodsComment.setUsername(account.getUsername());
+            goodsComment.setAvatar(account.getAvatar());
+        }
+        return page;
     }
 }

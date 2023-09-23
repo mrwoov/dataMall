@@ -1,10 +1,7 @@
 package com.example.datamall.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.datamall.entity.Account;
 import com.example.datamall.entity.GoodsComment;
 import com.example.datamall.service.AccountService;
 import com.example.datamall.service.GoodsCommentService;
@@ -77,14 +74,7 @@ public class GoodsCommentController {
     //查看商品的评论
     @GetMapping("/")
     public ResultData getList(@RequestParam("goodsId") Integer goodsId, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        QueryWrapper<GoodsComment> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("goods_id", goodsId);
-        IPage<GoodsComment> page = goodsCommentService.page(new Page<>(pageNum, pageSize), queryWrapper);
-        for (GoodsComment goodsComment : page.getRecords()) {
-            Account account = accountService.getById(goodsComment.getUid());
-            goodsComment.setUsername(account.getUsername());
-            goodsComment.setAvatar(account.getAvatar());
-        }
+        IPage<GoodsComment> page = goodsCommentService.query(goodsId, pageNum, pageSize);
         return ResultData.success(page);
     }
 
