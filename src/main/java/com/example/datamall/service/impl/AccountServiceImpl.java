@@ -6,7 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.Account;
 import com.example.datamall.mapper.AccountMapper;
-import com.example.datamall.service.*;
+import com.example.datamall.service.AccountService;
+import com.example.datamall.service.AdminService;
 import com.example.datamall.utils.Sha256;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,13 +30,7 @@ import java.util.regex.Pattern;
 @Service
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
     @Resource
-    private AuthService authService;
-    @Resource
     private RedisTemplate<String, String> redisTemplate;
-    @Resource
-    private RoleService roleService;
-    @Resource
-    private RoleToAuthService roleToAuthService;
     @Resource
     private AdminService adminService;
 

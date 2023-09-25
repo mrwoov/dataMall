@@ -187,6 +187,5 @@ public class GoodsController {
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
         return ResultData.success(goodsList);
     }
-
 }
 
