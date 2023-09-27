@@ -4,7 +4,6 @@ import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,7 +21,7 @@ public class MailService {
     /**
      * 注入邮件工具类
      */
-    @Autowired
+    @Resource
     private JavaMailSenderImpl javaMailSender;
 
     @Resource
@@ -66,7 +65,7 @@ public class MailService {
             System.out.println("发送邮件成功：" + sendMailer + "->" + to);
 
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             System.out.println("发送邮件失败：" + e.getMessage());
         }
     }
