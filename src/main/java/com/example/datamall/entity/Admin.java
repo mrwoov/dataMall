@@ -1,6 +1,8 @@
 package com.example.datamall.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,17 +44,25 @@ public class Admin implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     /**
      * 状态0正常1冻结
      */
     private Integer state;
+
+    @TableField(exist = false)
+    private String username;
+
+    @TableField(exist = false)
+    private String roleName;
 
 
 }

@@ -71,6 +71,16 @@ public class RoleController {
         return ResultData.success(role);
     }
 
+    @GetMapping("/admin")
+    public ResultData getList(@RequestHeader("token") String token) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        List<Role> list = roleService.list();
+        return ResultData.success(list);
+    }
+
     //分页查询
     @PostMapping("/admin/query")
     public ResultData findPage(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Role role) {

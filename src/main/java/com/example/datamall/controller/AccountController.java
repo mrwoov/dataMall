@@ -34,7 +34,7 @@ public class AccountController {
     private EmailCode emailCode;
 
     //管理员分页查账号信息
-    @PostMapping("admin/query")
+    @PostMapping("/admin/query")
     public ResultData queryUserInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
         boolean admin = accountService.checkAdminHavaAuth("/admin", token);
         if (!admin) {

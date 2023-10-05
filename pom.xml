@@ -37,7 +37,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<!--mybatis-plus依赖-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
@@ -97,6 +96,12 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
+        <!--		fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<plugins>
