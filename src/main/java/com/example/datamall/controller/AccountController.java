@@ -36,8 +36,8 @@ public class AccountController {
     //管理员分页查账号信息
     @PostMapping("/admin/query")
     public ResultData queryUserInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         String email = account.getEmail();
@@ -52,8 +52,8 @@ public class AccountController {
     //管理员通过账号id查单个信息
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         Account account = accountService.getById(id);

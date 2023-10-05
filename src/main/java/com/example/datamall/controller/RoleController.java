@@ -29,8 +29,8 @@ public class RoleController {
     //新增或修改
     @PatchMapping("/admin")
     public ResultData save(@RequestBody Role role, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         boolean state = roleService.saveOrUpdate(role);
@@ -40,8 +40,8 @@ public class RoleController {
     //删除by id
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         boolean state = roleService.removeById(id);
@@ -51,8 +51,8 @@ public class RoleController {
     //批量删除
     @PostMapping("/admin/del_batch")
     public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         boolean state = roleService.removeByIds(ids);
@@ -63,14 +63,15 @@ public class RoleController {
     //查找单个
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         Role role = roleService.getById(id);
         return ResultData.success(role);
     }
 
+    //获取角色列表
     @GetMapping("/admin")
     public ResultData getList(@RequestHeader("token") String token) {
         boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
@@ -87,8 +88,8 @@ public class RoleController {
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("参数缺少");
         }
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         String roleName = role.getRoleName();

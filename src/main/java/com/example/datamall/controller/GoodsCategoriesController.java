@@ -30,8 +30,8 @@ public class GoodsCategoriesController {
     //管理员新建或修改商品分类
     @PatchMapping("/admin")
     public ResultData save(@RequestBody GoodsCategories goodsCategories, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         boolean state = goodsCategoriesService.saveOrUpdate(goodsCategories);
@@ -41,8 +41,8 @@ public class GoodsCategoriesController {
     //管理员删除商品分类
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         boolean state = goodsCategoriesService.removeById(id);
@@ -52,8 +52,8 @@ public class GoodsCategoriesController {
     //管理员批量删除商品分类
     @PostMapping("/admin/del_batch")
     public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean admin = accountService.checkAdminHavaAuth("admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         boolean state = goodsCategoriesService.removeByIds(ids);
@@ -63,8 +63,8 @@ public class GoodsCategoriesController {
     //管理员分页查询商品分类：名称，url（模糊查询）
     @PostMapping("/admin/query")
     public ResultData queryGoodsCategoriesInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody GoodsCategories goodsCategories) {
-        boolean admin = accountService.checkAdminHavaAuth("admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         String name = goodsCategories.getName();

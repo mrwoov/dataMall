@@ -61,8 +61,8 @@ public class GoodsPicController {
     //管理员冻结商品图片
     @GetMapping("/admin")
     public ResultData freeze(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
-        boolean admin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!admin) {
+        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        if (!isAdmin) {
             return ResultData.fail("无权限");
         }
         GoodsPic goodsPic = goodsPicService.getById(picId);
