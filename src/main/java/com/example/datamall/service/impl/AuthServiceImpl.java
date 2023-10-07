@@ -30,7 +30,7 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, Auth> implements Au
 
     @Override
     public Boolean del(Integer id) {
-        //先删二级评论，再删一级
+        //先删子权限，再删一级
         boolean childState = delChildId(id);
         boolean state = removeById(id);
         return state && childState;

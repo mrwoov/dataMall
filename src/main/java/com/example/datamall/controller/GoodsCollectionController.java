@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2023-08-29
  */
 @RestController
-@RequestMapping("/goodsCollection")
+@RequestMapping("/goodsCollections")
 public class GoodsCollectionController {
     @Resource
     private GoodsCollectionService goodsCollectionService;
@@ -24,8 +24,8 @@ public class GoodsCollectionController {
     private AccountService accountService;
 
     //收藏商品
-    @GetMapping("/follow")
-    public ResultData follow(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+    @GetMapping("/follow/{goodsId}")
+    public ResultData follow(@RequestHeader("token") String token, @PathVariable("goodsId") Integer goodsId) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
@@ -34,8 +34,8 @@ public class GoodsCollectionController {
     }
 
     //取消收藏商品
-    @GetMapping("/unfollow")
-    public ResultData unfollow(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+    @GetMapping("/unfollow/{goodsId}")
+    public ResultData unfollow(@RequestHeader("token") String token, @PathVariable("goodsId") Integer goodsId) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
@@ -44,8 +44,8 @@ public class GoodsCollectionController {
     }
 
     //获取商品收藏数
-    @GetMapping("/getNum")
-    public ResultData getFollowNum(@RequestParam("goodsId") String goodsId) {
+    @GetMapping("/get_num/{goodsId}")
+    public ResultData getFollowNum(@PathVariable("goodsId") String goodsId) {
         return ResultData.success(goodsCollectionService.goodsCollectionNum(Integer.valueOf(goodsId)));
     }
 }

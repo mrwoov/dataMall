@@ -46,10 +46,9 @@ public class Auth implements Serializable {
     private LocalDateTime updateTime;
 
     @TableField(exist = false)
-    private List<Auth> child;
+    private List<Auth> child = new ArrayList<>();
 
     public void addChild(Auth auth) {
-        this.child = new ArrayList<>();
         this.child.add(auth);
     }
 }
