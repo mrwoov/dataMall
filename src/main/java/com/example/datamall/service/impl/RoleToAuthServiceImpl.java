@@ -43,15 +43,37 @@ public class RoleToAuthServiceImpl extends ServiceImpl<RoleToAuthMapper, RoleToA
     public List<Auth> getRoleAuthList(Integer roleId) {
         QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("role_id", roleId);
-        List<RoleToAuth> roleToAuthList = list(queryWrapper);
+        List<RoleToAuth> list = list(queryWrapper);
         List<Auth> authList = new ArrayList<>();
-        for (RoleToAuth roleToAuth : roleToAuthList) {
-            Auth auth = new Auth();
-            auth.setId(roleToAuth.getAuthId());
-            auth.setName(authService.getById(roleToAuth.getAuthId()).getName());
+        for (RoleToAuth roleToAuth : list) {
+            Auth auth = authService.getById(roleToAuth.getAuthId());
             authList.add(auth);
         }
         return authList;
+    }
+
+    @Override
+    public List<Auth> getRoleAuths(Integer roleId) {
+        QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id", roleId);
+        List<RoleToAuth> roleToAuthList = list(queryWrapper);
+        List<Auth> authList = new ArrayList<>();
+        for (RoleToAuth roleToAuth : roleToAuthList) {
+            Auth auth = authService.getById(roleToAuth.getAuthId());
+            authList.add(auth);
+        }
+        List<Auth> result = new ArrayList<>();
+        for (Auth parent : authList) {
+            if (parent.getParentId() == 0) {
+                result.add(parent);
+            }
+            for (Auth child : authList) {
+                if ((parent.getId().equals(child.getParentId()))) {
+                    parent.addChild(child);
+                }
+            }
+        }
+        return result;
     }
 
     @Override
@@ -103,6 +125,5 @@ public class RoleToAuthServiceImpl extends ServiceImpl<RoleToAuthMapper, RoleToA
         QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("role_id", roleId);
         return remove(queryWrapper);
-
     }
 }

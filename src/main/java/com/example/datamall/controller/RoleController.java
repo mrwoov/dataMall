@@ -4,6 +4,7 @@ package com.example.datamall.controller;
 import com.example.datamall.entity.Auth;
 import com.example.datamall.entity.Role;
 import com.example.datamall.service.AccountService;
+import com.example.datamall.service.AdminService;
 import com.example.datamall.service.RoleService;
 import com.example.datamall.service.RoleToAuthService;
 import com.example.datamall.vo.ResultData;
@@ -29,6 +30,8 @@ public class RoleController {
     private AccountService accountService;
     @Resource
     private RoleToAuthService roleToAuthService;
+    @Resource
+    private AdminService adminService;
 
     //新增或修改
     @PatchMapping("/admin")
@@ -66,7 +69,7 @@ public class RoleController {
         return ResultData.state(state);
     }
 
-    //查找单个
+    //管理员查找单个角色权限列表
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
         boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
@@ -79,6 +82,28 @@ public class RoleController {
         return ResultData.success(role);
     }
 
+    //用户查询权限树
+    @GetMapping("/getAuths")
+    public ResultData getAuths(@RequestHeader("token") String token) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        Integer roleId = adminService.getOneByOption("account_id", uid).getRole();
+        List<Auth> authList = roleToAuthService.getRoleAuths(roleId);
+        return ResultData.success(authList);
+    }
+
+    //用户查询权限列表
+    @GetMapping("/getAuthList")
+    public ResultData getAuthList(@RequestHeader("token") String token) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        Integer roleId = adminService.getOneByOption("account_id", uid).getRole();
+        return ResultData.success(roleToAuthService.getRoleAuthList(roleId));
+    }
     //获取角色列表
     @GetMapping("/admin")
     public ResultData getList(@RequestHeader("token") String token) {

@@ -63,4 +63,11 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, Auth> implements Au
         }
         return result;
     }
+
+    @Override
+    public List<Auth> getChild(Integer parentId) {
+        QueryWrapper<Auth> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("parent_id", parentId);
+        return list(queryWrapper);
+    }
 }

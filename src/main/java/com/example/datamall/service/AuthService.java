@@ -22,4 +22,6 @@ public interface AuthService extends IService<Auth> {
     Boolean delChildId(Integer pid);
 
     List<Auth> getAuthTree();
+
+    List<Auth> getChild(Integer parentId);
 }

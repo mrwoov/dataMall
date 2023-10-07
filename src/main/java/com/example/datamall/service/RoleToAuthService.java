@@ -21,6 +21,8 @@ public interface RoleToAuthService extends IService<RoleToAuth> {
 
     List<Auth> getRoleAuthList(Integer roleId);
 
+    List<Auth> getRoleAuths(Integer roleId);
+
     IPage<RoleToAuth> queryRTAInfoPageByOption(Integer pageSize, Integer pageNum, String roleName, String authName);
 
     boolean resetRoleAuth(Integer roleId, List<Integer> auths);

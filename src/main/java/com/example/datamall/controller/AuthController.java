@@ -3,6 +3,7 @@ package com.example.datamall.controller;
 import com.example.datamall.entity.Auth;
 import com.example.datamall.service.AccountService;
 import com.example.datamall.service.AuthService;
+import com.example.datamall.service.SystemDictService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,8 @@ public class AuthController {
     private AuthService authService;
     @Resource
     private AccountService accountService;
-
+    @Resource
+    private SystemDictService systemDictService;
 
     //管理员新增或修改权限
     @PatchMapping("/admin")
@@ -54,5 +56,10 @@ public class AuthController {
             return ResultData.fail("无权限");
         }
         return ResultData.success(authService.getAuthTree());
+    }
+
+    @GetMapping("/icons")
+    public ResultData getIcons() {
+        return ResultData.success(systemDictService.getOneType("icon"));
     }
 }
