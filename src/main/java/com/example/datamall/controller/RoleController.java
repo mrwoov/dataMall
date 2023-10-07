@@ -1,9 +1,11 @@
 package com.example.datamall.controller;
 
 
+import com.example.datamall.entity.Auth;
 import com.example.datamall.entity.Role;
 import com.example.datamall.service.AccountService;
 import com.example.datamall.service.RoleService;
+import com.example.datamall.service.RoleToAuthService;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,8 @@ public class RoleController {
     private RoleService roleService;
     @Resource
     private AccountService accountService;
+    @Resource
+    private RoleToAuthService roleToAuthService;
 
     //新增或修改
     @PatchMapping("/admin")
@@ -33,8 +37,10 @@ public class RoleController {
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
-        boolean state = roleService.saveOrUpdate(role);
-        return ResultData.state(state);
+        boolean status = roleService.saveOrUpdate(role);
+        List<Integer> ids = role.getAuthIds();
+        boolean optionStatus = roleToAuthService.resetRoleAuth(role.getId(), ids);
+        return ResultData.state(optionStatus && status);
     }
 
     //删除by id
@@ -44,8 +50,9 @@ public class RoleController {
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
+        boolean delRoleAuth = roleToAuthService.clearRoleAllAuth(id);
         boolean state = roleService.removeById(id);
-        return ResultData.state(state);
+        return ResultData.state(state && delRoleAuth);
     }
 
     //批量删除
@@ -59,7 +66,6 @@ public class RoleController {
         return ResultData.state(state);
     }
 
-
     //查找单个
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
@@ -68,6 +74,8 @@ public class RoleController {
             return ResultData.fail("无权限");
         }
         Role role = roleService.getById(id);
+        List<Auth> authList = roleToAuthService.getRoleAuthList(id);
+        role.setAuthList(authList);
         return ResultData.success(role);
     }
 
@@ -83,7 +91,7 @@ public class RoleController {
     }
 
     //分页查询
-    @PostMapping("/admin/query")
+    @PostMapping("admin/query")
     public ResultData findPage(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Role role) {
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("参数缺少");

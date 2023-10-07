@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -32,7 +33,10 @@ public class Role implements Serializable {
     private Integer id;
 
     private String roleName;
-
+    @TableField(exist = false)
+    private List<Auth> authList;
+    @TableField(exist = false)
+    private List<Integer> authIds;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

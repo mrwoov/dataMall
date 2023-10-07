@@ -12,6 +12,9 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   mail:
     host: smtp.163.com
     username: ${mail.username}

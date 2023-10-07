@@ -14,6 +14,7 @@ import com.example.datamall.service.RoleToAuthService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +37,21 @@ public class RoleToAuthServiceImpl extends ServiceImpl<RoleToAuthMapper, RoleToA
         QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(column, value);
         return getOne(queryWrapper);
+    }
+
+    @Override
+    public List<Auth> getRoleAuthList(Integer roleId) {
+        QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id", roleId);
+        List<RoleToAuth> roleToAuthList = list(queryWrapper);
+        List<Auth> authList = new ArrayList<>();
+        for (RoleToAuth roleToAuth : roleToAuthList) {
+            Auth auth = new Auth();
+            auth.setId(roleToAuth.getAuthId());
+            auth.setName(authService.getById(roleToAuth.getAuthId()).getName());
+            authList.add(auth);
+        }
+        return authList;
     }
 
     @Override
@@ -66,5 +82,27 @@ public class RoleToAuthServiceImpl extends ServiceImpl<RoleToAuthMapper, RoleToA
             tempRoleToAuth.setAuthName(auth.getName());
         }
         return page;
+    }
+
+    @Override
+    public boolean resetRoleAuth(Integer roleId, List<Integer> auths) {
+        clearRoleAllAuth(roleId);
+        int flag = 0;
+        for (int i : auths) {
+            RoleToAuth roleToAuth = new RoleToAuth();
+            roleToAuth.setRoleId(roleId);
+            roleToAuth.setAuthId(i);
+            boolean status = save(roleToAuth);
+            if (!status) flag++;
+        }
+        return flag == 0;
+    }
+
+    @Override
+    public boolean clearRoleAllAuth(Integer roleId) {
+        QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id", roleId);
+        return remove(queryWrapper);
+
     }
 }

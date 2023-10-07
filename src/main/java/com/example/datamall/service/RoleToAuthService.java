@@ -2,7 +2,10 @@ package com.example.datamall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.datamall.entity.Auth;
 import com.example.datamall.entity.RoleToAuth;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +19,11 @@ public interface RoleToAuthService extends IService<RoleToAuth> {
 
     RoleToAuth getOneByOption(String column, Object value);
 
+    List<Auth> getRoleAuthList(Integer roleId);
+
     IPage<RoleToAuth> queryRTAInfoPageByOption(Integer pageSize, Integer pageNum, String roleName, String authName);
+
+    boolean resetRoleAuth(Integer roleId, List<Integer> auths);
+
+    boolean clearRoleAllAuth(Integer roleId);
 }
