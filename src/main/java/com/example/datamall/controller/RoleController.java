@@ -104,6 +104,7 @@ public class RoleController {
         Integer roleId = adminService.getOneByOption("account_id", uid).getRole();
         return ResultData.success(roleToAuthService.getRoleAuthList(roleId));
     }
+
     //获取角色列表
     @GetMapping("/admin")
     public ResultData getList(@RequestHeader("token") String token) {
