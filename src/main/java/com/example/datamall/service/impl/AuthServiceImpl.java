@@ -50,12 +50,17 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, Auth> implements Au
     @Override
     public List<Auth> getAuthTree() {
         List<Auth> auths = list();
+        return listToTree(auths);
+    }
+
+    @Override
+    public List<Auth> listToTree(List<Auth> list) {
         List<Auth> result = new ArrayList<>();
-        for (Auth parent : auths) {
+        for (Auth parent : list) {
             if (parent.getParentId() == 0) {
                 result.add(parent);
             }
-            for (Auth child : auths) {
+            for (Auth child : list) {
                 if ((parent.getId().equals(child.getParentId()))) {
                     parent.addChild(child);
                 }

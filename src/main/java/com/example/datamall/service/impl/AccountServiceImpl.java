@@ -34,6 +34,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Resource
     private AdminService adminService;
 
+    //登录
     @Override
     public String login(String userName, String passWord) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
@@ -57,6 +58,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return token;
     }
 
+    //根据条件查询单个
     @Override
     public Account getOneByOption(String column, Object value) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
@@ -64,6 +66,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return getOne(queryWrapper);
     }
 
+    //根据redis检查token
     @Override
     public boolean checkTokenByRedis(String token) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
@@ -80,6 +83,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return Objects.equals(redisToken, token);
     }
 
+    //检查是否有管理员是否有权限
     @Override
     public boolean checkAdminHavaAuth(String pathNow, String token) {
         if (token == null || token.isEmpty()) {
@@ -98,6 +102,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         }
     }
 
+    // 管理员分页查询账号
     @Override
     public IPage<Account> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
@@ -113,6 +118,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return page(new Page<>(pageNum, pageSize), queryWrapper);
     }
 
+    //忘记账号密码
     @Override
     public void forget(String email, String password) {
         Account account = getOneByOption("email", email);
@@ -120,7 +126,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         updateById(account);
     }
 
-
+    //根据redis记录提取内容
     public int findUidInStrByRegex(String str) {
         String regex = "id=(\\d+)";
         Pattern pattern = Pattern.compile(regex);
@@ -131,6 +137,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return -1;
     }
 
+    //账号token转uid
     @Override
     public Integer tokenToUid(String token) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
@@ -141,6 +148,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return findUidInStrByRegex(res);
     }
 
+    //注册
     @Override
     public boolean reg(String username, String password, String email) {
         Account accountInsert = new Account();

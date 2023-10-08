@@ -12,7 +12,9 @@ import com.example.datamall.entity.Admin;
  * @since 2023-09-14
  */
 public interface AdminService extends IService<Admin> {
+    //判断是否管理员
     boolean isAdmin(Integer accountId);
 
+    //根据条件查询一个
     Admin getOneByOption(String column, Object value);
 }

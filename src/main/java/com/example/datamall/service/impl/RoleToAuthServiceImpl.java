@@ -54,26 +54,8 @@ public class RoleToAuthServiceImpl extends ServiceImpl<RoleToAuthMapper, RoleToA
 
     @Override
     public List<Auth> getRoleAuths(Integer roleId) {
-        QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("role_id", roleId);
-        List<RoleToAuth> roleToAuthList = list(queryWrapper);
-        List<Auth> authList = new ArrayList<>();
-        for (RoleToAuth roleToAuth : roleToAuthList) {
-            Auth auth = authService.getById(roleToAuth.getAuthId());
-            authList.add(auth);
-        }
-        List<Auth> result = new ArrayList<>();
-        for (Auth parent : authList) {
-            if (parent.getParentId() == 0) {
-                result.add(parent);
-            }
-            for (Auth child : authList) {
-                if ((parent.getId().equals(child.getParentId()))) {
-                    parent.addChild(child);
-                }
-            }
-        }
-        return result;
+        List<Auth> authList = getRoleAuthList(roleId);
+        return authService.listToTree(authList);
     }
 
     @Override

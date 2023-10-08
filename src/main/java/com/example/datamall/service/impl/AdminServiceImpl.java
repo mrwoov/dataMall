@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
 
+    //判断是否为管理员
     @Override
     public boolean isAdmin(Integer accountId) {
         Admin admin = getOneByOption("account_id", accountId);
@@ -25,6 +26,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
 
+    //根据条件查询单个
     @Override
     public Admin getOneByOption(String column, Object value) {
         QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();

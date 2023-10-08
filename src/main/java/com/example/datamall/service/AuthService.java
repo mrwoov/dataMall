@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2023-06-04
  */
 public interface AuthService extends IService<Auth> {
-
+    //根据条件查询单个
     Auth getOneByOption(String column, Object value);
 
     Boolean del(Integer id);
@@ -22,6 +22,8 @@ public interface AuthService extends IService<Auth> {
     Boolean delChildId(Integer pid);
 
     List<Auth> getAuthTree();
+
+    List<Auth> listToTree(List<Auth> list);
 
     List<Auth> getChild(Integer parentId);
 }

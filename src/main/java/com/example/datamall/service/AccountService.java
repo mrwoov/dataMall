@@ -31,7 +31,7 @@ public interface AccountService extends IService<Account> {
     //检查管理员是否有权限
     boolean checkAdminHavaAuth(String pathNow, String token);
 
-    //
+    //管理员分页查找
     IPage<Account> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
 
     //token转accountId

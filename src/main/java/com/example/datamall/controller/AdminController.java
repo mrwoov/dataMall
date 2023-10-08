@@ -68,6 +68,7 @@ public class AdminController {
         return ResultData.state(adminService.removeBatchByIds(ids));
     }
 
+    //分页查询查询管理员
     @PostMapping("/query")
     public ResultData query(@RequestHeader("token") String token, @RequestBody Admin admin, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
