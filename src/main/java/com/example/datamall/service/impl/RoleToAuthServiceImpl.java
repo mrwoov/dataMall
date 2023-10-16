@@ -108,4 +108,17 @@ public class RoleToAuthServiceImpl extends ServiceImpl<RoleToAuthMapper, RoleToA
         queryWrapper.eq("role_id", roleId);
         return remove(queryWrapper);
     }
+
+    @Override
+    public boolean checkRoleAuth(Integer roleId, String authPath) {
+        Auth auth = authService.getOneByOption("path", authPath);
+        Integer authId = auth.getId();
+        if (authId == null) {
+            return false;
+        }
+        QueryWrapper<RoleToAuth> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id", roleId);
+        RoleToAuth roleToAuth = getOne(queryWrapper);
+        return roleToAuth.getAuthId() != null;
+    }
 }

@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/goodsCategories")
 public class GoodsCategoriesController {
+    private final String authPath = "categories";
     @Resource
     private AccountService accountService;
     @Resource
@@ -30,7 +31,7 @@ public class GoodsCategoriesController {
     //管理员新建或修改商品分类
     @PatchMapping("/admin")
     public ResultData save(@RequestBody GoodsCategories goodsCategories, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -41,7 +42,7 @@ public class GoodsCategoriesController {
     //管理员删除商品分类
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -52,7 +53,7 @@ public class GoodsCategoriesController {
     //管理员批量删除商品分类
     @PostMapping("/admin/del_batch")
     public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -63,7 +64,7 @@ public class GoodsCategoriesController {
     //管理员分页查询商品分类：名称，url（模糊查询）
     @PostMapping("/admin/query")
     public ResultData queryGoodsCategoriesInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody GoodsCategories goodsCategories) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }

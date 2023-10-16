@@ -25,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/roleToAuths")
 public class RoleToAuthController {
+    private final String authPath = "roles";
     @Resource
     private RoleToAuthService roleToAuthService;
     @Resource
@@ -50,6 +51,7 @@ public class RoleToAuthController {
         boolean state = roleToAuthService.saveOrUpdate(roleToAuth);
         return ResultData.state(state);
     }
+
     //删除by id
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {

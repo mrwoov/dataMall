@@ -28,4 +28,6 @@ public interface RoleToAuthService extends IService<RoleToAuth> {
     boolean resetRoleAuth(Integer roleId, List<Integer> auths);
 
     boolean clearRoleAllAuth(Integer roleId);
+
+    boolean checkRoleAuth(Integer roleId, String authPath);
 }

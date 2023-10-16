@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/goodsComment")
 public class GoodsCommentController {
+    private final String authPath = "comment";
     @Resource
     private AccountService accountService;
     @Resource
@@ -63,7 +64,7 @@ public class GoodsCommentController {
         //评论er删除评论逻辑
         boolean sender = goodsCommentService.isSender(uid, commentId);
         //管理员删除逻辑
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!(owner || sender || isAdmin)) {
             return ResultData.fail();
         }

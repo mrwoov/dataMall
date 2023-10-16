@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.Account;
+import com.example.datamall.entity.Admin;
 import com.example.datamall.mapper.AccountMapper;
 import com.example.datamall.service.AccountService;
 import com.example.datamall.service.AdminService;
@@ -92,9 +93,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         try {
             Account account = getOneByOption("token", token);
             Integer accountId = account.getId();
-            if (!adminService.isAdmin(accountId)) {
+            Admin admin = adminService.getOneByOption("account_id", accountId);
+            if (admin.getId() == null) {
                 return false;
             }
+            admin.getRole();
             System.out.println(pathNow);
             return true;
         } catch (Exception e) {

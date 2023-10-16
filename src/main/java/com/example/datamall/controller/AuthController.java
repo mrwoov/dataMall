@@ -26,11 +26,12 @@ public class AuthController {
     private AccountService accountService;
     @Resource
     private SystemDictService systemDictService;
+    private final String authPath = "auths";
 
     //管理员新增或修改权限
     @PatchMapping("/admin")
     public ResultData save(@RequestBody Auth auth, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -41,7 +42,7 @@ public class AuthController {
     //管理员删除权限表中的权限
     @DeleteMapping("/admin/{id}")
     public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -51,7 +52,7 @@ public class AuthController {
     //管理员获取权限树
     @GetMapping("/admin")
     public ResultData getTree(@RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }

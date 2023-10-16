@@ -24,6 +24,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
+    private final String authPath = "accounts";
     @Resource
     private AccountService accountService;
     @Resource
@@ -36,7 +37,7 @@ public class AccountController {
     //管理员分页查账号信息
     @PostMapping("/admin/query")
     public ResultData queryUserInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -52,7 +53,7 @@ public class AccountController {
     //管理员通过账号id查单个信息
     @GetMapping("/admin/{id}")
     public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }

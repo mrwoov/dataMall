@@ -25,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admins")
 public class AdminController {
+    private final String authPath = "admins";
     @Resource
     private AccountService accountService;
     @Resource
@@ -35,7 +36,7 @@ public class AdminController {
     //管理员新增或修改管理员
     @PatchMapping("/")
     public ResultData saveOrUpdate(@RequestHeader("token") String token, @RequestBody Admin admin) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -51,7 +52,7 @@ public class AdminController {
     @DeleteMapping("/{id}")
     //管理员删除管理员
     public ResultData del(@RequestHeader("token") String token, @PathVariable Integer id) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -61,7 +62,7 @@ public class AdminController {
     //管理员批量删除管理员
     @PostMapping("/del_batch")
     public ResultData delBatch(@RequestHeader("token") String token, @RequestBody List<Integer> ids) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -71,7 +72,7 @@ public class AdminController {
     //分页查询查询管理员
     @PostMapping("/query")
     public ResultData query(@RequestHeader("token") String token, @RequestBody Admin admin, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }

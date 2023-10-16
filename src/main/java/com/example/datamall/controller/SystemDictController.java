@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/systemDict")
 public class SystemDictController {
+    private final String authPath = "/system";
     @Resource
     private SystemDictService systemDictService;
     @Resource
@@ -31,7 +32,7 @@ public class SystemDictController {
     //新增或修改
     @PatchMapping("/")
     public ResultData saveOrUpdate(@RequestHeader("token") String token, @RequestBody SystemDict systemDict) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -41,7 +42,7 @@ public class SystemDictController {
     //删除by id
     @DeleteMapping("/{id}")
     public ResultData delete(@RequestHeader("token") String token, @PathVariable Integer id) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -51,7 +52,7 @@ public class SystemDictController {
     //批量删除
     @PostMapping("/del_batch")
     public ResultData deleteBatch(@RequestHeader("token") String token, @RequestBody List<Integer> ids) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -61,7 +62,7 @@ public class SystemDictController {
     //查找全部
     @GetMapping("/")
     public ResultData findAll(@RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }

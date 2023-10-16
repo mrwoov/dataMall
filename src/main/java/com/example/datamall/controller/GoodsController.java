@@ -25,12 +25,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/goods")
 public class GoodsController {
+    private final String authPath = "goods";
     @Resource
     private AccountService accountService;
-
     @Resource
     private GoodsService goodsService;
-
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
@@ -89,7 +88,7 @@ public class GoodsController {
     // 管理员冻结商品
     @PostMapping("/admin/freeze")
     public ResultData freeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -99,7 +98,7 @@ public class GoodsController {
     // 管理员解冻商品
     @PostMapping("/admin/unfreeze")
     public ResultData unfreeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
@@ -120,7 +119,7 @@ public class GoodsController {
     // 管理员分页查询商品列表
     @PostMapping("/admin/page")
     public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody Goods goods) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
