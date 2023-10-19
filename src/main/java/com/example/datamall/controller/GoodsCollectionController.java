@@ -30,6 +30,9 @@ public class GoodsCollectionController {
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
+        if (goodsCollectionService.isCollection(accountId, goodsId)) {
+            ResultData.fail();
+        }
         return ResultData.state(goodsCollectionService.follow(accountId, goodsId));
     }
 
@@ -40,6 +43,9 @@ public class GoodsCollectionController {
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
+        if (!goodsCollectionService.isCollection(accountId, goodsId)) {
+            ResultData.fail();
+        }
         return ResultData.state(goodsCollectionService.unfollow(accountId, goodsId));
     }
 
@@ -47,6 +53,16 @@ public class GoodsCollectionController {
     @GetMapping("/get_num/{goodsId}")
     public ResultData getFollowNum(@PathVariable("goodsId") String goodsId) {
         return ResultData.success(goodsCollectionService.goodsCollectionNum(Integer.valueOf(goodsId)));
+    }
+
+    //判断用户是否收藏
+    @GetMapping("/isCollection/{goodsId}")
+    public ResultData userIsCollection(@RequestHeader("token") String token, @PathVariable Integer goodsId) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登录过期");
+        }
+        return ResultData.state(goodsCollectionService.isCollection(uid, goodsId));
     }
 }
 

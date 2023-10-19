@@ -40,4 +40,13 @@ public class GoodsCollectionServiceImpl extends ServiceImpl<GoodsCollectionMappe
         queryWrapper.eq("goods_id", goodsId);
         return remove(queryWrapper);
     }
+
+    @Override
+    public boolean isCollection(Integer uid, Integer goodsId) {
+        QueryWrapper<GoodsCollection> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid", uid);
+        queryWrapper.eq("goods_id", goodsId);
+        GoodsCollection goodsCollection = getOne(queryWrapper);
+        return goodsCollection != null;
+    }
 }
