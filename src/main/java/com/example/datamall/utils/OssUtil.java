@@ -2,6 +2,7 @@ package com.example.datamall.utils;
 
 
 import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.PutObjectRequest;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,8 @@ public class OssUtil {
      */
     @Resource
     private OSS oss;
+    @Resource
+    private OSSClient ossClient;
 
     /**
      * 上传商品数据文件
@@ -73,6 +76,27 @@ public class OssUtil {
         String path = "pic/system/" + filename;
         uploadFile(path, filePath);
         return checkExist(path);
+    }
+
+    /**
+     * 获取用户上传的图片路径
+     *
+     * @param accountId 账号id
+     * @param filename  文件名
+     * @return 图片url路径
+     */
+    public String getPicUrlUser(Integer accountId, String filename) {
+        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/" + String.valueOf(accountId) + "/" + filename;
+    }
+
+    /**
+     * 获取系统上传的图片路径
+     *
+     * @param filename 文件名
+     * @return 图片路径
+     */
+    public String getPicUrlSystem(String filename) {
+        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/system" + filename;
     }
 
     /**
