@@ -46,9 +46,19 @@ public class OssUtil {
      * @param filePath  文件本地路径
      */
     public static boolean uploadGoodsData(Integer accountId, String filename, String filePath) {
-        String path = "data/" + String.valueOf(accountId) + filename;
+        String path = "data/" + String.valueOf(accountId) + "/" + filename;
         uploadFile(path, filePath);
         return checkExist(path);
+    }
+
+    public static boolean downloadGoodsData(Integer ownerAccountId, String filename) {
+        String path = "data/" + String.valueOf(ownerAccountId) + "/" + filename;
+        boolean fileStatus = checkExist(path);
+        if (!fileStatus) {
+            return false;
+        }
+        downloadFile(path, filename);
+        return true;
     }
 
     /**
@@ -98,6 +108,7 @@ public class OssUtil {
     public String getPicUrlSystem(String filename) {
         return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/system" + filename;
     }
+
 
     /**
      * 上传文件
