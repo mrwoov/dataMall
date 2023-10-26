@@ -34,6 +34,7 @@ public class OssUtil {
      */
     @Resource
     private OSS oss;
+    
 
     /**
      * 上传文件
