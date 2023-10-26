@@ -7,7 +7,7 @@ import com.example.datamall.entity.GoodsCategories;
 import com.example.datamall.entity.GoodsFile;
 import com.example.datamall.entity.GoodsPic;
 import com.example.datamall.service.*;
-import com.example.datamall.utils.Oss;
+import com.example.datamall.utils.OssUtils;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -46,10 +46,10 @@ public class GoodsController {
     @Resource
     private GoodsFileService goodsFileService;
     @Resource
-    private Oss oss;
+    private OssUtils ossUtils;
 
-    public GoodsController(Oss oss) {
-        this.oss = oss;
+    public GoodsController(OssUtils ossUtils) {
+        this.ossUtils = ossUtils;
     }
 
     public static String generateFileName(String originalFileName) {
@@ -231,24 +231,24 @@ public class GoodsController {
         for (MultipartFile image : images) {
             String processedFileName = generateFileName(Objects.requireNonNull(image.getOriginalFilename()));
             //从服务器上传到阿里云oss
-            boolean uploadStatus = oss.uploadPicUser(accountId, processedFileName, image);
+            boolean uploadStatus = ossUtils.uploadPicUser(accountId, processedFileName, image);
             if (!uploadStatus) {
                 return ResultData.fail("图片上传失败");
             }
-            String url = oss.getPicUrlUser(goods.getUid(), processedFileName);
+            String url = ossUtils.getPicUrlUser(goods.getUid(), processedFileName);
             imageUrls.add(url);
         }
         MultipartFile file = goods.getDataFile();
         //处理上传的数据文件
         String processedFileName = generateFileName(Objects.requireNonNull(file.getOriginalFilename()));
         String originalName = file.getOriginalFilename();
-        boolean uploadStatus = oss.uploadGoodsData(accountId, processedFileName, file);
+        boolean uploadStatus = ossUtils.uploadGoodsData(accountId, processedFileName, file);
         //上传失败操作
         if (!uploadStatus) {
             return ResultData.fail("文件上传失败");
         }
         //上传成功
-        String dataFileUrl = oss.getGoodsDataUrlUser(accountId, processedFileName);
+        String dataFileUrl = ossUtils.getGoodsDataUrlUser(accountId, processedFileName);
         String fileMd5;
         try {
             fileMd5 = calculateMD5(file.getBytes());

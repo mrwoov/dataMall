@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Component
-public class Oss {
+public class OssUtils {
 
     /**
      * 默认的oss桶位置
