@@ -3,14 +3,13 @@ package com.example.datamall.utils;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.GetObjectRequest;
-import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.PutObjectRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * @deprecated : 操作oss数据存取等的工具类
@@ -37,29 +36,6 @@ public class OssUtil {
     private OSS oss;
 
     /**
-     * 上传字符串
-     *
-     * @param objectName oss文件全路径名-默认是桶位置加全路径名，如桶位置为ossbucket，全路径名为upload/string/str.json，则数据会放到ossbucket下的upload/string包中，文件名为str.json
-     * @param content    上传内容
-     */
-    public static void uploadString(String objectName, String content) {
-        PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, new ByteArrayInputStream(content.getBytes()));
-        ossP.putObject(putObjectRequest);
-    }
-
-    /**
-     * 上传字符串
-     *
-     * @param bucketName 文件存在oss的桶名称
-     * @param objectName 文件在oss中的全路径
-     * @param content    上传内容
-     */
-    public static void uploadString(String bucketName, String objectName, String content) {
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, new ByteArrayInputStream(content.getBytes()));
-        ossP.putObject(putObjectRequest);
-    }
-
-    /**
      * 上传文件
      *
      * @param objectName 文件在oss中的全路径
@@ -82,42 +58,6 @@ public class OssUtil {
         ossP.putObject(putObjectRequest);
     }
 
-    /**
-     * 上传multi文件
-     *
-     * @param objectName    文件全路径
-     * @param multipartFile 上传的文件
-     */
-    public static void uploadMultipartFile(String objectName, MultipartFile multipartFile) {
-        byte[] bytes;
-        try {
-            bytes = multipartFile.getBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        InputStream inputStream = new ByteArrayInputStream(bytes);
-        PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, inputStream);
-        ossP.putObject(putObjectRequest);
-    }
-
-    /**
-     * multi方式上传文件
-     *
-     * @param bucketName    oss中桶名称
-     * @param objectName    文件在oss中的全路径
-     * @param multipartFile 上传的文件
-     */
-    public static void uploadMultipartFile(String bucketName, String objectName, MultipartFile multipartFile) {
-        byte[] bytes;
-        try {
-            bytes = multipartFile.getBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        InputStream inputStream = new ByteArrayInputStream(bytes);
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
-        ossP.putObject(putObjectRequest);
-    }
 
     /**
      * 上传流数据
@@ -141,52 +81,7 @@ public class OssUtil {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
         ossP.putObject(putObjectRequest);
     }
-
-    /**
-     * 下载字符串数据
-     *
-     * @param objectName 数据所在oss的全路径
-     * @return 字符串
-     */
-    public static String downloadString(String objectName) throws IOException {
-        OSSObject ossObject = ossP.getObject(fixedBucket, objectName);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ossObject.getObjectContent()));
-        StringBuilder stringBuilder = new StringBuilder();
-        while (true) {
-            String line = bufferedReader.readLine();
-            if (line == null) {
-                break;
-            } else {
-                stringBuilder.append(line);
-            }
-        }
-        bufferedReader.close();
-        return stringBuilder.toString();
-    }
-
-    /**
-     * 下载字符串数据
-     *
-     * @param bucketName oss桶位置
-     * @param objectName 数据所在oss中的全路径
-     * @return 返回字符串
-     */
-    public static String downloadString(String bucketName, String objectName) throws IOException {
-        OSSObject ossObject = ossP.getObject(bucketName, objectName);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ossObject.getObjectContent()));
-        StringBuilder stringBuilder = new StringBuilder();
-        while (true) {
-            String line = bufferedReader.readLine();
-            if (line == null) {
-                break;
-            } else {
-                stringBuilder.append(line);
-            }
-        }
-        bufferedReader.close();
-        return stringBuilder.toString();
-    }
-
+    
     /**
      * 下载文件
      *
