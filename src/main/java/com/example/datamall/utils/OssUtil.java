@@ -34,27 +34,66 @@ public class OssUtil {
      */
     @Resource
     private OSS oss;
-    
 
     /**
-     * 上传文件
+     * 上传商品数据文件
      *
-     * @param objectName 文件在oss中的全路径
-     * @param filePath   上传文件的本地路径
+     * @param accountId 用户账号id
+     * @param filename  文件名称
+     * @param filePath  文件本地路径
      */
-    public static void uploadFile(String objectName, String filePath) {
-        PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, new File(filePath));
-        ossP.putObject(putObjectRequest);
+    public static boolean uploadGoodsData(Integer accountId, String filename, String filePath) {
+        String path = "data/" + String.valueOf(accountId) + filename;
+        uploadFile(path, filePath);
+        return checkExist(path);
+    }
+
+    /**
+     * 用户上传图片
+     *
+     * @param accountId 用户账号id
+     * @param filename  文件名
+     * @param filePath  本地文件路径
+     * @return 是否上传成功
+     */
+    public static boolean uploadPicUser(Integer accountId, String filename, String filePath) {
+        String path = "pic/" + String.valueOf(accountId) + filename;
+        uploadFile(path, filePath);
+        return checkExist(path);
+    }
+
+    /**
+     * 系统上传图片
+     *
+     * @param filename 文件名
+     * @param filePath 本地文件路径
+     * @return 是否上传成功
+     */
+    public static boolean uploadPicSystem(String filename, String filePath) {
+        String path = "pic/system/" + filename;
+        uploadFile(path, filePath);
+        return checkExist(path);
     }
 
     /**
      * 上传文件
      *
+     * @param objectName 文件在oss中的全路径
+     * @param filePath   上传文件的本地路径
+     */
+    private static void uploadFile(String objectName, String filePath) {
+        PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, new File(filePath));
+        ossP.putObject(putObjectRequest);
+    }
+
+    /**
+     * 上传文件-指定桶
+     *
      * @param bucketName 文件所在oss桶名称
      * @param objectName 文件在oss中的全路径
      * @param filePath   上传文件的本地路径
      */
-    public static void uploadFile(String bucketName, String objectName, String filePath) {
+    private static void uploadFile(String bucketName, String objectName, String filePath) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, new File(filePath));
         ossP.putObject(putObjectRequest);
     }
@@ -66,7 +105,7 @@ public class OssUtil {
      * @param objectName  数据在oss中的全路径
      * @param inputStream 流数据内容
      */
-    public static void uploadStream(String objectName, InputStream inputStream) {
+    private static void uploadStream(String objectName, InputStream inputStream) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, inputStream);
         ossP.putObject(putObjectRequest);
     }
@@ -78,11 +117,11 @@ public class OssUtil {
      * @param objectName  数据所在oss中的全路径
      * @param inputStream 流数据
      */
-    public static void uploadStream(String bucketName, String objectName, InputStream inputStream) {
+    private static void uploadStream(String bucketName, String objectName, InputStream inputStream) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
         ossP.putObject(putObjectRequest);
     }
-    
+
     /**
      * 下载文件
      *
