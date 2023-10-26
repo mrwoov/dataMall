@@ -27,3 +27,9 @@ spring:
       host: ${redis.host}
       port: 6379
       password: ${redis.password}
+aliyun:
+  oss:
+    endpoint: oss-cn-chengdu.aliyuncs.com
+    accessKeyId: ${accessKeyId}
+    accessKeySecret: ${accessKeySecret}
+    

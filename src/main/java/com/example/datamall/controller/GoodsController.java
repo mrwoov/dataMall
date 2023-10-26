@@ -44,6 +44,8 @@ public class GoodsController {
         }
         goods.setUid(uid);
         goods.moneyToPrice();
+        //设置商品状态为待审核
+        goods.setState(-3);
         boolean state = goodsService.save(goods);
         return ResultData.state(state);
     }
@@ -84,6 +86,11 @@ public class GoodsController {
         boolean state = goodsService.removeById(goodsId);
         return ResultData.state(state);
     }
+
+    //管理员审核商品
+//    public ResultData audit(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId, @RequestParam("status") boolean status) {
+//        //审核通过转为0，失败转为-4
+//    }
 
     // 管理员冻结商品
     @PostMapping("/admin/freeze")

@@ -11,17 +11,17 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 商品收藏表
+ * 冻结详解表
  * </p>
  *
  * @author woov
- * @since 2023-08-29
+ * @since 2023-10-19
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("goods_collection")
-public class GoodsCollection implements Serializable {
+@TableName("goods_freeze")
+public class GoodsFreeze implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -29,21 +29,23 @@ public class GoodsCollection implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * 用户id
-     */
-    private Integer uid;
-
-    /**
-     * 商品id
-     */
     private Integer goodsId;
 
     /**
-     * 创建时间
+     * 冻结理由
      */
+    private String content;
+
+    private Integer accountId;
+
+    /**
+     * 0正常1已解冻
+     */
+    private Integer status;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+    @TableField(fill = FieldFill.UPDATE)
+    private LocalDateTime updateTime;
 
 
 }
