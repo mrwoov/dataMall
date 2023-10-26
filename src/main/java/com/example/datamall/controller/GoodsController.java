@@ -4,15 +4,22 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.datamall.entity.Goods;
 import com.example.datamall.entity.GoodsCategories;
-import com.example.datamall.service.AccountService;
-import com.example.datamall.service.GoodsCategoriesService;
-import com.example.datamall.service.GoodsCollectionService;
-import com.example.datamall.service.GoodsService;
+import com.example.datamall.entity.GoodsFile;
+import com.example.datamall.entity.GoodsPic;
+import com.example.datamall.service.*;
+import com.example.datamall.utils.Oss;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * <p>
@@ -34,20 +41,37 @@ public class GoodsController {
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
     private GoodsCollectionService goodsCollectionService;
+    @Resource
+    private GoodsPicService goodsPicService;
+    @Resource
+    private GoodsFileService goodsFileService;
+    @Resource
+    private Oss oss;
 
-    // 用户发布商品
-    @PatchMapping("/")
-    public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        Integer uid = accountService.tokenToUid(token);
-        if (uid == -1) {
-            return ResultData.fail("登录过期");
+    public GoodsController(Oss oss) {
+        this.oss = oss;
+    }
+
+    public static String generateFileName(String originalFileName) {
+        long timestamp = System.currentTimeMillis();
+        Random random = new Random();
+        int randomNumber = random.nextInt(900000) + 10000;
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String processedFileName = timestamp + "_" + originalFileName + "_" + randomNumber;
+
+        // 对处理后的文件名进行加密，使用MD5
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(processedFileName.getBytes());
+            byte[] digest = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            processedFileName = sb.toString();
+        } catch (NoSuchAlgorithmException ignored) {
         }
-        goods.setUid(uid);
-        goods.moneyToPrice();
-        //设置商品状态为待审核
-        goods.setState(-3);
-        boolean state = goodsService.save(goods);
-        return ResultData.state(state);
+        return processedFileName + extension;
     }
 
     // 用户下架商品
@@ -192,6 +216,86 @@ public class GoodsController {
         queryWrapper.eq("state", 0);
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
         return ResultData.success(goodsList);
+    }
+
+    // 用户发布商品
+    @PatchMapping("/")
+    public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登录过期");
+        }
+        //处理上传的图片
+        List<MultipartFile> images = goods.getImagesFile();
+        List<String> imageUrls = new ArrayList<>();
+        for (MultipartFile image : images) {
+            String processedFileName = generateFileName(Objects.requireNonNull(image.getOriginalFilename()));
+            //从服务器上传到阿里云oss
+            boolean uploadStatus = oss.uploadPicUser(accountId, processedFileName, image);
+            if (!uploadStatus) {
+                return ResultData.fail("图片上传失败");
+            }
+            String url = oss.getPicUrlUser(goods.getUid(), processedFileName);
+            imageUrls.add(url);
+        }
+        MultipartFile file = goods.getDataFile();
+        //处理上传的数据文件
+        String processedFileName = generateFileName(Objects.requireNonNull(file.getOriginalFilename()));
+        String originalName = file.getOriginalFilename();
+        boolean uploadStatus = oss.uploadGoodsData(accountId, processedFileName, file);
+        //上传失败操作
+        if (!uploadStatus) {
+            return ResultData.fail("文件上传失败");
+        }
+        //上传成功
+        String dataFileUrl = oss.getGoodsDataUrlUser(accountId, processedFileName);
+        String fileMd5;
+        try {
+            fileMd5 = calculateMD5(file.getBytes());
+        } catch (NoSuchAlgorithmException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        //保存商品信息
+        goods.setUid(accountId);
+        goods.moneyToPrice();
+        goods.setPicIndex(imageUrls.get(0));
+        //设置商品状态为待审核
+        goods.setState(-3);
+        //保存至商品表
+        boolean goodsStatus = goodsService.save(goods);
+        Integer goodsId = goods.getId();
+        //保存至商品数据文件表
+        GoodsFile goodsFile = new GoodsFile();
+        goodsFile.setGoodsId(goodsId);
+        goodsFile.setFilename(originalName);
+        goodsFile.setFilePath(dataFileUrl);
+        goodsFile.setMd5(fileMd5);
+        boolean goodsFileStatus = goodsFileService.save(goodsFile);
+        //保存至商品图片表
+        boolean flag = true;
+        for (String imgUrl : imageUrls) {
+            GoodsPic goodsPic = new GoodsPic();
+            goodsPic.setGoodsId(goodsId);
+            goodsPic.setUrl(imgUrl);
+            boolean goodsPicStatus = goodsPicService.save(goodsPic);
+            flag = flag & goodsPicStatus;
+        }
+        return ResultData.state(flag & goodsStatus & goodsFileStatus);
+    }
+
+    private String calculateMD5(byte[] data) throws NoSuchAlgorithmException {
+        // 使用MD5算法计算数据的MD5值
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(data);
+        byte[] digest = md.digest();
+
+        // 将字节数组转换为十六进制字符串
+        StringBuilder sb = new StringBuilder();
+        for (byte b : digest) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+
+        return sb.toString();
     }
 }
 

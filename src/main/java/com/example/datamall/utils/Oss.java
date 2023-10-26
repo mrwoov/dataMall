@@ -2,21 +2,20 @@ package com.example.datamall.utils;
 
 
 import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.PutObjectRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * @deprecated : 操作oss数据存取等的工具类
- */
 @Component
-public class OssUtil {
+public class Oss {
 
     /**
      * 默认的oss桶位置
@@ -35,24 +34,44 @@ public class OssUtil {
      */
     @Resource
     private OSS oss;
-    @Resource
-    private OSSClient ossClient;
+
+    /**
+     * 上传multi文件
+     *
+     * @param objectName    文件全路径
+     * @param multipartFile 上传的文件
+     */
+    public static void uploadMultipartFile(String objectName, MultipartFile multipartFile) {
+        byte[] bytes = new byte[0];
+        try {
+            bytes = multipartFile.getBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        InputStream inputStream = new ByteArrayInputStream(bytes);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, inputStream);
+        ossP.putObject(putObjectRequest);
+    }
 
     /**
      * 上传商品数据文件
      *
      * @param accountId 用户账号id
      * @param filename  文件名称
-     * @param filePath  文件本地路径
+     * @param multipartFile  文件
      */
-    public static boolean uploadGoodsData(Integer accountId, String filename, String filePath) {
-        String path = "data/" + String.valueOf(accountId) + "/" + filename;
-        uploadFile(path, filePath);
+    public boolean uploadGoodsData(Integer accountId, String filename, MultipartFile multipartFile) {
+        String path = "data/" + accountId + "/" + filename;
+        uploadMultipartFile(path, multipartFile);
         return checkExist(path);
     }
 
-    public static boolean downloadGoodsData(Integer ownerAccountId, String filename) {
-        String path = "data/" + String.valueOf(ownerAccountId) + "/" + filename;
+    public String getGoodsDataUrlUser(Integer accountId, String filename) {
+        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/data/" + accountId + "/" + filename;
+    }
+
+    public boolean downloadGoodsData(Integer ownerAccountId, String filename) {
+        String path = "data/" + ownerAccountId + "/" + filename;
         boolean fileStatus = checkExist(path);
         if (!fileStatus) {
             return false;
@@ -66,12 +85,12 @@ public class OssUtil {
      *
      * @param accountId 用户账号id
      * @param filename  文件名
-     * @param filePath  本地文件路径
+     * @param multipartFile  本地文件
      * @return 是否上传成功
      */
-    public static boolean uploadPicUser(Integer accountId, String filename, String filePath) {
-        String path = "pic/" + String.valueOf(accountId) + filename;
-        uploadFile(path, filePath);
+    public boolean uploadPicUser(Integer accountId, String filename, MultipartFile multipartFile) {
+        String path = "pic/" + accountId + filename;
+        uploadMultipartFile(path, multipartFile);
         return checkExist(path);
     }
 
@@ -79,24 +98,13 @@ public class OssUtil {
      * 系统上传图片
      *
      * @param filename 文件名
-     * @param filePath 本地文件路径
+     * @param multipartFile 本地文件路径
      * @return 是否上传成功
      */
-    public static boolean uploadPicSystem(String filename, String filePath) {
+    public boolean uploadPicSystem(String filename, MultipartFile multipartFile) {
         String path = "pic/system/" + filename;
-        uploadFile(path, filePath);
+        uploadMultipartFile(path, multipartFile);
         return checkExist(path);
-    }
-
-    /**
-     * 获取用户上传的图片路径
-     *
-     * @param accountId 账号id
-     * @param filename  文件名
-     * @return 图片url路径
-     */
-    public String getPicUrlUser(Integer accountId, String filename) {
-        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/" + String.valueOf(accountId) + "/" + filename;
     }
 
     /**
@@ -109,6 +117,16 @@ public class OssUtil {
         return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/system" + filename;
     }
 
+    /**
+     * 获取用户上传的图片路径
+     *
+     * @param accountId 账号id
+     * @param filename  文件名
+     * @return 图片url路径
+     */
+    public String getPicUrlUser(Integer accountId, String filename) {
+        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/" + accountId + "/" + filename;
+    }
 
     /**
      * 上传文件
@@ -116,7 +134,7 @@ public class OssUtil {
      * @param objectName 文件在oss中的全路径
      * @param filePath   上传文件的本地路径
      */
-    private static void uploadFile(String objectName, String filePath) {
+    private void uploadFile(String objectName, String filePath) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, new File(filePath));
         ossP.putObject(putObjectRequest);
     }
@@ -128,7 +146,7 @@ public class OssUtil {
      * @param objectName 文件在oss中的全路径
      * @param filePath   上传文件的本地路径
      */
-    private static void uploadFile(String bucketName, String objectName, String filePath) {
+    private void uploadFile(String bucketName, String objectName, String filePath) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, new File(filePath));
         ossP.putObject(putObjectRequest);
     }
@@ -140,7 +158,7 @@ public class OssUtil {
      * @param objectName  数据在oss中的全路径
      * @param inputStream 流数据内容
      */
-    private static void uploadStream(String objectName, InputStream inputStream) {
+    private void uploadStream(String objectName, InputStream inputStream) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(fixedBucket, objectName, inputStream);
         ossP.putObject(putObjectRequest);
     }
@@ -152,7 +170,7 @@ public class OssUtil {
      * @param objectName  数据所在oss中的全路径
      * @param inputStream 流数据
      */
-    private static void uploadStream(String bucketName, String objectName, InputStream inputStream) {
+    private void uploadStream(String bucketName, String objectName, InputStream inputStream) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
         ossP.putObject(putObjectRequest);
     }
@@ -163,7 +181,7 @@ public class OssUtil {
      * @param objectName 数据所在oss全路径
      * @param fileName   文件名
      */
-    public static void downloadFile(String objectName, String fileName) {
+    public void downloadFile(String objectName, String fileName) {
         ossP.getObject(new GetObjectRequest(fixedBucket, objectName), new File(fileName));
     }
 
@@ -174,7 +192,7 @@ public class OssUtil {
      * @param objectName 文件所在oss中的全路径
      * @param fileName   文件名
      */
-    public static void downloadFile(String bucketName, String objectName, String fileName) {
+    public void downloadFile(String bucketName, String objectName, String fileName) {
         ossP.getObject(new GetObjectRequest(bucketName, objectName), new File(fileName));
     }
 
@@ -183,7 +201,7 @@ public class OssUtil {
      *
      * @param objectName 删除文件的全路径
      */
-    public static void delete(String objectName) {
+    public void delete(String objectName) {
         ossP.deleteObject(fixedBucket, objectName);
     }
 
@@ -193,7 +211,7 @@ public class OssUtil {
      * @param bucketName 桶名称
      * @param objectName 删除文件的全路径
      */
-    public static void delete(String bucketName, String objectName) {
+    public void delete(String bucketName, String objectName) {
         ossP.deleteObject(bucketName, objectName);
     }
 
@@ -203,7 +221,7 @@ public class OssUtil {
      * @param objectName 文件所在oss中的全路径
      * @return 返回是否
      */
-    public static boolean checkExist(String objectName) {
+    public boolean checkExist(String objectName) {
         return ossP.doesObjectExist(fixedBucket, objectName);
     }
 
@@ -214,7 +232,7 @@ public class OssUtil {
      * @param objectName 文件所在oss中的全路径
      * @return 返回是否
      */
-    public static boolean checkExist(String bucketName, String objectName) {
+    public boolean checkExist(String bucketName, String objectName) {
         return ossP.doesObjectExist(bucketName, objectName);
     }
 

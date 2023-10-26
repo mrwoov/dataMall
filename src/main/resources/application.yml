@@ -32,4 +32,3 @@ aliyun:
     endpoint: oss-cn-chengdu.aliyuncs.com
     accessKeyId: ${accessKeyId}
     accessKeySecret: ${accessKeySecret}
-    
