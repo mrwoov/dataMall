@@ -56,9 +56,9 @@ public class OssUtils {
     /**
      * 上传商品数据文件
      *
-     * @param accountId 用户账号id
-     * @param filename  文件名称
-     * @param multipartFile  文件
+     * @param accountId     用户账号id
+     * @param filename      文件名称
+     * @param multipartFile 文件
      */
     public boolean uploadGoodsData(Integer accountId, String filename, MultipartFile multipartFile) {
         String path = "data/" + accountId + "/" + filename;
@@ -67,7 +67,7 @@ public class OssUtils {
     }
 
     public String getGoodsDataUrlUser(Integer accountId, String filename) {
-        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/data/" + accountId + "/" + filename;
+        return "https://" + fixedBucket + ".oss-cn-chengdu.aliyuncs.com/data/" + accountId + "/" + filename;
     }
 
     public boolean downloadGoodsData(Integer ownerAccountId, String filename) {
@@ -83,13 +83,13 @@ public class OssUtils {
     /**
      * 用户上传图片
      *
-     * @param accountId 用户账号id
-     * @param filename  文件名
-     * @param multipartFile  本地文件
+     * @param accountId     用户账号id
+     * @param filename      文件名
+     * @param multipartFile 本地文件
      * @return 是否上传成功
      */
     public boolean uploadPicUser(Integer accountId, String filename, MultipartFile multipartFile) {
-        String path = "pic/" + accountId + filename;
+        String path = "pic/" + accountId + "/" + filename;
         uploadMultipartFile(path, multipartFile);
         return checkExist(path);
     }
@@ -97,7 +97,7 @@ public class OssUtils {
     /**
      * 系统上传图片
      *
-     * @param filename 文件名
+     * @param filename      文件名
      * @param multipartFile 本地文件路径
      * @return 是否上传成功
      */
@@ -114,7 +114,7 @@ public class OssUtils {
      * @return 图片路径
      */
     public String getPicUrlSystem(String filename) {
-        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/system" + filename;
+        return "https://" + fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/system" + filename;
     }
 
     /**
@@ -125,7 +125,7 @@ public class OssUtils {
      * @return 图片url路径
      */
     public String getPicUrlUser(Integer accountId, String filename) {
-        return fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/" + accountId + "/" + filename;
+        return "https://" + fixedBucket + ".oss-cn-chengdu.aliyuncs.com/pic/" + accountId + "/" + filename;
     }
 
     /**

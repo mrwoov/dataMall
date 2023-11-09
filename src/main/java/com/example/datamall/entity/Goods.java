@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -97,11 +96,10 @@ public class Goods implements Serializable {
     @TableField(exist = false)
     private String avatar;
 
-    @TableField(exist = false)
-    private List<MultipartFile> imagesFile;
+    private String fileMd5;
 
     @TableField(exist = false)
-    private MultipartFile dataFile;
+    private List<String> imagesMd5;
 
     private Goods(Integer goodsId, String name, Integer categoriesId, String detail, String picIndex, Integer price) {
         this.setId(goodsId);

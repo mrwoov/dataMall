@@ -11,14 +11,11 @@ import com.example.datamall.utils.OssUtils;
 import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -219,83 +216,47 @@ public class GoodsController {
     }
 
     // 用户发布商品
-    @PatchMapping("/")
+    @PostMapping("/")
     public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
             return ResultData.fail("登录过期");
         }
-        //处理上传的图片
-        List<MultipartFile> images = goods.getImagesFile();
-        List<String> imageUrls = new ArrayList<>();
-        for (MultipartFile image : images) {
-            String processedFileName = generateFileName(Objects.requireNonNull(image.getOriginalFilename()));
-            //从服务器上传到阿里云oss
-            boolean uploadStatus = ossUtils.uploadPicUser(accountId, processedFileName, image);
-            if (!uploadStatus) {
-                return ResultData.fail("图片上传失败");
-            }
-            String url = ossUtils.getPicUrlUser(goods.getUid(), processedFileName);
-            imageUrls.add(url);
+        //todo: 将上传接口分离后，发布商品接口将上传文件和图片文件的md5值
+        String fileMd5 = goods.getFileMd5();
+        GoodsFile goodsFile = goodsFileService.getOneByOption("md5", fileMd5);
+        if (goodsFile == null) {
+            return ResultData.fail();
         }
-        MultipartFile file = goods.getDataFile();
-        //处理上传的数据文件
-        String processedFileName = generateFileName(Objects.requireNonNull(file.getOriginalFilename()));
-        String originalName = file.getOriginalFilename();
-        boolean uploadStatus = ossUtils.uploadGoodsData(accountId, processedFileName, file);
-        //上传失败操作
-        if (!uploadStatus) {
-            return ResultData.fail("文件上传失败");
-        }
-        //上传成功
-        String dataFileUrl = ossUtils.getGoodsDataUrlUser(accountId, processedFileName);
-        String fileMd5;
-        try {
-            fileMd5 = calculateMD5(file.getBytes());
-        } catch (NoSuchAlgorithmException | IOException e) {
-            throw new RuntimeException(e);
+        List<String> imagesFilesMd5 = goods.getImagesMd5();
+        List<GoodsFile> goodsImages = new ArrayList<>();
+        for (String s : imagesFilesMd5) {
+            GoodsFile goodsImage = goodsFileService.getOneByOption("md5", s);
+            goodsImages.add(goodsImage);
         }
         //保存商品信息
         goods.setUid(accountId);
         goods.moneyToPrice();
-        goods.setPicIndex(imageUrls.get(0));
+        //将商品图片第一个图作为主图
+        goods.setPicIndex(goodsImages.get(0).getFilePath());
         //设置商品状态为待审核
         goods.setState(-3);
         //保存至商品表
         boolean goodsStatus = goodsService.save(goods);
+        if (!goodsStatus) {
+            return ResultData.fail();
+        }
         Integer goodsId = goods.getId();
-        //保存至商品数据文件表
-        GoodsFile goodsFile = new GoodsFile();
-        goodsFile.setGoodsId(goodsId);
-        goodsFile.setFilename(originalName);
-        goodsFile.setFilePath(dataFileUrl);
-        goodsFile.setMd5(fileMd5);
-        boolean goodsFileStatus = goodsFileService.save(goodsFile);
-        //保存至商品图片表
         boolean flag = true;
-        for (String imgUrl : imageUrls) {
+        //保存至商品图片表
+        for (GoodsFile image : goodsImages) {
             GoodsPic goodsPic = new GoodsPic();
             goodsPic.setGoodsId(goodsId);
-            goodsPic.setUrl(imgUrl);
-            boolean goodsPicStatus = goodsPicService.save(goodsPic);
-            flag = flag & goodsPicStatus;
+            goodsPic.setUrl(image.getFilePath());
+            boolean goodsPicState = goodsPicService.save(goodsPic);
+            flag = flag & goodsPicState;
         }
-        return ResultData.state(flag & goodsStatus & goodsFileStatus);
-    }
-
-    private String calculateMD5(byte[] data) throws NoSuchAlgorithmException {
-        // 使用MD5算法计算数据的MD5值
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(data);
-        byte[] digest = md.digest();
-
-        // 将字节数组转换为十六进制字符串
-        StringBuilder sb = new StringBuilder();
-        for (byte b : digest) {
-            sb.append(String.format("%02x", b & 0xff));
-        }
-
-        return sb.toString();
+        return ResultData.state(flag);
     }
 }
 

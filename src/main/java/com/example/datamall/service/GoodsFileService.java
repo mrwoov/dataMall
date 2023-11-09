@@ -12,5 +12,6 @@ import com.example.datamall.entity.GoodsFile;
  * @since 2023-10-26
  */
 public interface GoodsFileService extends IService<GoodsFile> {
-
+    //根据一个条件查找
+    GoodsFile getOneByOption(String column, Object value);
 }

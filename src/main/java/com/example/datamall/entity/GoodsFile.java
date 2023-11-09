@@ -30,9 +30,9 @@ public class GoodsFile implements Serializable {
     private Integer id;
 
     /**
-     * 商品id
+     * 用户id
      */
-    private Integer goodsId;
+    private Integer accountId;
 
     /**
      * 文件名
@@ -55,5 +55,15 @@ public class GoodsFile implements Serializable {
      */
     private Integer status;
 
+    public GoodsFile() {
+
+    }
+
+    public GoodsFile(Integer accountId, String filename, String filePath, String md5) {
+        this.setAccountId(accountId);
+        this.setFilename(filename);
+        this.setFilePath(filePath);
+        this.setMd5(md5);
+    }
 
 }
