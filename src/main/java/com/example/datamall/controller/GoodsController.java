@@ -259,4 +259,3 @@ public class GoodsController {
         return ResultData.state(flag);
     }
 }
-
