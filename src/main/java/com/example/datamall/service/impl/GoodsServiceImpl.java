@@ -87,6 +87,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             }
             queryWrapper.eq("uid", account.getId());
         }
+        queryWrapper.eq("state", 0).or().eq("state", 1).or().eq("state", -1);
         IPage<Goods> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (Goods goods : page.getRecords()) {
             goods.setUsername(accountService.getById(goods.getUid()).getUsername());

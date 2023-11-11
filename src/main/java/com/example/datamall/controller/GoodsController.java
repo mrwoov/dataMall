@@ -50,45 +50,6 @@ public class GoodsController {
         this.ossUtils = ossUtils;
     }
 
-    // 用户下架商品
-    @PostMapping("/release_off")
-    public ResultData releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
-        if (uid == -1) {
-            return ResultData.fail("登录过期");
-        }
-        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 1);
-        return ResultData.state(state);
-    }
-
-    // 用户上架商品
-    @PostMapping("release_on")
-    public ResultData releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
-        if (uid == -1) {
-            return ResultData.fail("登录过期");
-        }
-        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);
-        return ResultData.state(state);
-    }
-
-    // 用户删除商品
-    @DeleteMapping("/")
-    public ResultData del(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
-        if (uid == -1) {
-            return ResultData.fail("登录过期");
-        }
-        boolean owner = goodsService.isOwner(uid, goodsId);
-        if (!owner) {
-            return ResultData.fail();
-        }
-        boolean state = goodsService.removeById(goodsId);
-        return ResultData.state(state);
-    }
-
-    //获取待审核和审核中商品数量
-
     public static String generateFileName(String originalFileName) {
         long timestamp = System.currentTimeMillis();
         Random random = new Random();
@@ -111,40 +72,84 @@ public class GoodsController {
         return processedFileName + extension;
     }
 
-    //管理员获取一个待审核的商品信息
-    @GetMapping("/get_not_audit")
-    public ResultData getNotAuditGoodsInfo(@RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
+    // 用户上架商品
+    @PostMapping("release_on")
+    public ResultData releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登录过期");
         }
-        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
-        //查找逻辑：状态等于未审核-3，或者（状态等于-5且处于审核状态大于3分钟的记录）
-        queryWrapper.eq("state", -3);
-        queryWrapper.or(i -> i.eq("state", -5).lt("update_time", LocalDateTime.now().minusMinutes(3)));
-        queryWrapper.last("limit 1");
-        Goods goods = goodsService.getOne(queryWrapper);
-        if (goods == null) {
+        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);
+        return ResultData.state(state);
+    }
+
+    // 用户发布商品
+    @PostMapping("/")
+    public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登录过期");
+        }
+        String fileMd5 = goods.getFileMd5();
+        GoodsFile goodsFile = goodsFileService.getOneByOption("md5", fileMd5);
+        if (goodsFile == null) {
             return ResultData.fail();
         }
-        //将状态码改为-5表示审核中
-        goods.setState(-5);
-        goodsService.updateById(goods);
-        //获取goods其他外键信息
-        goods.setUsername(accountService.getById(goods.getUid()).getUsername());
-        goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-        goods.priceToMoney();
-        String fileUrl = goodsFileService.getOneByOption("md5", goods.getFileMd5()).getFilePath();
-        goods.setFileUrl(fileUrl);
-        List<String> imageUrls = new ArrayList<>();
-        QueryWrapper<GoodsPic> picQueryWrapper = new QueryWrapper<>();
-        picQueryWrapper.eq("goods_id", goods.getId());
-        List<GoodsPic> pics = goodsPicService.list(picQueryWrapper);
-        for (GoodsPic goodsPic : pics) {
-            imageUrls.add(goodsPic.getUrl());
+        List<String> imagesFilesMd5 = goods.getImagesMd5();
+        List<GoodsFile> goodsImages = new ArrayList<>();
+        for (String s : imagesFilesMd5) {
+            GoodsFile goodsImage = goodsFileService.getOneByOption("md5", s);
+            goodsImages.add(goodsImage);
         }
-        goods.setImagesUrls(imageUrls);
-        return ResultData.success(goods);
+        //保存商品信息
+        goods.setUid(accountId);
+        goods.moneyToPrice();
+        //将商品图片第一个图作为主图
+        goods.setPicIndex(goodsImages.get(0).getFilePath());
+        //设置商品状态为待审核
+        goods.setState(-3);
+        //保存至商品表
+        boolean goodsStatus = goodsService.save(goods);
+        if (!goodsStatus) {
+            return ResultData.fail();
+        }
+        Integer goodsId = goods.getId();
+        boolean flag = true;
+        //保存至商品图片表
+        for (GoodsFile image : goodsImages) {
+            GoodsPic goodsPic = new GoodsPic();
+            goodsPic.setGoodsId(goodsId);
+            goodsPic.setUrl(image.getFilePath());
+            boolean goodsPicState = goodsPicService.save(goodsPic);
+            flag = flag & goodsPicState;
+        }
+        return ResultData.state(flag);
+    }
+
+    // 用户删除商品
+    @DeleteMapping("/")
+    public ResultData del(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登录过期");
+        }
+        boolean owner = goodsService.isOwner(uid, goodsId);
+        if (!owner) {
+            return ResultData.fail();
+        }
+        boolean state = goodsService.removeById(goodsId);
+        return ResultData.state(state);
+    }
+
+    // 用户下架商品
+    @PostMapping("/release_off")
+    public ResultData releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登录过期");
+        }
+        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 1);
+        return ResultData.state(state);
     }
 
     // 管理员冻结商品
@@ -249,53 +254,56 @@ public class GoodsController {
         return ResultData.success(goodsList);
     }
 
-    // 用户发布商品
-    @PostMapping("/")
-    public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        Integer accountId = accountService.tokenToUid(token);
-        if (accountId == -1) {
-            return ResultData.fail("登录过期");
+    //管理员获取一个待审核的商品信息
+    @GetMapping("/get_not_audit")
+    public ResultData getNotAuditGoodsInfo(@RequestHeader("token") String token) {
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
         }
-        //todo: 将上传接口分离后，发布商品接口将上传文件和图片文件的md5值
-        String fileMd5 = goods.getFileMd5();
-        GoodsFile goodsFile = goodsFileService.getOneByOption("md5", fileMd5);
-        if (goodsFile == null) {
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        //查找逻辑：状态等于未审核-3，或者（状态等于-5且处于审核状态大于3分钟的记录）
+        queryWrapper.eq("state", -3);
+        queryWrapper.or(i -> i.eq("state", -5).lt("update_time", LocalDateTime.now().minusMinutes(3)));
+        queryWrapper.last("limit 1");
+        Goods goods = goodsService.getOne(queryWrapper);
+        if (goods == null) {
             return ResultData.fail();
         }
-        List<String> imagesFilesMd5 = goods.getImagesMd5();
-        List<GoodsFile> goodsImages = new ArrayList<>();
-        for (String s : imagesFilesMd5) {
-            GoodsFile goodsImage = goodsFileService.getOneByOption("md5", s);
-            goodsImages.add(goodsImage);
+        //将状态码改为-5表示审核中
+        goods.setState(-5);
+        goods.setUpdateTime(LocalDateTime.now());
+        goodsService.updateById(goods);
+        //获取goods其他外键信息
+        goods.setUsername(accountService.getById(goods.getUid()).getUsername());
+        goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
+        goods.priceToMoney();
+        String fileUrl = goodsFileService.getOneByOption("md5", goods.getFileMd5()).getFilePath();
+        goods.setFileUrl(fileUrl);
+        List<String> imageUrls = new ArrayList<>();
+        QueryWrapper<GoodsPic> picQueryWrapper = new QueryWrapper<>();
+        picQueryWrapper.eq("goods_id", goods.getId());
+        List<GoodsPic> pics = goodsPicService.list(picQueryWrapper);
+        for (GoodsPic goodsPic : pics) {
+            imageUrls.add(goodsPic.getUrl());
         }
-        //保存商品信息
-        goods.setUid(accountId);
-        goods.moneyToPrice();
-        //将商品图片第一个图作为主图
-        goods.setPicIndex(goodsImages.get(0).getFilePath());
-        //设置商品状态为待审核
-        goods.setState(-3);
-        //保存至商品表
-        boolean goodsStatus = goodsService.save(goods);
-        if (!goodsStatus) {
-            return ResultData.fail();
-        }
-        Integer goodsId = goods.getId();
-        boolean flag = true;
-        //保存至商品图片表
-        for (GoodsFile image : goodsImages) {
-            GoodsPic goodsPic = new GoodsPic();
-            goodsPic.setGoodsId(goodsId);
-            goodsPic.setUrl(image.getFilePath());
-            boolean goodsPicState = goodsPicService.save(goodsPic);
-            flag = flag & goodsPicState;
-        }
-        return ResultData.state(flag);
+        goods.setImagesUrls(imageUrls);
+        return ResultData.success(goods);
     }
 
+    @GetMapping("/audit")
     //管理员审核商品
-    public ResultData audit(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId, @RequestParam("status") boolean status) {
+    public ResultData audit(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId, @RequestParam("state") boolean state) {
         //审核通过转为0，失败转为-4
-        return null;
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        if (state) {
+            goodsService.adminUpdateGoodsState(goodsId, 0);
+        } else {
+            goodsService.adminUpdateGoodsState(goodsId, -4);
+        }
+        return ResultData.success();
     }
 }

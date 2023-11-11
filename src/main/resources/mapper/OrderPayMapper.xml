@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.datamall.mapper.OrderPayMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.datamall.entity.OrderPay">
+        <id column="id" property="id"/>
+        <result column="plat_trade_no" property="platTradeNo"/>
+        <result column="trade_no" property="tradeNo"/>
+        <result column="order_id" property="orderId"/>
+        <result column="total_amount" property="totalAmount"/>
+        <result column="pay_type" property="payType"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, plat_trade_no, trade_no, order_id, total_amount, pay_type, state, create_time, update_time
+    </sql>
+
+</mapper>
