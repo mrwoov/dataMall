@@ -8,7 +8,9 @@ import com.example.datamall.service.AuthService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -55,17 +57,37 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, Auth> implements Au
 
     @Override
     public List<Auth> listToTree(List<Auth> list) {
+        Map<Integer, Auth> map = new HashMap<>();
         List<Auth> result = new ArrayList<>();
-        for (Auth parent : list) {
-            if (parent.getParentId() == 0) {
-                result.add(parent);
-            }
-            for (Auth child : list) {
-                if ((parent.getId().equals(child.getParentId()))) {
-                    parent.addChild(child);
+
+        // 首先将所有权限添加到映射中
+        for (Auth auth : list) {
+            map.put(auth.getId(), auth);
+        }
+
+        for (Auth auth : list) {
+            if (auth.getParentId() == 0) {
+                // 如果是一级权限，直接添加到结果列表
+                result.add(auth);
+            } else {
+                // 查找父权限
+                Auth parent = map.get(auth.getParentId());
+                if (parent != null) {
+                    // 如果父权限存在，添加为子权限
+                    parent.addChild(auth);
+                } else {
+                    // 如果父权限不存在，将其父权限id设为-1，归为功能的父权限中
+                    parent = new Auth();
+                    parent.setId(-1);
+                    parent.setIcon("el-icon-s-grid");
+                    parent.setDescription("功能"); // 可以根据需要设置名称
+                    parent.addChild(auth);
+                    result.add(parent); // 将新创建的父权限添加到结果列表
+                    map.put(parent.getId(), parent); // 更新映射
                 }
             }
         }
+
         return result;
     }
 

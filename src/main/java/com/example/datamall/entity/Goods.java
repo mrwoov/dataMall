@@ -101,6 +101,11 @@ public class Goods implements Serializable {
     @TableField(exist = false)
     private List<String> imagesMd5;
 
+    @TableField(exist = false)
+    private String fileUrl;
+
+    @TableField(exist = false)
+    private List<String> imagesUrls;
     private Goods(Integer goodsId, String name, Integer categoriesId, String detail, String picIndex, Integer price) {
         this.setId(goodsId);
         this.setName(name);
