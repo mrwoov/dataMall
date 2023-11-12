@@ -30,6 +30,7 @@ public class GoodsPicController {
     private GoodsPicService goodsPicService;
     @Resource
     private GoodsService goodsService;
+    //todo：图片管理页面
 
     //用户新增商品图片
     @PatchMapping("/")

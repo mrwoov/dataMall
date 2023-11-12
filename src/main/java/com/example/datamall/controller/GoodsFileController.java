@@ -43,7 +43,7 @@ public class GoodsFileController {
         this.ossUtils = ossUtils;
     }
 
-
+    //todo:文件管理页面
     //用户上传图片
     @PostMapping("/user/upload_pic")
     public ResultData userUploadPic(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {

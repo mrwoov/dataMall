@@ -29,6 +29,7 @@ public class GoodsCommentController {
     @Resource
     private GoodsService goodsService;
 
+    //todo:【前端】发起评论，删除评论，举报评论
     //发起或回复评论
     @PostMapping("/send")
     public ResultData send(@RequestHeader("token") String token, @RequestBody GoodsComment goodsComment) {

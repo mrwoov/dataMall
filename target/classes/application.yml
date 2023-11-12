@@ -34,14 +34,14 @@ aliyun:
     accessKeySecret: ${accessKeySecret}
 alipay:
   #正式环境
-#  #应用ID
-#  app_id: ${alipay.config.appid}
-#  #应用私钥
-#  merchant_private_key: ${alipay.config.merchant_private_key}
-#  #支付宝公钥
-#  alipay_public_key: ${alipay.config.alipay_public_key}
-#  #支付宝网关，这一项是写死的，正式环境是openapi.alipay.com(不用写http)
-#  gatewayUrl: openapi.alipay.com
+  #  #应用ID
+  #  app_id: ${alipay.config.appid}
+  #  #应用私钥
+  #  merchant_private_key: ${alipay.config.merchant_private_key}
+  #  #支付宝公钥
+  #  alipay_public_key: ${alipay.config.alipay_public_key}
+  #  #支付宝网关，这一项是写死的，正式环境是openapi.alipay.com(不用写http)
+  #  gatewayUrl: openapi.alipay.com
 
   # 测试环境：
   #应用ID

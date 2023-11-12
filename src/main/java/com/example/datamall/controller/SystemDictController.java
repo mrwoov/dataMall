@@ -29,6 +29,7 @@ public class SystemDictController {
     @Resource
     private AccountService accountService;
 
+    //todo：系统字典管理页面
     //新增或修改
     @PatchMapping("/")
     public ResultData saveOrUpdate(@RequestHeader("token") String token, @RequestBody SystemDict systemDict) {
