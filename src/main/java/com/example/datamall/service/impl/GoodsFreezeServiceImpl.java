@@ -17,4 +17,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoodsFreezeServiceImpl extends ServiceImpl<GoodsFreezeMapper, GoodsFreeze> implements GoodsFreezeService {
 
+    @Override
+    public boolean option(Integer goodsId, Integer optionAccountId, boolean isFreeze, String content) {
+        GoodsFreeze goodsFreeze = new GoodsFreeze();
+        goodsFreeze.setGoodsId(goodsId);
+        goodsFreeze.setAccountId(optionAccountId);
+        goodsFreeze.setContent(content);
+        Integer optionId = isFreeze ? -1 : 0;
+        goodsFreeze.setOperate(optionId);
+        save(goodsFreeze);
+        return false;
+    }
 }

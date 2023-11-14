@@ -2,6 +2,7 @@ package com.example.datamall.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.datamall.entity.SystemDict;
 import com.example.datamall.service.AccountService;
@@ -29,9 +30,31 @@ public class SystemDictController {
     @Resource
     private AccountService accountService;
 
-    //todo：系统字典管理页面
+    //分页查图标
+    @PostMapping("/admin/icon_page")
+    public ResultData iconPage(@RequestHeader("token") String token, @RequestParam Integer pageNum,
+                               @RequestParam Integer pageSize, @RequestBody SystemDict systemDict) {
+        if (pageNum == null || pageSize == null) {
+            return ResultData.fail("参数缺少");
+        }
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        QueryWrapper<SystemDict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("type", "icon");
+        if (systemDict.getName() != null) {
+            queryWrapper.like("name", systemDict.getName());
+        }
+        if (systemDict.getValue() != null) {
+            queryWrapper.like("value", systemDict.getValue());
+        }
+        IPage<SystemDict> page = systemDictService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        return ResultData.success(page);
+    }
+
     //新增或修改
-    @PatchMapping("/")
+    @PatchMapping("/admin")
     public ResultData saveOrUpdate(@RequestHeader("token") String token, @RequestBody SystemDict systemDict) {
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
@@ -41,7 +64,7 @@ public class SystemDictController {
     }
 
     //删除by id
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResultData delete(@RequestHeader("token") String token, @PathVariable Integer id) {
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
@@ -51,7 +74,7 @@ public class SystemDictController {
     }
 
     //批量删除
-    @PostMapping("/del_batch")
+    @PostMapping("/admin/del_batch")
     public ResultData deleteBatch(@RequestHeader("token") String token, @RequestBody List<Integer> ids) {
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {

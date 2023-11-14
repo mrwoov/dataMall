@@ -24,7 +24,6 @@ public class GoodsFreezeController {
     @Resource
     private GoodsFreezeService goodsFreezeService;
 
-    //todo：冻结、解冻商品理由
     //新增或修改
     @PatchMapping("/")
     public ResultData saveOrUpdate(@RequestBody GoodsFreeze goodsFreeze) {

@@ -44,6 +44,8 @@ public class GoodsController {
     @Resource
     private GoodsFileService goodsFileService;
     @Resource
+    private GoodsFreezeService goodsFreezeService;
+    @Resource
     private OssUtils ossUtils;
 
     public GoodsController(OssUtils ossUtils) {
@@ -154,22 +156,40 @@ public class GoodsController {
 
     // 管理员冻结商品
     @PostMapping("/admin/freeze")
-    public ResultData freeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+    public ResultData freeze(@RequestHeader("token") String token, @RequestBody Goods goods) {
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
-        return ResultData.state(goodsService.adminUpdateGoodsState(goodsId, -1));
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登录过期");
+        }
+        if (goods.getOption().equals("freeze")) {
+            //冻结
+            goodsFreezeService.option(goods.getId(), accountId, true, goods.getMessage());
+            return ResultData.state(goodsService.adminUpdateGoodsState(goods.getId(), -1));
+        } else if (goods.getOption().equals("unfreeze")) {
+            //解冻
+            goodsFreezeService.option(goods.getId(), accountId, false, goods.getMessage());
+            return ResultData.state(goodsService.adminUpdateGoodsState(goods.getId(), 0));
+        }
+        return ResultData.fail();
     }
 
     // 管理员解冻商品
     @PostMapping("/admin/unfreeze")
-    public ResultData unfreeze(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+    public ResultData unfreeze(@RequestHeader("token") String token, @RequestBody Goods goods) {
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             return ResultData.fail("无权限");
         }
-        return ResultData.state(goodsService.adminUpdateGoodsState(goodsId, 0));
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登录过期");
+        }
+        goodsFreezeService.option(goods.getId(), accountId, false, goods.getMessage());
+        return ResultData.state(goodsService.adminUpdateGoodsState(goods.getId(), 0));
     }
 
     // 获取单个商品信息

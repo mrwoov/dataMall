@@ -37,6 +37,13 @@ public class OrderIndex implements Serializable {
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
-
+    @TableField(exist = false)
+    private String username;
+    @TableField(exist = false)
+    private String tradeNo;
+    @TableField(exist = false)
+    private double money;
+    @TableField(exist = false)
+    private Integer price;
 
 }

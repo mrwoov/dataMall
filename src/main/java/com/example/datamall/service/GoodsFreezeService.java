@@ -12,5 +12,5 @@ import com.example.datamall.entity.GoodsFreeze;
  * @since 2023-10-19
  */
 public interface GoodsFreezeService extends IService<GoodsFreeze> {
-
+    boolean option(Integer goodsId, Integer optionAccountId, boolean isFreeze, String content);
 }

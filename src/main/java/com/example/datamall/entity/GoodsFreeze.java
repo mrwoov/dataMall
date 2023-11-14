@@ -42,6 +42,10 @@ public class GoodsFreeze implements Serializable {
      * 0正常1已解冻
      */
     private Integer status;
+    /**
+     * -1冻结1解冻
+     */
+    private Integer operate;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.UPDATE)

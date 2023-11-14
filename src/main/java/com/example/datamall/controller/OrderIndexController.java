@@ -1,7 +1,7 @@
 package com.example.datamall.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.datamall.entity.Goods;
 import com.example.datamall.entity.OrderGoods;
 import com.example.datamall.entity.OrderIndex;
@@ -11,7 +11,6 @@ import com.example.datamall.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -26,6 +25,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/order")
 public class OrderIndexController {
+    private final String authPath = "order";
     @Resource
     private OrderIndexService orderIndexService;
     @Resource
@@ -38,21 +38,6 @@ public class OrderIndexController {
     private AccountService accountService;
 
     //todo:订单管理页面
-    //Object转Map
-    public static Map<String, Object> getObjectToMap(Object obj) throws IllegalAccessException {
-        Map<String, Object> map = new HashMap<String, Object>();
-        Class<?> cla = obj.getClass();
-        Field[] fields = cla.getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            String keyName = field.getName();
-            Object value = field.get(obj);
-            if (value == null)
-                value = "";
-            map.put(keyName, value);
-        }
-        return map;
-    }
 
     //查询订单交易状态
     @GetMapping("/check")
@@ -60,7 +45,6 @@ public class OrderIndexController {
         OrderPay orderPay = orderPayService.getOneByOption("trade_no", tradeNo);
         //查数据库
         if (orderPay == null) {
-            System.out.println(3);
             return ResultData.fail();
         }
         if (orderPay.getState() == 0) {
@@ -76,10 +60,8 @@ public class OrderIndexController {
                 orderIndexService.updateOrderSuccess(orderId, platTradeNo);
                 return ResultData.success();
             }
-            System.out.println(1);
             return ResultData.fail();
         } catch (Exception e) {
-            System.out.println(2);
             return ResultData.fail();
         }
     }
@@ -129,6 +111,20 @@ public class OrderIndexController {
         return ResultData.success(map);
     }
 
+    //分页查找
+    @PostMapping("/admin/page")
+    public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody OrderIndex orderIndex) {
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        if (pageNum == null || pageSize == null) {
+            return ResultData.fail("缺少参数");
+        }
+        IPage<OrderIndex> page = orderIndexService.page(pageSize, pageNum, orderIndex.getUsername(), orderIndex.getTradeNo());
+        return ResultData.success(page);
+    }
+
     //新增或修改
     @PatchMapping("/")
     public ResultData saveOrUpdate(@RequestBody OrderIndex orderIndex) {
@@ -157,13 +153,6 @@ public class OrderIndexController {
     @GetMapping("/{id}")
     public List<OrderIndex> findOne(@PathVariable Integer id) {
         return orderIndexService.list();
-    }
-
-    //分页查询
-    @GetMapping("/page")
-    public Page<OrderIndex> findPage(@RequestParam Integer pageNum,
-                                     @RequestParam Integer pageSize) {
-        return orderIndexService.page(new Page<>(pageNum, pageSize));
     }
 }
 
