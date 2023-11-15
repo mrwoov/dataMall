@@ -33,14 +33,16 @@ public class Role implements Serializable {
     private Integer id;
 
     private String roleName;
-    @TableField(exist = false)
-    private List<Auth> authList;
-    @TableField(exist = false)
-    private List<Integer> authIds;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    @TableField(exist = false)
+    private List<Auth> authList;
+
+    @TableField(exist = false)
+    private List<Integer> authIds;
 }

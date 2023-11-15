@@ -13,4 +13,5 @@ import com.example.datamall.entity.OrderGoods;
  */
 public interface OrderGoodsService extends IService<OrderGoods> {
 
+    OrderGoods getOneByOption(String column, Object value);
 }

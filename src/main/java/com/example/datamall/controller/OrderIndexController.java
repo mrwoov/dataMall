@@ -1,6 +1,7 @@
 package com.example.datamall.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.datamall.entity.Goods;
 import com.example.datamall.entity.OrderGoods;
@@ -36,8 +37,6 @@ public class OrderIndexController {
     private GoodsService goodsService;
     @Resource
     private AccountService accountService;
-
-    //todo:订单管理页面
 
     //查询订单交易状态
     @GetMapping("/check")
@@ -125,6 +124,33 @@ public class OrderIndexController {
         return ResultData.success(page);
     }
 
+    //管理员获取订单detail
+    @GetMapping("/admin/{id}")
+    public ResultData findOne(@RequestHeader("token") String token, @PathVariable Integer id) {
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        OrderIndex orderIndex = orderIndexService.getById(id);
+        QueryWrapper<OrderGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_id", orderIndex.getId());
+        List<OrderGoods> orderGoodsList = orderGoodsService.list(queryWrapper);
+        List<Goods> goodsList = new ArrayList<>();
+        for (OrderGoods orderGoods : orderGoodsList) {
+            Goods goods = goodsService.getById(orderGoods.getGoodsId());
+            goods.priceToMoney();
+            goodsList.add(goods);
+        }
+        orderIndex.setGoods(goodsList);
+        orderIndex.setUsername(accountService.getById(orderIndex.getAccountId()).getUsername());
+        OrderPay orderPay = orderPayService.getOneByOption("order_id", orderIndex.getId());
+        orderIndex.setTradeNo(orderPay.getTradeNo());
+        Integer totalAmount = orderPay.getTotalAmount();
+        double money = (double) totalAmount / 100;
+        orderIndex.setMoney(money);
+        return ResultData.success(orderIndex);
+    }
+
     //新增或修改
     @PatchMapping("/")
     public ResultData saveOrUpdate(@RequestBody OrderIndex orderIndex) {
@@ -150,9 +176,5 @@ public class OrderIndexController {
     }
 
     //查找单个
-    @GetMapping("/{id}")
-    public List<OrderIndex> findOne(@PathVariable Integer id) {
-        return orderIndexService.list();
-    }
 }
 

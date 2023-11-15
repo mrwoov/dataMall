@@ -1,5 +1,6 @@
 package com.example.datamall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.OrderGoods;
 import com.example.datamall.mapper.OrderGoodsMapper;
@@ -16,5 +17,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderGoodsServiceImpl extends ServiceImpl<OrderGoodsMapper, OrderGoods> implements OrderGoodsService {
-
+    @Override
+    public OrderGoods getOneByOption(String column, Object value) {
+        QueryWrapper<OrderGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(column, value);
+        return getOne(queryWrapper);
+    }
 }

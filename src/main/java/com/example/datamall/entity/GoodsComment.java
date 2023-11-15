@@ -56,8 +56,10 @@ public class GoodsComment implements Serializable {
     private Integer state;
 
     private Integer parentId;
+
     @TableField(exist = false)
     private String username;
+
     @TableField(exist = false)
     private String avatar;
 }

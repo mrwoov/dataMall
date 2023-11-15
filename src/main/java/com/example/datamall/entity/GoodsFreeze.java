@@ -48,6 +48,7 @@ public class GoodsFreeze implements Serializable {
     private Integer operate;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 

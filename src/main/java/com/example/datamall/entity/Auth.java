@@ -39,6 +39,12 @@ public class Auth implements Serializable {
 
     private Integer parentId;
 
+    private String pagePath;
+
+    private String icon;
+
+    private String description;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
@@ -47,9 +53,6 @@ public class Auth implements Serializable {
 
     @TableField(exist = false)
     private List<Auth> child = new ArrayList<>();
-    private String pagePath;
-    private String icon;
-    private String description;
 
     public void addChild(Auth auth) {
         this.child.add(auth);

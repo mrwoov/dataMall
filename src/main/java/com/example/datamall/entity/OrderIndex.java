@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -35,15 +36,23 @@ public class OrderIndex implements Serializable {
     private Integer state;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
+
     @TableField(exist = false)
     private String username;
+
     @TableField(exist = false)
     private String tradeNo;
+
     @TableField(exist = false)
     private double money;
+
     @TableField(exist = false)
     private Integer price;
+
+    @TableField(exist = false)
+    private List<Goods> goods;
 
 }
