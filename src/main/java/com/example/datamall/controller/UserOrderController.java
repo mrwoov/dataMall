@@ -124,17 +124,6 @@ public class UserOrderController {
             return ResultData.fail("无权限");
         }
         UserOrder userOrder = userOrderService.getById(id);
-        //todo:
-
-//        QueryWrapper<OrderGoods> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("order_id", userOrder.getId());
-//        List<OrderGoods> orderGoodsList = orderGoodsService.list(queryWrapper);
-//        List<Goods> goodsList = new ArrayList<>();
-//        for (OrderGoods orderGoods : orderGoodsList) {
-//            Goods goods = goodsService.getById(orderGoods.getGoodsId());
-//            goods.priceToMoney();
-//            goodsList.add(goods);
-//        }
         List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(id);
         userOrder.setGoodsSnapshots(goodsSnapshotList);
         userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
