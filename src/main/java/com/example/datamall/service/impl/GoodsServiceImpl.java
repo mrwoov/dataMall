@@ -7,13 +7,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.datamall.entity.Account;
 import com.example.datamall.entity.Goods;
 import com.example.datamall.mapper.GoodsMapper;
-import com.example.datamall.service.AccountService;
-import com.example.datamall.service.GoodsCategoriesService;
-import com.example.datamall.service.GoodsCollectionService;
-import com.example.datamall.service.GoodsService;
+import com.example.datamall.service.*;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,6 +32,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     private AccountService accountService;
     @Resource
     private GoodsCollectionService goodsCollectionService;
+    @Resource
+    private GoodsFileService goodsFileService;
+    @Resource
+    private GoodsPicService goodsPicService;
 
     @Override
     public boolean isOwner(Integer uid, Integer goodsId) {
@@ -42,6 +44,56 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             return false;
         }
         return uidTemp.equals(uid);
+    }
+
+    @Override
+    public void getGoodsOtherParam(Goods goods) {
+        Account account = accountService.getById(goods.getUid());
+        goods.setUsername(account.getUsername());
+        goods.setAvatar(account.getAvatar());
+        goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
+        goods.priceToMoney();
+        goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
+        goods.priceToMoney();
+    }
+
+    @Override
+    public void getGoodsListOtherParam(List<Goods> goodsList) {
+        for (Goods goods : goodsList) {
+            getGoodsOtherParam(goods);
+        }
+    }
+
+    @Override
+    public Goods getGoodsInfoById(Integer id) {
+        Goods goods = getById(id);
+        getGoodsOtherParam(goods);
+        return goods;
+    }
+
+    @Override
+    public Goods getNotAuditGoods() {
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        //查找逻辑：状态等于未审核-3，或者（状态等于-5且处于审核状态大于3分钟的记录）
+        queryWrapper.eq("state", -3);
+        queryWrapper.or(i -> i.eq("state", -5).lt("update_time", LocalDateTime.now().minusMinutes(3)));
+        queryWrapper.last("limit 1");
+        Goods goods = getOne(queryWrapper);
+        if (goods == null) {
+            return null;
+        }
+        //将状态码改为-5表示审核中
+        goods.setState(-5);
+        //这里需要手动更新更新时间
+        goods.setUpdateTime(LocalDateTime.now());
+        updateById(goods);
+        //获取goods其他外键信息
+        getGoodsOtherParam(goods);
+        String fileUrl = goodsFileService.getOneByOption("md5", goods.getFileMd5()).getFilePath();
+        goods.setFileUrl(fileUrl);
+        List<String> imageUrls = goodsPicService.getGoodsImageUrls(goods.getId());
+        goods.setImagesUrls(imageUrls);
+        return goods;
     }
 
     @Override
@@ -90,9 +142,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         queryWrapper.eq("state", 0).or().eq("state", 1).or().eq("state", -1);
         IPage<Goods> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (Goods goods : page.getRecords()) {
-            goods.setUsername(accountService.getById(goods.getUid()).getUsername());
-            goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-            goods.priceToMoney();
+            getGoodsOtherParam(goods);
         }
         return page;
     }
@@ -100,14 +150,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Override
     public List<Goods> getGoodsList(QueryWrapper<Goods> queryWrapper) {
         List<Goods> goodsList = list(queryWrapper);
-        for (Goods goods : goodsList) {
-            Account account = accountService.getById(goods.getUid());
-            goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-            goods.setUsername(account.getUsername());
-            goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
-            goods.setAvatar(account.getAvatar());
-            goods.priceToMoney();
-        }
+        getGoodsListOtherParam(goodsList);
         return goodsList;
     }
 }

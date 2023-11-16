@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -38,8 +37,6 @@ public class GoodsController {
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
-    private GoodsCollectionService goodsCollectionService;
-    @Resource
     private GoodsPicService goodsPicService;
     @Resource
     private GoodsFileService goodsFileService;
@@ -52,27 +49,7 @@ public class GoodsController {
         this.ossUtils = ossUtils;
     }
 
-    public static String generateFileName(String originalFileName) {
-        long timestamp = System.currentTimeMillis();
-        Random random = new Random();
-        int randomNumber = random.nextInt(900000) + 10000;
-        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String processedFileName = timestamp + "_" + originalFileName + "_" + randomNumber;
-
-        // 对处理后的文件名进行加密，使用MD5
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(processedFileName.getBytes());
-            byte[] digest = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for (byte b : digest) {
-                sb.append(String.format("%02x", b & 0xff));
-            }
-            processedFileName = sb.toString();
-        } catch (NoSuchAlgorithmException ignored) {
-        }
-        return processedFileName + extension;
-    }
+    //todo: 优化
 
     // 用户上架商品
     @PostMapping("release_on")
@@ -154,7 +131,29 @@ public class GoodsController {
         return ResultData.state(state);
     }
 
-    // 管理员冻结商品
+    public static String generateFileName(String originalFileName) {
+        long timestamp = System.currentTimeMillis();
+        Random random = new Random();
+        int randomNumber = random.nextInt(900000) + 10000;
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String processedFileName = timestamp + "_" + originalFileName + "_" + randomNumber;
+
+        // 对处理后的文件名进行加密，使用MD5
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(processedFileName.getBytes());
+            byte[] digest = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            processedFileName = sb.toString();
+        } catch (NoSuchAlgorithmException ignored) {
+        }
+        return processedFileName + extension;
+    }
+
+    // 管理员冻结与解冻商品
     @PostMapping("/admin/freeze")
     public ResultData freeze(@RequestHeader("token") String token, @RequestBody Goods goods) {
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
@@ -177,32 +176,6 @@ public class GoodsController {
         return ResultData.fail();
     }
 
-    // 管理员解冻商品
-    @PostMapping("/admin/unfreeze")
-    public ResultData unfreeze(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
-        Integer accountId = accountService.tokenToUid(token);
-        if (accountId == -1) {
-            return ResultData.fail("登录过期");
-        }
-        goodsFreezeService.option(goods.getId(), accountId, false, goods.getMessage());
-        return ResultData.state(goodsService.adminUpdateGoodsState(goods.getId(), 0));
-    }
-
-    // 获取单个商品信息
-    @GetMapping("/info/{goodsId}")
-    public ResultData getInfo(@PathVariable("goodsId") Integer goodsId) {
-        Goods goods = goodsService.getById(goodsId);
-        goods.setUsername(accountService.getById(goods.getUid()).getUsername());
-        goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-        goods.priceToMoney();
-        goods.setCollection(goodsCollectionService.goodsCollectionNum(goodsId));
-        return ResultData.success(goods);
-    }
-
     // 管理员分页查询商品列表
     @PostMapping("/admin/page")
     public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody Goods goods) {
@@ -220,18 +193,11 @@ public class GoodsController {
         return ResultData.success(page);
     }
 
-    // 查询单个用户发布的商品列表
-    @GetMapping("/list/{uid}")
-    public ResultData getUserGoodsList(@PathVariable("uid") String uid) {
-        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("uid", uid);
-        List<Goods> list = goodsService.list(queryWrapper);
-        for (Goods goods : list) {
-            goods.setUsername(accountService.getById(goods.getUid()).getUsername());
-            goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-            goods.priceToMoney();
-        }
-        return ResultData.success(list);
+    // 获取单个商品信息
+    @GetMapping("/info/{goodsId}")
+    public ResultData getInfo(@PathVariable("goodsId") Integer goodsId) {
+        Goods goods = goodsService.getGoodsInfoById(goodsId);
+        return ResultData.success(goods);
     }
 
     // 用户修改商品信息
@@ -274,41 +240,14 @@ public class GoodsController {
         return ResultData.success(goodsList);
     }
 
-    //管理员获取一个待审核的商品信息
-    @GetMapping("/get_not_audit")
-    public ResultData getNotAuditGoodsInfo(@RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    // 查询单个用户发布的商品列表
+    @GetMapping("/list/{uid}")
+    public ResultData getUserGoodsList(@PathVariable("uid") String uid) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
-        //查找逻辑：状态等于未审核-3，或者（状态等于-5且处于审核状态大于3分钟的记录）
-        queryWrapper.eq("state", -3);
-        queryWrapper.or(i -> i.eq("state", -5).lt("update_time", LocalDateTime.now().minusMinutes(3)));
-        queryWrapper.last("limit 1");
-        Goods goods = goodsService.getOne(queryWrapper);
-        if (goods == null) {
-            return ResultData.fail();
-        }
-        //将状态码改为-5表示审核中
-        goods.setState(-5);
-        goods.setUpdateTime(LocalDateTime.now());
-        goodsService.updateById(goods);
-        //获取goods其他外键信息
-        goods.setUsername(accountService.getById(goods.getUid()).getUsername());
-        goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
-        goods.priceToMoney();
-        String fileUrl = goodsFileService.getOneByOption("md5", goods.getFileMd5()).getFilePath();
-        goods.setFileUrl(fileUrl);
-        List<String> imageUrls = new ArrayList<>();
-        QueryWrapper<GoodsPic> picQueryWrapper = new QueryWrapper<>();
-        picQueryWrapper.eq("goods_id", goods.getId());
-        List<GoodsPic> pics = goodsPicService.list(picQueryWrapper);
-        for (GoodsPic goodsPic : pics) {
-            imageUrls.add(goodsPic.getUrl());
-        }
-        goods.setImagesUrls(imageUrls);
-        return ResultData.success(goods);
+        queryWrapper.eq("uid", uid);
+        List<Goods> list = goodsService.list(queryWrapper);
+        goodsService.getGoodsListOtherParam(list);
+        return ResultData.success(list);
     }
 
     @GetMapping("/audit")
@@ -325,5 +264,16 @@ public class GoodsController {
             goodsService.adminUpdateGoodsState(goodsId, -4);
         }
         return ResultData.success();
+    }
+
+    //管理员获取一个待审核的商品信息
+    @GetMapping("/get_not_audit")
+    public ResultData getNotAuditGoodsInfo(@RequestHeader("token") String token) {
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        Goods goods = goodsService.getNotAuditGoods();
+        return ResultData.success(goods);
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.datamall.mapper.GoodsSnapshotMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.datamall.entity.GoodsSnapshot">
+        <id column="id" property="id"/>
+        <result column="owner_id" property="ownerId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="name" property="name"/>
+        <result column="pic_index" property="picIndex"/>
+        <result column="price" property="price"/>
+        <result column="file_md5" property="fileMd5"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="state" property="state"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, owner_id, goods_id, name, pic_index, price, file_md5, create_time, update_time, state
+    </sql>
+
+</mapper>

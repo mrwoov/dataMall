@@ -11,7 +11,7 @@ import java.util.Collections;
 public class CodeGeneration {
 
     public static void main(String[] args) {
-        Generation("order_index");
+        Generation("user_order_goods");
     }
 
     /**

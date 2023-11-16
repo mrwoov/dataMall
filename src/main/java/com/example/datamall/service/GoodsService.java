@@ -18,6 +18,14 @@ import java.util.List;
 public interface GoodsService extends IService<Goods> {
     boolean isOwner(Integer uid, Integer goodsId);
 
+    void getGoodsOtherParam(Goods goods);
+
+    void getGoodsListOtherParam(List<Goods> goodsList);
+
+    Goods getGoodsInfoById(Integer id);
+
+    Goods getNotAuditGoods();
+
     boolean userUpdateGoodsState(Integer uid, Integer goodsId, Integer state);
 
     boolean adminUpdateGoodsState(Integer goodsId, Integer state);

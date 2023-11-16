@@ -13,17 +13,17 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 订单表
+ * 订单商品表
  * </p>
  *
  * @author woov
- * @since 2023-11-11
+ * @since 2023-11-16
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("order_pay")
-public class OrderPay implements Serializable {
+@TableName("user_order_goods")
+public class UserOrderGoods implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -31,27 +31,30 @@ public class OrderPay implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private String platTradeNo;
-
-    private String tradeNo;
-
+    /**
+     * 订单id
+     */
     private Integer orderId;
 
     /**
-     * bigdecimal(16,2)
+     * 商品快照id
      */
-    private Integer totalAmount;
-
-    private String payType;
+    private Integer goodsSnapshotId;
 
     /**
-     * -1未支付0已支付
+     * 创建时间
      */
-    private Integer state;
-
     private LocalDateTime createTime;
 
+    /**
+     * 修改时间
+     */
     private LocalDateTime updateTime;
+
+    /**
+     * 状态
+     */
+    private Integer state;
 
 
 }

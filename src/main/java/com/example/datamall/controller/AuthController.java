@@ -59,6 +59,7 @@ public class AuthController {
         return ResultData.success(authService.getAuthTree());
     }
 
+    //获取权限图标
     @GetMapping("/icons")
     public ResultData getIcons() {
         return ResultData.success(systemDictService.getOneType("icon"));

@@ -5,24 +5,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * <p>
- *
+ * 用户订单表
  * </p>
  *
  * @author woov
- * @since 2023-11-11
+ * @since 2023-11-16
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("order_index")
-public class OrderIndex implements Serializable {
+@TableName("user_order")
+public class UserOrder implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
@@ -31,28 +33,54 @@ public class OrderIndex implements Serializable {
     private Integer accountId;
 
     /**
-     * 0进行中1交易完成-1交易关闭
+     * 订单号
+     */
+    private String tradeNo;
+
+    /**
+     * 支付方式
+     */
+    private String payType;
+
+    /**
+     * 总费用，单位分
+     */
+    private Integer totalAmount;
+
+    /**
+     * 平台订单号
+     */
+    private String platTradeNo;
+
+    /**
+     * 0进行中1已付款2交易完成-1交易关闭-2已退款
      */
     private Integer state;
+
+    /**
+     * 支付时间
+     */
+    private LocalDateTime payTime;
+
+    /**
+     * 创建时间
+     */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
+    /**
+     * 更新时间
+     */
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @TableField(exist = false)
     private String username;
 
-    @TableField(exist = false)
-    private String tradeNo;
 
     @TableField(exist = false)
     private double money;
 
     @TableField(exist = false)
-    private Integer price;
-
-    @TableField(exist = false)
-    private List<Goods> goods;
-
+    private List<GoodsSnapshot> goodsSnapshots;
 }
