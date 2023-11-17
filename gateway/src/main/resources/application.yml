@@ -1,0 +1,27 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      # 路由规则
+      routes:
+        - id: admin # 路由唯一标识
+          uri: lb://admin-center #nacos服务名-负载均衡
+          # 断言规则
+          predicates:
+            - Path="/admin/**"
+          filters:
+            - StripPrefix=1
+
+        - id: goods
+          uri: lb://goods-center
+          predicates:
+            - Path="/goods/**"
+          filters:
+            - StripPrefix=1
+
+        - id: order
+          uri:
+
