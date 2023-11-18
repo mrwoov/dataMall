@@ -16,6 +16,14 @@ import java.util.Map;
  */
 public interface UserOrderService extends IService<UserOrder> {
 
+    //获取今日订单数
+    long getTodayOrderCount();
+
+    //获取今日销售总额
+    double getTodayMoney();
+
+    double getYesterdayMoney();
+
     UserOrder getOneByOption(String column, Object value);
 
     //更新订单表状态

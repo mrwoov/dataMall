@@ -24,8 +24,6 @@ import java.util.List;
  */
 @Service
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements GoodsService {
-
-
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
@@ -37,6 +35,31 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Resource
     private GoodsPicService goodsPicService;
 
+    //获取商品总数
+    @Override
+    public Integer getGoodsCount() {
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        return (int) count(queryWrapper);
+    }
+
+    //获取未审核的商品的数量
+    @Override
+    public Integer getNotAuditGoodsCount() {
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("state", -3);
+        queryWrapper.or(i -> i.eq("state", -5).lt("update_time", LocalDateTime.now().minusMinutes(3)));
+        return (int) count(queryWrapper);
+    }
+
+    //获取上架商品数量
+    @Override
+    public Integer getNormalGoodsCount() {
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("state", 0);
+        return (int) count(queryWrapper);
+    }
+
+    //判断是否是商品发布者
     @Override
     public boolean isOwner(Integer uid, Integer goodsId) {
         Integer uidTemp = getById(goodsId).getUid();
@@ -46,6 +69,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return uidTemp.equals(uid);
     }
 
+    //获取Goods其他外键参数
     @Override
     public void getGoodsOtherParam(Goods goods) {
         Account account = accountService.getById(goods.getUid());
@@ -57,6 +81,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         goods.priceToMoney();
     }
 
+    //获取Goods List的其他外键参数
     @Override
     public void getGoodsListOtherParam(List<Goods> goodsList) {
         for (Goods goods : goodsList) {
@@ -64,6 +89,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
     }
 
+    //通过商品id获取商品信息
     @Override
     public Goods getGoodsInfoById(Integer id) {
         Goods goods = getById(id);
@@ -71,6 +97,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return goods;
     }
 
+    //获取未审核的商品
     @Override
     public Goods getNotAuditGoods() {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
@@ -96,6 +123,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return goods;
     }
 
+    //用户更新商品状态
     @Override
     public boolean userUpdateGoodsState(Integer uid, Integer goodsId, Integer state) {
         Goods goods = getById(goodsId);
@@ -112,6 +140,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return updateById(goods);
     }
 
+    //管理员更新商品状态
     @Override
     public boolean adminUpdateGoodsState(Integer goodsId, Integer state) {
         Goods goods = getById(goodsId);
@@ -122,6 +151,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return updateById(goods);
     }
 
+    //获取商品分页数据
     @Override
     public IPage<Goods> getGoodsPage(String name, String categoriesName, String username, Integer pageNum, Integer pageSize) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
@@ -147,6 +177,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return page;
     }
 
+    //获取商品list
     @Override
     public List<Goods> getGoodsList(QueryWrapper<Goods> queryWrapper) {
         List<Goods> goodsList = list(queryWrapper);

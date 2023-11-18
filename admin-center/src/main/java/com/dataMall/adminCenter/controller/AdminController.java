@@ -5,14 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dataMall.adminCenter.entity.Admin;
-import com.dataMall.adminCenter.service.AccountService;
-import com.dataMall.adminCenter.service.AdminService;
-import com.dataMall.adminCenter.service.RoleService;
+import com.dataMall.adminCenter.service.*;
 import com.dataMall.adminCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,6 +32,29 @@ public class AdminController {
     private AdminService adminService;
     @Resource
     private RoleService roleService;
+    @Resource
+    private UserOrderService userOrderService;
+    @Resource
+    private GoodsService goodsService;
+
+    public ResultData panelInfo(@RequestHeader("token") String token) {
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        Map<String, String> res = new HashMap<>();
+        //订单数据
+        res.put("order_today_num", String.valueOf(userOrderService.getTodayOrderCount()));
+        res.put("order_today_money", String.valueOf(userOrderService.getTodayMoney()));
+        res.put("order_yesterday_money", String.valueOf(userOrderService.getYesterdayMoney()));
+        //商品数据
+        res.put("goods_total", String.valueOf(goodsService.getGoodsCount()));
+        res.put("goods_not_audit", String.valueOf(goodsService.getNotAuditGoodsCount()));
+        res.put("goods_normal", String.valueOf(goodsService.getNormalGoodsCount()));
+        //用户数据
+
+        return ResultData.success(res);
+    }
 
     //管理员新增或修改管理员
     @PatchMapping("/")

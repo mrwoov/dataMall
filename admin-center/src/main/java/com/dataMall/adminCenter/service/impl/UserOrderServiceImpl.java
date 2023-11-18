@@ -16,7 +16,6 @@ import com.dataMall.adminCenter.service.UserOrderService;
 import com.dataMall.adminCenter.utils.JSONUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -35,6 +34,39 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     private AlipayConfig alipayConfig;
     @Resource
     private AccountService accountService;
+
+    @Override
+    //获取今日订单数
+    public long getTodayOrderCount() {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("create_time", java.time.LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0), java.time.LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999));
+        return count(queryWrapper);
+    }
+    @Override
+    //获取今日销售总额
+    public double getTodayMoney() {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("create_time", java.time.LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0), java.time.LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999));
+        queryWrapper.ge("state", 1);
+        List<UserOrder> userOrderList = list(queryWrapper);
+        Integer total = 0;
+        for (UserOrder userOrder : userOrderList) {
+            total += userOrder.getTotalAmount();
+        }
+        return (double) total / 100;
+    }
+    @Override
+    public double getYesterdayMoney(){
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("create_time",java.time.LocalDateTime.now().minusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0),java.time.LocalDateTime.now().minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999));
+        queryWrapper.ge("state", 1);
+        List<UserOrder> userOrderList = list(queryWrapper);
+        Integer total = 0;
+        for (UserOrder userOrder : userOrderList) {
+            total += userOrder.getTotalAmount();
+        }
+        return (double) total / 100;
+    }
 
     @Override
     public UserOrder getOneByOption(String column, Object value) {

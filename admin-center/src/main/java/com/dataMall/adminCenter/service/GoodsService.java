@@ -16,6 +16,15 @@ import java.util.List;
  * @since 2023-08-29
  */
 public interface GoodsService extends IService<Goods> {
+    //获取商品总数
+    Integer getGoodsCount();
+
+    //获取未审核的商品的数量
+    Integer getNotAuditGoodsCount();
+
+    //获取上架商品数量
+    Integer getNormalGoodsCount();
+
     boolean isOwner(Integer uid, Integer goodsId);
 
     void getGoodsOtherParam(Goods goods);
