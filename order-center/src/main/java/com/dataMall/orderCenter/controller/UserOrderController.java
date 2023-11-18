@@ -75,11 +75,13 @@ public class UserOrderController {
         //计算总价
         int totalPrice = 0;
         for (Integer i : goodsIds) {
-            Goods goods = goodsService.getById(i);
-            if (goods == null) {
+            System.out.println(i);
+            Integer price = goodsService.getGoodsPrice(i);
+//            Goods goods = goodsService.getById(i);
+            if (price == null) {
                 return ResultData.fail();
             }
-            totalPrice = totalPrice + goods.getPrice();
+            totalPrice = totalPrice + price;
         }
         //设置其他参数
         userOrder.setTotalAmount(totalPrice);

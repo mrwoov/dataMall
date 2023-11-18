@@ -10,4 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface GoodsService {
     @GetMapping("/getById/{id}")
     Goods getById(@PathVariable Integer id);
+
+    @GetMapping("/getGoodsPrice/{id}")
+    Integer getGoodsPrice(@PathVariable Integer id);
 }

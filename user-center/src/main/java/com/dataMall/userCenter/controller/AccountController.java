@@ -1,10 +1,10 @@
 package com.dataMall.userCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dataMall.userCenter.Utils.EmailCode;
-import com.dataMall.userCenter.Utils.MailService;
 import com.dataMall.userCenter.entity.Account;
 import com.dataMall.userCenter.service.AccountService;
+import com.dataMall.userCenter.utils.EmailCode;
+import com.dataMall.userCenter.utils.MailService;
 import com.dataMall.userCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class AccountController {
         if (token.isEmpty()) {
             return ResultData.fail("账号或密码错误");
         }
-        account = accountService.getOneByOption("token", token);
+//        account = accountService.getOneByOption("token", token);
         Map<String, String> res = new HashMap<>();
         res.put("token", token);
 //        res.put("admin", String.valueOf(adminService.isAdmin(account.getId())));

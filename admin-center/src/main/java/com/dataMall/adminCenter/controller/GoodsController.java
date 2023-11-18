@@ -75,7 +75,10 @@ public class GoodsController {
         }
         if (goods.getOption().equals("freeze")) {
             //冻结
-            goodsFreezeService.option(goods.getId(), accountId, true, goods.getMessage());
+            boolean state = goodsFreezeService.option(goods.getId(), accountId, true, goods.getMessage());
+            if (!state) {
+                return ResultData.fail();
+            }
             return ResultData.state(goodsService.adminUpdateGoodsState(goods.getId(), -1));
         } else if (goods.getOption().equals("unfreeze")) {
             //解冻

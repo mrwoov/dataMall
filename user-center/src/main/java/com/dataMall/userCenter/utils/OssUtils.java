@@ -1,4 +1,4 @@
-package com.dataMall.userCenter.Utils;
+package com.dataMall.userCenter.utils;
 
 
 import com.aliyun.oss.OSS;
@@ -42,7 +42,7 @@ public class OssUtils {
      * @param multipartFile 上传的文件
      */
     public static void uploadMultipartFile(String objectName, MultipartFile multipartFile) {
-        byte[] bytes = new byte[0];
+        byte[] bytes;
         try {
             bytes = multipartFile.getBytes();
         } catch (IOException e) {

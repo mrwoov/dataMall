@@ -9,7 +9,6 @@ public class JSONUtils {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public static Map<String, Object> jsonToMap(String jsonStr) throws JsonProcessingException {
-        Map<String, Object> map = mapper.readValue(jsonStr, Map.class);
-        return map;
+        return mapper.readValue(jsonStr, Map.class);
     }
 }

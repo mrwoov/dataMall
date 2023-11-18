@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class JSONUtils {
     private static final ObjectMapper mapper = new ObjectMapper();
 

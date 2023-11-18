@@ -11,17 +11,37 @@ spring:
           uri: lb://admin-center #nacos服务名-负载均衡
           # 断言规则
           predicates:
-            - Path="/admin/**"
+            - Path=/admin/**
           filters:
             - StripPrefix=1
-
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
         - id: goods
           uri: lb://goods-center
           predicates:
-            - Path="/goods/**"
+            - Path=/goods/**
           filters:
             - StripPrefix=1
-
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
         - id: order
-          uri:
-
+          uri: lb://order-center
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: user
+          uri: lb://user-center
+          predicates:
+            - Path= /user/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 允许跨域的源(网站域名/ip)，设置*为全部
+            allowedOrigins: "*"
+            # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
+            allowedMethods: "*"
+            # 允许跨域请求里的head字段，设置*为全部
+            allowedHeaders: "*"

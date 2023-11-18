@@ -5,7 +5,6 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dataMall.goodsCenter.entity.GoodsFile">
         <id column="id" property="id"/>
-        <result column="goods_id" property="goodsId"/>
         <result column="filename" property="filename"/>
         <result column="file_path" property="filePath"/>
         <result column="create_time" property="createTime"/>

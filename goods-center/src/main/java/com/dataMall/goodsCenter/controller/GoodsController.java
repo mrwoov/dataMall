@@ -210,6 +210,13 @@ public class GoodsController {
 
     @GetMapping("/getById/{id}")
     public Goods getById(@PathVariable Integer id) {
-        return goodsService.getGoodsInfoById(id);
+        Goods goods = goodsService.getGoodsInfoById(id);
+        goods.moneyToPrice();
+        return goods;
+    }
+
+    @GetMapping("/getGoodsPrice/{id}")
+    public Integer getGoodsPrice(@PathVariable Integer id) {
+        return goodsService.getById(id).getPrice();
     }
 }

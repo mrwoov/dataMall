@@ -1,4 +1,4 @@
-package com.dataMall.userCenter.Utils;
+package com.dataMall.userCenter.utils;
 
 import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;

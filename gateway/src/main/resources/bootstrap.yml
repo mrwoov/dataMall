@@ -1,3 +1,4 @@
+#file: noinspection SpringBootApplicationYaml
 spring:
   cloud:
     nacos:

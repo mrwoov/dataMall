@@ -15,7 +15,6 @@ import com.dataMall.orderCenter.mapper.UserOrderMapper;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.utils.JSONUtils;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +31,7 @@ import java.util.*;
  */
 @Service
 public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder> implements UserOrderService {
-    @Autowired
+    @Resource
     private AlipayConfig alipayConfig;
     @Resource
     private AccountService accountService;

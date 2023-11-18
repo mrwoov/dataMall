@@ -25,7 +25,6 @@ public class GoodsFreezeServiceImpl extends ServiceImpl<GoodsFreezeMapper, Goods
         goodsFreeze.setContent(content);
         Integer optionId = isFreeze ? -1 : 0;
         goodsFreeze.setOperate(optionId);
-        save(goodsFreeze);
-        return false;
+        return save(goodsFreeze);
     }
 }

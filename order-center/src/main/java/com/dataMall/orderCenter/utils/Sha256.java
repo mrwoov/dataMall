@@ -4,14 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * sha256加密工具类
- *
- * @author
- * @version 1.0
- * @date 2021/8/3 10:48
- * @since JDK 1.8
- */
 public class Sha256 {
     public static void main(String[] args) {
         String sha256Str = getSha256Str("123456");
@@ -31,8 +23,7 @@ public class Sha256 {
             messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(str.getBytes(StandardCharsets.UTF_8));
             encodeStr = byte2Hex(messageDigest.digest());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (NoSuchAlgorithmException ignored) {
         }
         return encodeStr;
     }

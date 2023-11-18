@@ -108,4 +108,24 @@ public class RoleController {
         String roleName = role.getRoleName();
         return ResultData.success(roleService.queryRoleInfoPageByOption(pageSize, pageNum, roleName));
     }
+    //用户查询权限列表
+    @GetMapping("/getAuthList")
+    public ResultData getAuthList(@RequestHeader("token") String token) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        Integer roleId = adminService.getOneByOption("account_id", uid).getRole();
+        return ResultData.success(roleToAuthService.getRoleAuthList(roleId));
+    }
+    @GetMapping("/getAuths")
+    public ResultData getAuths(@RequestHeader("token") String token) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        Integer roleId = adminService.getOneByOption("account_id", uid).getRole();
+        List<Auth> authList = roleToAuthService.getRoleAuths(roleId);
+        return ResultData.success(authList);
+    }
 }

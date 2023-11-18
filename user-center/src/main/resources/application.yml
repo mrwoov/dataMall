@@ -1,3 +1,4 @@
+#file: noinspection SpringBootApplicationYaml
 server:
   port: 8300
 

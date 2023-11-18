@@ -4,267 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f390c057-56f3-4fdb-bb8e-f75a027e5e31" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/AdminCenterApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/config/AlipayConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/config/MyBatisPlusConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/config/OssConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/AccountController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsCategoriesController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsCommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsFileController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsPicController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsSnapshotController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/RoleController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/RoleToAuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/SystemDictController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/UserOrderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/UserOrderGoodsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/Auth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/Goods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/GoodsCategories.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/GoodsCollection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/GoodsComment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/GoodsFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/GoodsFreeze.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/GoodsPic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/GoodsSnapshot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/RoleToAuth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/SystemDict.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/UserOrder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/UserOrderGoods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/AccountMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/AdminMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/AuthMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsCategoriesMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsCollectionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsCommentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsFileMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsFreezeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsPicMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/GoodsSnapshotMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/RoleMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/RoleToAuthMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/SystemDictMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/UserOrderGoodsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/mapper/UserOrderMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/AuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsCategoriesService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsCollectionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsCommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsFileService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsFreezeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsPicService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/GoodsSnapshotService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/RoleService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/RoleToAuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/SystemDictService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/UserOrderGoodsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/UserOrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/AccountServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/AdminServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/AuthServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsCategoriesServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsCollectionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsCommentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsFileServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsFreezeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsPicServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsSnapshotServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/RoleServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/RoleToAuthServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/SystemDictServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/UserOrderGoodsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/UserOrderServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/CodeGeneration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/EmailCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/JSONUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/MailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/MyMetaObjectHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/OssUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/Sha256.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/vo/ResultData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/AccountMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/AdminMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsCategoriesMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsCollectionMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsCommentMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsFileMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsFreezeMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsPicMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsSnapshotMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/SystemDictMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/UserOrderGoodsMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/UserOrderMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/dataMall/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/dataMall/gateway/GatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/GoodsCenterApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/config/AlipayConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/config/MyBatisPlusConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/config/OssConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsCategoriesController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsCollectionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsCommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsFileController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsPicController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsSnapshotController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/Auth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/Goods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/GoodsCategories.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/GoodsCollection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/GoodsComment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/GoodsFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/GoodsFreeze.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/GoodsPic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/GoodsSnapshot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/RoleToAuth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/SystemDict.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/UserOrder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/entity/UserOrderGoods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/feign/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsCategoriesMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsCollectionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsCommentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsFileMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsFreezeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsPicMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/mapper/GoodsSnapshotMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsCategoriesService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsCollectionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsCommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsFileService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsFreezeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsPicService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/GoodsSnapshotService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsCategoriesServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsCollectionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsCommentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsFileServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsFreezeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsPicServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsSnapshotServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/CodeGeneration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/EmailCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/JSONUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/MailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/MyMetaObjectHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/OssUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/Sha256.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/vo/ResultData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsCategoriesMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsCollectionMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsCommentMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsFileMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsFreezeMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsPicMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsSnapshotMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/OrderCenterApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/config/AlipayConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/config/MyBatisPlusConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/config/OssConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/controller/GoodsSnapshotController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/controller/UserOrderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/controller/UserOrderGoodsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/Auth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/Goods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/GoodsCategories.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/GoodsCollection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/GoodsComment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/GoodsFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/GoodsFreeze.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/GoodsPic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/GoodsSnapshot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/RoleToAuth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/SystemDict.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/UserOrder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/entity/UserOrderGoods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/feign/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/feign/GoodsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/mapper/GoodsSnapshotMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/mapper/UserOrderGoodsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/mapper/UserOrderMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/GoodsSnapshotService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/UserOrderGoodsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/UserOrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/impl/GoodsSnapshotServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/impl/UserOrderGoodsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/impl/UserOrderServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/CodeGeneration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/EmailCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/JSONUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/MailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/MyMetaObjectHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/OssUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/Sha256.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/vo/ResultData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/resources/mapper/GoodsSnapshotMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/resources/mapper/UserOrderGoodsMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-center/src/main/resources/mapper/UserOrderMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/UserCenterApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/EmailCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/JSONUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/MailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/MyMetaObjectHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/OssUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/Sha256.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/config/MyBatisPlusConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/controller/AccountController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/entity/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/mapper/AccountMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/service/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/service/impl/AccountServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/vo/ResultData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-center/src/main/resources/mapper/AccountMapper.xml" afterDir="false" />
+    <list default="true" id="f390c057-56f3-4fdb-bb8e-f75a027e5e31" name="更改" comment="服务分离">
+      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/config/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/config/OssConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/config/AlipayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/config/AlipayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsCommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsCommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsPicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/GoodsPicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/controller/RoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/entity/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsFreezeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/GoodsFreezeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/UserOrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/service/impl/UserOrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/JSONUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/JSONUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/OssUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/OssUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/Sha256.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/java/com/dataMall/adminCenter/utils/Sha256.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/AccountMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/AccountMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsFileMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin-center/src/main/resources/mapper/GoodsFileMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/dataMall/gateway/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/dataMall/gateway/GatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/config/AlipayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/config/AlipayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/controller/GoodsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsFreezeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/service/impl/GoodsFreezeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/JSONUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/JSONUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/OssUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/OssUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/Sha256.java" beforeDir="false" afterPath="$PROJECT_DIR$/goods-center/src/main/java/com/dataMall/goodsCenter/utils/Sha256.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsFileMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/goods-center/src/main/resources/mapper/GoodsFileMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/config/AlipayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/config/AlipayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/controller/UserOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/controller/UserOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/feign/GoodsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/feign/GoodsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/impl/GoodsSnapshotServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/impl/GoodsSnapshotServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/impl/UserOrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/service/impl/UserOrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/JSONUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/JSONUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/OssUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/OssUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/Sha256.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-center/src/main/java/com/dataMall/orderCenter/utils/Sha256.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/EmailCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/utils/EmailCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/JSONUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/utils/JSONUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/utils/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/MyMetaObjectHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/utils/MyMetaObjectHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/OssUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/utils/OssUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/Utils/Sha256.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/utils/Sha256.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/java/com/dataMall/userCenter/service/impl/AccountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-center/src/main/resources/mapper/AccountMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-center/src/main/resources/mapper/AccountMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,9 +75,12 @@
   <component name="HttpClientSelectedEnvironments">
     <file url="file://$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" environment="dev" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2YGBabLsJ7ojWBv7CmTXQSeqS2y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -297,48 +89,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "corretto-18",
-    "last_opened_file_path": "F:/graduation/springcloud/dataMall/order-center/src/main/java/com/dataMall/orderCenter",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "rest.client.default.execution.environment": "dev",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/graduation/springcloud/dataMall/user-center/src/main/java/com/dataMall/userCenter/config&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;rest.client.default.execution.environment&quot;: &quot;dev&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\graduation\springcloud\dataMall\user-center\src\main\java\com\dataMall\userCenter\config" />
+      <recent name="F:\graduation\springcloud\dataMall\gateway\src\main\resources" />
       <recent name="F:\graduation\springcloud\dataMall\order-center\src\main\java\com\dataMall\orderCenter" />
       <recent name="F:\graduation\springcloud\dataMall\goods-center\src\main\java\com\dataMall\goodsCenter\entity" />
       <recent name="F:\graduation\springcloud\dataMall\order-center\src\main\resources\mapper" />
-      <recent name="F:\graduation\springcloud\dataMall\order-center\src\main\java\com\dataMall\orderCenter\service\impl" />
-      <recent name="F:\graduation\springcloud\dataMall\order-center\src\main\java\com\dataMall\orderCenter\service\" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.dataMall.userCenter.config" />
+      <recent name="com.dataMall.gateway.config" />
       <recent name="com.dataMall.goodsCenter.entity" />
       <recent name="com.dataMall.orderCenter.service" />
       <recent name="com.dataMall.orderCenter.service.impl" />
-      <recent name="com.dataMall.orderCenter.mapper" />
-      <recent name="com.dataMall.orderCenter.entity" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -348,11 +141,8 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.用户中心 (1)">
-    <configuration name="generated-requests | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="2" requestIdentifier="#2" runType="运行单个请求">
-      <method v="2" />
-    </configuration>
-    <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="运行单个请求">
+  <component name="RunManager" selected="Spring Boot.OrderCenterApplication">
+    <configuration name="generated-requests | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="6" requestIdentifier="#6" runType="运行单个请求">
       <method v="2" />
     </configuration>
     <configuration name="管理中心 (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -431,6 +221,8 @@
       </method>
     </configuration>
     <configuration name="用户中心 (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <envs>
         <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
         <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
@@ -449,12 +241,56 @@
       </envs>
       <module name="user-center" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.userCenter.UserCenterApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dataMall.userCenter.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="商品中心 (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8101" />
+      </envs>
+      <module name="goods-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.goodsCenter.GoodsCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="订单中心 (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8201" />
+      </envs>
+      <module name="order-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.orderCenter.OrderCenterApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -480,6 +316,81 @@
       </envs>
       <module name="admin-center" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.adminCenter.AdminCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="商品中心 (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8102" />
+      </envs>
+      <module name="goods-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.goodsCenter.GoodsCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="订单中心 (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8202" />
+      </envs>
+      <module name="order-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.orderCenter.OrderCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="用户中心 (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8302" />
+      </envs>
+      <module name="user-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.userCenter.UserCenterApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -563,35 +474,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="用户中心" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
-      <envs>
-        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
-        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
-        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
-        <env name="alipay.config.appid" value="2021004122662875" />
-        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
-        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
-        <env name="alipay.dev.config.appid" value="9021000131681661" />
-        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
-        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
-        <env name="mail.username" value="wooovi@163.com" />
-        <env name="mysql.password" value="5123580rt" />
-        <env name="redis.host" value="180.76.236.84" />
-        <env name="redis.password" value="Woov0815@" />
-        <env name="server.port" value="8300" />
-      </envs>
-      <module name="user-center" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.userCenter.UserCenterApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.dataMall.userCenter.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="管理中心" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -613,6 +495,194 @@
       </envs>
       <module name="admin-center" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.adminCenter.AdminCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.gateway.GatewayApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dataMall.gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GoodsCenterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8100" />
+      </envs>
+      <module name="goods-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.goodsCenter.GoodsCenterApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dataMall.goodsCenter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderCenterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8200" />
+      </envs>
+      <module name="order-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.orderCenter.OrderCenterApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dataMall.orderCenter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserCenterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8400" />
+      </envs>
+      <module name="user-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.userCenter.UserCenterApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dataMall.userCenter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="网关" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
+      <module name="gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.gateway.GatewayApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.dataMall.gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="商品中心" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8100" />
+      </envs>
+      <module name="goods-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.goodsCenter.GoodsCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="订单中心" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8200" />
+      </envs>
+      <module name="order-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.orderCenter.OrderCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="用户中心" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="accessKeyId" value="LTAI5t6kzkNsprvAHYzHPmED" />
+        <env name="accessKeySecret" value="asAJUzXm5Cc6iAhzvfA0cjiGFARhNF" />
+        <env name="alipay.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnoTEo5HXsywmHNWM7KmJx2NEg7bzYS3KQDum2a+rcb3sjbET0CmPuztKdGlJj07SFvPSC717hlpgVorXYmqCEAPoAjjrIyMZmGOjYEcPU0qj8edeGcCyOuMmdtFOZMf4PJYusF/Pn4FJr6MMRhL3TdIFDyUcsl4K6qTSht/HgoPkxsBiay7Muy+0wcBwk92ZLnAgcNjS6qwBEA+O8sqQCFok/RcorzOvu4nnBhF4+CUuvx6uIGP6BGM8fPOcqtaNWlpA8BSUGyJ2c7JMTP9m9gX1g+SS6LxgP7lnNh1wlcYH+0FiTZRwf9bph8HzNzYqtdgFeC3SS0hn9nMtVuPMbQIDAQAB" />
+        <env name="alipay.config.appid" value="2021004122662875" />
+        <env name="alipay.config.merchant_private_key" value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCFvg/oJQ9i4oEOIhA8isNLLv1P5fFS7b3tDEVnXRD68VdOTtQY3vvYOa8NmQxFunPi89EdOnbAnwECXf6Cp9srL5bIf8sJ7hf0BHS4AgrHe/d60y+uldQisJjQpSxLSsRp/+xO2LTYqGH1S2DLSerGJrsty0s1CyU6nVqYl19ZJRWHCRAOGs1ay+UG9vL47Wmyut69dzZ+IoyatE8wsFuVHE/UKR6v6/9mMAOvebNDNcYvKGHPAXz4jd/34iczP+SAhOSFlAkdkNL5VCrOIa3aUL384QZ8V68KP14ofW6tziXUJkz3a7AkqXsZrUNi1nRPFdZc/lxsScmqaZP/hRAjAgMBAAECggEAEfRH8mQ3QpEhviH4iAgg25D9VKKL2RQtcQs6rfuice3ASLTwaD5XFNn5lBu9uAal1AvjQMc+dfFik0zHBAdAtvV2iogNW9HoyUtn1+P+SnVr7cM4HXnjtpx6h1gFMD5jS8+di6Av9v3z2Jg78E6GA//jFOy7te0/HDVPmjiIBlFwRvJL0KZzMnW3tqqdsG6RGI37LnBH2yLs37YpXquNJUalfVg4BkyU3c09bgOn58+DDTPHittD0TDlca3YnKJX2VP4tZcx9nf3196Z0mqP/4ho6r7fbZV/M5ssmG9vpdYSdpyBcJunwV58FHt01Nsw/WgsexKlKcLgPGhcgaRZ8QKBgQDKZPij1lS0ldhmUA4I9pEuz//hmAzk+AHJgbX+0hCRmNECU2Il2aD+dtcJ/b6Jw/pLH4aWto9U0B7Fup3QZtnhtiEZHEg9aWm1KP2YoKG80VUJc2kHBrAMS4PZJl7bb4PAdpZc1MIEa3ekx9ZbfrqCDA/VSBm0s/kx0U3jBZK5fQKBgQCpKkDCufLLhJ53i5pmDPG/MEXoeYXWDQ8+vlqFiSNQrte0gi6xpkOyAuXjT5UpvsxcfOXrBqxGLF7Y/GZu0aqb2mYQJwPDZEDFenzQarWzovSXo3zwfXv3cedzcdpeP7IIWZOpOK/UMoY8bIGcosFmOiTZ0mbUon2T+EiIePYiHwKBgQDIvgFHL0xwmLc8M2bYSQaS8ccQEGmpqLrNDJRgnCXG41VbAy0z8XkXKvP6euzDY9gbLrelQIlFS+9ZmtDwZTLyBl0ptL2J+8XW40M0YQ5KYy3+47NmPqHacAPkG4S2DRMWkAhvJq8RBy5yB6t6sGV4m1IQ7yRf8KnXWYvxAhQXWQKBgQCWjUoxg3g39IFr90ykQiTseLPe4DhidiD5QEQj0Bcj+Vd0COAxrr1UsguSsAMasfoC3g1pi/jKQzbuekNXoTXrmwV2nqJUxOZ4Wji27CFmDEMOqavKBIPNhwvrzIoBk0KI99/YnOCvQ4AASrlXg+oHZvvg98YYu7xzcmZrPuwfFQKBgBakfs3LIH+ZKYra/cPQ1lUyyAnfKVoZmOfuY1VZDaO0Zx3pEwCGLfX3uWUX5rb70blyKtCLkuZ6irWytekhkciwXH8mfMTWCc4RgFOqAnG30LdYY6Vv6x+9AvHUArvwxSNEzuV+iVXIDIA1U+1rEDWOe9mAA5VfMvyemlEfT09t" />
+        <env name="alipay.dev.config.alipay_public_key" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsUKNLfuZ/70VOa8Fm1c1WYFDSznSTHj5Iktqz7xSx4cTIoZzFDRfpfQDb1WJ3pe9H1uaRvZzIt03VgINQKDZOmqzSYY4/eSQ/wvynPacgbT+w/+kSFrnwmEwez2aAFbcLmlB5hWxOp/Mg+2FeJ6ggoXFycHd7UYS1sRlPK7SWvcUEvP72wXlZMbghtAeMJwa42aLFC0gGMlsQfGYpO7xVvbGYjjL0P2Y5hADTgTwY3HkJAorps9Xx6gU1tYQNi3qhXvjC0hVXBZDJetAOn6MHsgPhrCtonZ52Gc9UlvqS22Gxtt0Vf/zpqkI62I1fXhZDSlgUdmadb1uBqDDF/ZsnQIDAQAB" />
+        <env name="alipay.dev.config.appid" value="9021000131681661" />
+        <env name="alipay.dev.config.merchant_private_key" value="MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCmqbQOXiOw3qi0Kg1axg5MJ2UAWVuZApqpu3irA8Wii8DGXU7YfK02/ihedo00dM4Tbi3jd1rUOvn7ZpUMLAURoAhKyRjJLn/L01zMhrcnTMm5kILrkv9gxiSUr2wJzBYHwPDBdE57Pkanbk6NQxmsbRZ996rOvu7zKDaDmn8/kEt0hZsnJvDwmbJK7/lniUzYWGxySKnCOIncvURAdlOSDukuqbB0h1WlOdWKPDgJ2synvKV1J+UVB91XbqtdtVl/n8qP8JfHkzNoflTDZpjurywpEM43yUHQwrriQ3mMpEcGikNX8VFLZ/A5JrEDR0InXebpOsuMtTsff2Lcvs3XAgMBAAECggEACmIaQKbmzFci5Y6VJGmgbGgr57ipdz/tSNPQMb9bacQRL4qSpfQmin2NIE18gJ8iU52SqFBATWabOmlqscZwTmfM/HPI4ofOGHHDn05pTL6A9tmk/m47ENlnYAgJ0BZx7Ou9VCAd35nCpx29MRnUGKT3OMPcVWMZ2fZQZySR9vC5tbyU6htBpUvHl8KnrCkvfAMb6uDQ2nTPMxZzP5lvDZ6XuBjNeT8VTvcKimP+SGiQmQep+4FPbvq1M7rqv29tonAVdeoOFccUdjLx3FcDjK8ZevuCkOpyEc+YKADWMjrguQrLb8PZvdgaoml3bB5SfB/OqNv32NsRLNATPuykeQKBgQDP9OiEVKRxlziocXbAlpEEWHHB0/W8VMIadRq6hPSs+zR/J6ObkL80jv61RNm/RSSi+yA3L4mynCWQLxiblHebJV2RcwduGikHmRojNNcEWdZFM9aKpBGhvNoRPQDN2ZI3OXcz0fEh2wNiRFbBFT2eQ4+JtO74hwjXA713PV6uhQKBgQDNKpNUeZeEZKNhiBMe7uLcxTV7yHlxBAYpsKN1GfN4oKgLr1Z9F6lfN/Dr4+q8tXw6gMSeukhNqlg6EdHcuh6j9vYM2Pm3IwcXemikNyqUSXFAHFo0wNwd9hXO2e2TXjvylp6JL+Whwil2SVL9D1jKjBJn8lw1CB/BWXAIJo+/qwJ/PoxrY2ISFBhn8kIudb7T33q6vJIEV6EmwM54O6HB9kWYhKZnj2L6H9Tix6Lt25nwaxUdm3uw7wgIRFXmEOWXFBMpEZaHpZY4wRBLzEsYYTakPCxbW1f99afX71dp5oCKehHOyMdcv9IgMm5bqbe50OCBS+of9qCnCAUX98V9tQKBgFJu9NtQL4zGUs7xOZ2IJibGJgMiPYknMMK3cjWuw6CIDH0Fah7AzxCvDWH6JWrFELEA4/9SoZJzCxfp6QRi08TViW8IDu2CaWsJh9nTQIxsJdC4k5X2l3qCUajW7xnzFusVkYVVdVJVDQu10l5TOD3JoeuZ+WplZTzujpD3zXIZAoGBAKe67HA2RKVx+r15KItlxhksv6n0ueTKvZ96Hpaxa5QBuwzG020+hnWshJiTThRsgPhi0BnOYQhogreTLA4FrlP7VJc/wOS4GsKPJthD6d2htVA3TnJB0h2bincebUHLKr+GCLqWhZvtyo3xZDGCwq37lqG31RgAPX9pRIWnlFFt" />
+        <env name="mail.password" value="RQJGPLSHKCWVTTII" />
+        <env name="mail.username" value="wooovi@163.com" />
+        <env name="mysql.password" value="5123580rt" />
+        <env name="redis.host" value="180.76.236.84" />
+        <env name="redis.password" value="Woov0815@" />
+        <env name="server.port" value="8300" />
+      </envs>
+      <module name="user-center" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dataMall.userCenter.UserCenterApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -668,26 +738,22 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="HTTP 请求.generated-requests | #2" />
-      <item itemvalue="HTTP 请求.generated-requests | #3" />
+      <item itemvalue="HTTP 请求.generated-requests | #6" />
       <item itemvalue="Spring Boot.管理中心" />
       <item itemvalue="Spring Boot.管理中心 (1)" />
       <item itemvalue="Spring Boot.管理中心 (2)" />
-      <item itemvalue="Spring Boot.商品中心" />
-      <item itemvalue="Spring Boot.商品中心 (1)" />
-      <item itemvalue="Spring Boot.商品中心 (2)" />
-      <item itemvalue="Spring Boot.订单中心" />
-      <item itemvalue="Spring Boot.订单中心 (1)" />
-      <item itemvalue="Spring Boot.订单中心 (2)" />
-      <item itemvalue="Spring Boot.用户中心 (1)" />
-      <item itemvalue="Spring Boot.用户中心 (2)" />
-      <item itemvalue="Spring Boot.用户中心" />
+      <item itemvalue="Spring Boot.GatewayApplication" />
+      <item itemvalue="Spring Boot.GoodsCenterApplication" />
+      <item itemvalue="Spring Boot.OrderCenterApplication" />
+      <item itemvalue="Spring Boot.UserCenterApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP 请求.generated-requests | #2" />
-        <item itemvalue="HTTP 请求.generated-requests | #3" />
-        <item itemvalue="Spring Boot.用户中心" />
+        <item itemvalue="Spring Boot.OrderCenterApplication" />
+        <item itemvalue="Spring Boot.GoodsCenterApplication" />
+        <item itemvalue="Spring Boot.GatewayApplication" />
+        <item itemvalue="Spring Boot.UserCenterApplication" />
+        <item itemvalue="HTTP 请求.generated-requests | #6" />
       </list>
     </recent_temporary>
   </component>
@@ -699,8 +765,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1700142101082</updated>
-      <workItem from="1700142102171" duration="20778000" />
+      <workItem from="1700142102171" duration="27205000" />
+      <workItem from="1700273600573" duration="673000" />
+      <workItem from="1700274283549" duration="8357000" />
+      <workItem from="1700293321190" duration="3618000" />
     </task>
+    <task id="LOCAL-00001" summary="服务分离">
+      <option name="closed" value="true" />
+      <created>1700234230084</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1700234230084</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -708,5 +786,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="服务分离" />
+    <option name="LAST_COMMIT_MESSAGE" value="服务分离" />
   </component>
 </project>

@@ -28,7 +28,7 @@ public class AlipayConfig implements ApplicationRunner {
     // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
     // 即支付成功之后，需要跳转到的页面，一般为网站的首页
     @Value("${alipay.return_url}")
-    public String return_url = "http://www.baidu.com";
+    public String return_url;
     // 签名方式
     @Value("${alipay.sign_type}")
     public String sign_type;

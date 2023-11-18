@@ -26,6 +26,7 @@ public class GoodsSnapshotServiceImpl extends ServiceImpl<GoodsSnapshotMapper, G
     @Override
     public Integer saveGoodsSnapshot(Integer goodsId) {
         Goods goods = goodsService.getById(goodsId);
+        goods.moneyToPrice();
         Integer snapshotId = isExistSnapshot(goods);
         if (snapshotId != -1) {
             return snapshotId;

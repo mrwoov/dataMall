@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author woov
  * @since 2023-08-29
  */
+@SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/goodsComment")
 public class GoodsCommentController {
