@@ -11,6 +11,7 @@ import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.AdminService;
 import com.dataMall.adminCenter.utils.Sha256;
 import jakarta.annotation.Resource;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,33 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     private RedisTemplate<String, String> redisTemplate;
     @Resource
     private AdminService adminService;
+
+    @Override
+    public int getTodayNewUserCount() {
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("create_time", java.time.LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0)); // 大于等于今天的开始时间
+        queryWrapper.lt("create_time", java.time.LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999)); // 小于今天的结束时间
+        return (int) count(queryWrapper);
+    }
+    @Override
+    public int getYesterdayNewUserCount() {
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("create_time", java.time.LocalDateTime.now().minusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0)); // 大于等于昨天的开始时间
+        queryWrapper.lt("create_time", java.time.LocalDateTime.now().minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999)); // 小于昨天的结束时间
+        return (int) count(queryWrapper);
+    }
+    @Override
+    public int getThisMonthNewUserCount() {
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("create_time", java.time.LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0)); // 大于等于本月的开始时间
+        queryWrapper.lt("create_time", java.time.LocalDateTime.now());
+        return (int) count(queryWrapper);
+    }
+    @Override
+    public int getUserTotal(){
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        return (int) count(queryWrapper);
+    }
 
     //登录
     @Override

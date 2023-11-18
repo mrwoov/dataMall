@@ -13,6 +13,14 @@ import com.dataMall.adminCenter.entity.Account;
  * @since 2023-09-14
  */
 public interface AccountService extends IService<Account> {
+    int getTodayNewUserCount();
+
+    int getYesterdayNewUserCount();
+
+    int getThisMonthNewUserCount();
+
+    int getUserTotal();
+
     //登录
     String login(String userName, String passWord);
 

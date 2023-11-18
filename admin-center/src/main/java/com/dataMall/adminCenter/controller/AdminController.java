@@ -37,6 +37,7 @@ public class AdminController {
     @Resource
     private GoodsService goodsService;
 
+    @GetMapping("/panel")
     public ResultData panelInfo(@RequestHeader("token") String token) {
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
@@ -52,7 +53,10 @@ public class AdminController {
         res.put("goods_not_audit", String.valueOf(goodsService.getNotAuditGoodsCount()));
         res.put("goods_normal", String.valueOf(goodsService.getNormalGoodsCount()));
         //用户数据
-
+        res.put("user_today_num", String.valueOf(accountService.getTodayNewUserCount()));
+        res.put("user_yesterday_num", String.valueOf(accountService.getYesterdayNewUserCount()));
+        res.put("user_total_num", String.valueOf(accountService.getUserTotal()));
+        res.put("user_month_num", String.valueOf(accountService.getThisMonthNewUserCount()));
         return ResultData.success(res);
     }
 
