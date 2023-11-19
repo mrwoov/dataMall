@@ -37,5 +37,10 @@ build/
 ### Mac OS ###
 .DS_Store
 
-/run/admin.run/*.xml
+/run/admin.run/*.run.xml
 
+/run/
+/run/gateway.run/*.xml
+/run/goods.run/*.xml
+/run/order.run/*.xml
+/run/user.run/*.xml
