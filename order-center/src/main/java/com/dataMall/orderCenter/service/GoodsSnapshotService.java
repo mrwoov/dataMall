@@ -14,7 +14,10 @@ import com.dataMall.orderCenter.entity.GoodsSnapshot;
  */
 public interface GoodsSnapshotService extends IService<GoodsSnapshot> {
 
+    boolean snapshotHaveGoods(Integer snapshotId, Integer goodsId);
+
     Integer saveGoodsSnapshot(Integer goodsId);
 
     Integer isExistSnapshot(Goods goods);
+
 }

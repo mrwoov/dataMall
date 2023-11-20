@@ -22,7 +22,15 @@ import org.springframework.stereotype.Service;
 public class GoodsSnapshotServiceImpl extends ServiceImpl<GoodsSnapshotMapper, GoodsSnapshot> implements GoodsSnapshotService {
     @Resource
     private GoodsService goodsService;
-
+    @Override
+    public boolean snapshotHaveGoods(Integer snapshotId,Integer goodsId){
+        QueryWrapper<GoodsSnapshot> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",snapshotId);
+        queryWrapper.eq("goods_id",goodsId);
+        queryWrapper.last("limit 1");
+        GoodsSnapshot goodsSnapshot = getOne(queryWrapper);
+        return goodsSnapshot == null;
+    }
     @Override
     public Integer saveGoodsSnapshot(Integer goodsId) {
         Goods goods = goodsService.getById(goodsId);
@@ -57,4 +65,6 @@ public class GoodsSnapshotServiceImpl extends ServiceImpl<GoodsSnapshotMapper, G
         }
         return goodsSnapshot.getId();
     }
+
+
 }

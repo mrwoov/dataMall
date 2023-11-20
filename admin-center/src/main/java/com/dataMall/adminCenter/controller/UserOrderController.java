@@ -58,13 +58,6 @@ public class UserOrderController {
             return ResultData.fail("无权限");
         }
         UserOrder userOrder = userOrderService.getById(id);
-        List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(id);
-        userOrder.setGoodsSnapshots(goodsSnapshotList);
-        userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
-        userOrder.setTradeNo(userOrder.getTradeNo());
-        Integer totalAmount = userOrder.getTotalAmount();
-        double money = (double) totalAmount / 100;
-        userOrder.setMoney(money);
         return ResultData.success(userOrder);
     }
 
@@ -98,11 +91,5 @@ public class UserOrderController {
         return userOrderService.getById(id);
     }
 
-    //分页查询
-    @GetMapping("/page")
-    public Page<UserOrder> findPage(@RequestParam Integer pageNum,
-                                    @RequestParam Integer pageSize) {
-        return userOrderService.page(new Page<>(pageNum, pageSize));
-    }
 }
 

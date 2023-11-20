@@ -66,3 +66,6 @@ alipay:
   sign_type: RSA2
   #字符编码格式
   charset: utf-8
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

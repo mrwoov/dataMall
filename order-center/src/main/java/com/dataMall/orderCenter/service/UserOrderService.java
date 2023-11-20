@@ -21,11 +21,13 @@ public interface UserOrderService extends IService<UserOrder> {
     //更新订单表状态
     boolean updateOrderSuccess(Integer orderId, String platTradeNo);
 
-    IPage<UserOrder> page(Integer pageSize, Integer pageNum, String username, String tradeNo);
+    IPage<UserOrder> page(Integer pageSize, Integer pageNum, Integer accountId, String tradeNo,Integer state);
 
     Map<String, Object> getTradeState(String outTradeNo) throws Exception;
 
     String createTradeNo();
 
     String toPayPage(String subject, String orderId, String total) throws Exception;
+
+    void getOrderGoods(UserOrder userOrder);
 }

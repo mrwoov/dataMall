@@ -1,11 +1,18 @@
 package com.dataMall.goodsCenter.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dataMall.goodsCenter.entity.Goods;
+import com.dataMall.goodsCenter.entity.GoodsCollection;
 import com.dataMall.goodsCenter.feign.AccountService;
 import com.dataMall.goodsCenter.service.GoodsCollectionService;
+import com.dataMall.goodsCenter.service.GoodsService;
 import com.dataMall.goodsCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -22,6 +29,27 @@ public class GoodsCollectionController {
     private GoodsCollectionService goodsCollectionService;
     @Resource
     private AccountService accountService;
+    @Resource
+    private GoodsService goodsService;
+
+    //获取用户收藏的商品
+    @GetMapping("/get_user_follow")
+    public ResultData getUserFollowGoods(@RequestHeader("token") String token) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        QueryWrapper<GoodsCollection> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid", accountId);
+        List<GoodsCollection> goodsCollectionList = goodsCollectionService.list(queryWrapper);
+        List<Goods> goodsList = new ArrayList<>();
+        for (GoodsCollection goodsCollection : goodsCollectionList) {
+            Goods goods = goodsService.getById(goodsCollection.getGoodsId());
+            if (goods.getState() != 0) continue;
+            goodsList.add(goods);
+        }
+        return ResultData.success(goodsList);
+    }
 
     //收藏商品
     @GetMapping("/follow/{goodsId}")

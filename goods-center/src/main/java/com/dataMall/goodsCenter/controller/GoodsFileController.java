@@ -1,6 +1,7 @@
 package com.dataMall.goodsCenter.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dataMall.goodsCenter.entity.GoodsFile;
 import com.dataMall.goodsCenter.feign.AccountService;
@@ -8,6 +9,9 @@ import com.dataMall.goodsCenter.service.GoodsFileService;
 import com.dataMall.goodsCenter.utils.OssUtils;
 import com.dataMall.goodsCenter.vo.ResultData;
 import jakarta.annotation.Resource;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +47,15 @@ public class GoodsFileController {
         this.ossUtils = ossUtils;
     }
 
+    //用户下载商品数据
+    @GetMapping("/download/{md5}")
+    public ResultData download(@PathVariable String md5, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        QueryWrapper<GoodsFile> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("md5",md5);
+        GoodsFile goodsFile = goodsFileService.getOne(queryWrapper);
+        String url = goodsFile.getFilePath();
+        return ResultData.success(url);
+    }
     //用户上传图片
     @PostMapping("/user/upload_pic")
     public ResultData userUploadPic(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {

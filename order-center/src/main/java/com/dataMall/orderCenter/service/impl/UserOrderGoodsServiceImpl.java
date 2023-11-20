@@ -25,6 +25,19 @@ import java.util.List;
 public class UserOrderGoodsServiceImpl extends ServiceImpl<UserOrderGoodsMapper, UserOrderGoods> implements UserOrderGoodsService {
     @Resource
     private GoodsSnapshotService goodsSnapshotService;
+    @Override
+    public boolean orderHaveGoods(Integer orderId, Integer goodsId) {
+        QueryWrapper<UserOrderGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_id", orderId);
+        List<UserOrderGoods> userOrderGoodsList = list(queryWrapper);
+        for (UserOrderGoods userOrderGoods : userOrderGoodsList) {
+            boolean state = goodsSnapshotService.snapshotHaveGoods(userOrderGoods.getGoodsSnapshotId(), goodsId);
+            if (state){
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean saveOrderGoods(Integer goodsId, Integer orderId) {

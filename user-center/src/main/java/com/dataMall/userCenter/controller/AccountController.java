@@ -32,6 +32,26 @@ public class AccountController {
     @Resource
     private EmailCode emailCode;
 
+    //token和accountId是否为同一人
+    @GetMapping("is_one/{accountId}")
+    public ResultData isOne(@PathVariable Integer accountId, @RequestHeader("token") String token) {
+        Integer aId = accountService.tokenToUid(token);
+        return ResultData.state(aId.equals(accountId));
+    }
+
+    //获取用户信息
+    @GetMapping("/userInfo/{username}")
+    public ResultData getUserInfo(@PathVariable String username) {
+        Account account = accountService.getOneByOption("username",username);
+        if (account == null) {
+            return ResultData.fail();
+        }
+        account.setPassword("");
+        account.setEmail("");
+        account.setEmail("");
+        account.setToken("");
+        return ResultData.success(account);
+    }
 
     //用户登录
     @PostMapping("/login")

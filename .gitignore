@@ -44,3 +44,4 @@ build/
 /run/goods.run/*.xml
 /run/order.run/*.xml
 /run/user.run/*.xml
+/.run/

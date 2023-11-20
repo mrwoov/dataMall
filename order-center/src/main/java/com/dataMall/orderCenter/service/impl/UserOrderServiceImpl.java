@@ -9,9 +9,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.orderCenter.config.AlipayConfig;
 import com.dataMall.orderCenter.entity.Account;
+import com.dataMall.orderCenter.entity.GoodsSnapshot;
 import com.dataMall.orderCenter.entity.UserOrder;
 import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.mapper.UserOrderMapper;
+import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.utils.JSONUtils;
 import jakarta.annotation.Resource;
@@ -35,6 +37,8 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     private AlipayConfig alipayConfig;
     @Resource
     private AccountService accountService;
+    @Resource
+    private UserOrderGoodsService userOrderGoodsService;
 
     @Override
     public UserOrder getOneByOption(String column, Object value) {
@@ -58,24 +62,22 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
-    public IPage<UserOrder> page(Integer pageSize, Integer pageNum, String username, String tradeNo) {
+    public IPage<UserOrder> page(Integer pageSize, Integer pageNum, Integer accountId, String tradeNo, Integer state) {
         QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
-        if (username != null) {
-            List<Account> accountList = accountService.usernameLikeList(username);
-            List<Integer> accounts = new ArrayList<>();
-            for (Account account : accountList) {
-                accounts.add(account.getId());
-            }
-            queryWrapper.in("account_id", accounts);
+        queryWrapper.eq("account_id", accountId);
+        if (state!=null){
+            queryWrapper.eq("state",state);
         }
         if (tradeNo != null) {
             queryWrapper.like("trade_no", tradeNo);
         }
+        queryWrapper.orderByDesc("id");
         IPage<UserOrder> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (UserOrder userOrder : page.getRecords()) {
             userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
             double money = (double) userOrder.getTotalAmount() / 100;
             userOrder.setMoney(money);
+            userOrder.setGoodsSnapshots(userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId()));
         }
         return page;
     }
@@ -110,5 +112,16 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     public String toPayPage(String subject, String orderId, String total) throws Exception {
         AlipayTradePagePayResponse response = Factory.Payment.Page().pay(subject, orderId, total, alipayConfig.return_url);
         return response.getBody();
+    }
+
+    @Override
+    public void getOrderGoods(UserOrder userOrder) {
+        List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId());
+        userOrder.setGoodsSnapshots(goodsSnapshotList);
+        userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
+        userOrder.setTradeNo(userOrder.getTradeNo());
+        Integer totalAmount = userOrder.getTotalAmount();
+        double money = (double) totalAmount / 100;
+        userOrder.setMoney(money);
     }
 }

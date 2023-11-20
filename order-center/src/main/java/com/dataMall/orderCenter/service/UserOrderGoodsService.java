@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface UserOrderGoodsService extends IService<UserOrderGoods> {
 
+    boolean orderHaveGoods(Integer orderId, Integer goodsId);
+
     boolean saveOrderGoods(Integer goodsId, Integer orderId);
 
     List<GoodsSnapshot> getOrderGoodsSnapshot(Integer orderId);

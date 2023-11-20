@@ -1,17 +1,22 @@
 package com.dataMall.orderCenter.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dataMall.orderCenter.entity.Goods;
+import com.dataMall.orderCenter.entity.GoodsSnapshot;
 import com.dataMall.orderCenter.entity.UserOrder;
 import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.feign.GoodsService;
+import com.dataMall.orderCenter.service.GoodsSnapshotService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +41,104 @@ public class UserOrderController {
     private AccountService accountService;
     @Resource
     private UserOrderService userOrderService;
+    @Resource
+    private GoodsSnapshotService goodsSnapshotService;
 
+    //用户取消订单
+
+    //用户下载订单商品的资源
+    @GetMapping("/download/{orderId}")
+    public ResultData downloadGoodsSource(@PathVariable Integer orderId, @RequestHeader("token") String token) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+        queryWrapper.ge("state", 1);
+        queryWrapper.eq("id", orderId);
+        UserOrder userOrder = userOrderService.getOne(queryWrapper);
+        if (userOrder==null){
+            System.out.println(1);
+            return ResultData.fail();
+        }
+        //逻辑：查订单是否是token用户的，查订单商品的md5
+        List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(orderId);
+        List<String> md5List = new ArrayList<>();
+        for (GoodsSnapshot goodsSnapshot:goodsSnapshotList){
+            md5List.add(goodsSnapshot.getFileMd5());
+        }
+        return ResultData.success(md5List);
+    }
+
+    //用户分页查订单
+    @PostMapping("/user/page")
+    public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        if (pageNum == null || pageSize == null) {
+            return ResultData.fail("缺少参数");
+        }
+        IPage<UserOrder> page = userOrderService.page(pageSize, pageNum, accountId, userOrder.getTradeNo(), userOrder.getState());
+        return ResultData.success(page);
+    }
+
+    //查用户全部订单
+    @GetMapping("user_get_all")
+    public ResultData getUserALlOrder(@RequestHeader("token") String token) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+        List<UserOrder> userOrderList = userOrderService.list(queryWrapper);
+        for (UserOrder userOrder : userOrderList) {
+            //查快照
+            userOrderService.getOrderGoods(userOrder);
+        }
+        return ResultData.success(userOrderList);
+    }
+
+    //查用户未付款订单
+    @GetMapping("user_get_noPay")
+    public ResultData getUserNoPayOrder(@RequestHeader("token") String token) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+        queryWrapper.eq("state", 0);
+        List<UserOrder> userOrderList = userOrderService.list(queryWrapper);
+        for (UserOrder userOrder : userOrderList) {
+            //查快照
+            userOrderService.getOrderGoods(userOrder);
+        }
+        return ResultData.success(userOrderList);
+    }
+
+    //查用户已购买订单
+    @GetMapping("user_get_buy")
+    public ResultData getUserBuyOrder(@RequestHeader("token") String token) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+        queryWrapper.gt("state", 1);
+        List<UserOrder> userOrderList = userOrderService.list(queryWrapper);
+        for (UserOrder userOrder : userOrderList) {
+            //查快照
+            userOrderService.getOrderGoods(userOrder);
+        }
+        return ResultData.success(userOrderList);
+    }
+
+    //检查订单
     @GetMapping("/check")
     public ResultData checkOrder(@RequestParam("trade_no") String tradeNo) {
         UserOrder userOrder = userOrderService.getOneByOption("trade_no", tradeNo);
@@ -102,6 +204,7 @@ public class UserOrderController {
         return ResultData.success(map);
     }
 
+    //支付订单
     @GetMapping("/pay")
     public String pay(@RequestParam("trade_no") String tradeNo) throws Exception {
         UserOrder userOrder = userOrderService.getOneByOption("trade_no", tradeNo);

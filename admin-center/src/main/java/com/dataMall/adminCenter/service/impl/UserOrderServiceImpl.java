@@ -9,9 +9,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.adminCenter.config.AlipayConfig;
 import com.dataMall.adminCenter.entity.Account;
+import com.dataMall.adminCenter.entity.GoodsSnapshot;
 import com.dataMall.adminCenter.entity.UserOrder;
 import com.dataMall.adminCenter.mapper.UserOrderMapper;
 import com.dataMall.adminCenter.service.AccountService;
+import com.dataMall.adminCenter.service.UserOrderGoodsService;
 import com.dataMall.adminCenter.service.UserOrderService;
 import com.dataMall.adminCenter.utils.JSONUtils;
 import jakarta.annotation.Resource;
@@ -34,6 +36,8 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     private AlipayConfig alipayConfig;
     @Resource
     private AccountService accountService;
+    @Resource
+    private UserOrderGoodsService userOrderGoodsService;
 
     @Override
     //获取今日订单数
@@ -145,5 +149,16 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     public String toPayPage(String subject, String orderId, String total) throws Exception {
         AlipayTradePagePayResponse response = Factory.Payment.Page().pay(subject, orderId, total, alipayConfig.return_url);
         return response.getBody();
+    }
+
+    @Override
+    public void getOrderGoods(UserOrder userOrder){
+        List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId());
+        userOrder.setGoodsSnapshots(goodsSnapshotList);
+        userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
+        userOrder.setTradeNo(userOrder.getTradeNo());
+        Integer totalAmount = userOrder.getTotalAmount();
+        double money = (double) totalAmount / 100;
+        userOrder.setMoney(money);
     }
 }
