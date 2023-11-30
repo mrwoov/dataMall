@@ -1,10 +1,7 @@
 package com.dataMall.goodsCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dataMall.goodsCenter.entity.Goods;
-import com.dataMall.goodsCenter.entity.GoodsCategories;
-import com.dataMall.goodsCenter.entity.GoodsFile;
-import com.dataMall.goodsCenter.entity.GoodsPic;
+import com.dataMall.goodsCenter.entity.*;
 import com.dataMall.goodsCenter.feign.AccountService;
 import com.dataMall.goodsCenter.service.*;
 import com.dataMall.goodsCenter.utils.OssUtils;
@@ -44,11 +41,25 @@ public class GoodsController {
     private GoodsFreezeService goodsFreezeService;
     @Resource
     private OssUtils ossUtils;
+    @Resource
+    private GoodsPortalShowService goodsPortalShowService;
 
     public GoodsController(OssUtils ossUtils) {
         this.ossUtils = ossUtils;
     }
 
+    @GetMapping("/getPortalIndex")
+    public ResultData getPortalIndex() {
+        List<GoodsPortalShow> goodsPortalShowList = goodsPortalShowService.list();
+        List<Goods> goodsList = new ArrayList<>();
+        for (GoodsPortalShow goodsPortalShow : goodsPortalShowList) {
+            Goods goods = goodsService.getById(goodsPortalShow.getGoodsId());
+            goods.setFileMd5("");
+            goodsService.getGoodsOtherParam(goods);
+            goodsList.add(goods);
+        }
+        return ResultData.success(goodsList);
+    }
 
     // 用户上架商品
     @PostMapping("release_on")

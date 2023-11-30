@@ -2,6 +2,7 @@ package com.dataMall.userCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dataMall.userCenter.entity.Account;
+import com.dataMall.userCenter.feign.AdminFeign;
 import com.dataMall.userCenter.service.AccountService;
 import com.dataMall.userCenter.utils.EmailCode;
 import com.dataMall.userCenter.utils.MailService;
@@ -31,6 +32,8 @@ public class AccountController {
     private MailService mailService;
     @Resource
     private EmailCode emailCode;
+    @Resource
+    private AdminFeign adminFeign;
 
     //token和accountId是否为同一人
     @GetMapping("is_one/{accountId}")
@@ -42,7 +45,7 @@ public class AccountController {
     //获取用户信息
     @GetMapping("/userInfo/{username}")
     public ResultData getUserInfo(@PathVariable String username) {
-        Account account = accountService.getOneByOption("username",username);
+        Account account = accountService.getOneByOption("username", username);
         if (account == null) {
             return ResultData.fail();
         }
@@ -142,7 +145,7 @@ public class AccountController {
         Integer uid = accountService.tokenToUid(token);
         Account account = accountService.getById(uid);
         Map<String, String> res = new HashMap<>();
-//        res.put("admin", String.valueOf(adminService.isAdmin(uid)));
+        res.put("admin", String.valueOf(adminFeign.isAdmin(uid)));
         res.put("username", account.getUsername());
         return ResultData.success(res);
     }

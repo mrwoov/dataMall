@@ -111,6 +111,7 @@ public class GoodsFileController {
         if (!state) {
             return ResultData.fail();
         }
+        System.out.println(file);
         //开始上传
         boolean uploadStatus = ossUtils.uploadGoodsData(accountId, processedFileName, file);
         //上传失败操作

@@ -112,6 +112,9 @@ public class Goods implements Serializable {
 
     @TableField(exist = false)
     private String option;
+    
+    @TableField(exist = false)
+    private boolean isShowIndex;
 
     private Goods(Integer goodsId, String name, Integer categoriesId, String detail, String picIndex, Integer price) {
         this.setId(goodsId);

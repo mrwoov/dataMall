@@ -34,6 +34,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     private GoodsFileService goodsFileService;
     @Resource
     private GoodsPicService goodsPicService;
+    @Resource
+    private GoodsPortalShowService goodsPortalShowService;
 
     //获取商品总数
     @Override
@@ -79,6 +81,12 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         goods.priceToMoney();
         goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
         goods.priceToMoney();
+        if (goodsPortalShowService.getOneByOption("goods_id", goods.getId()) != null){
+            goods.setShowPortal(true);
+        }else {
+            goods.setShowPortal(false);
+        }
+        
     }
 
     //获取Goods List的其他外键参数
@@ -87,7 +95,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         for (Goods goods : goodsList) {
             getGoodsOtherParam(goods);
         }
-    }
+    }   
 
     //通过商品id获取商品信息
     @Override

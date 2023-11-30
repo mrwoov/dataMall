@@ -2,8 +2,10 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.entity.Goods;
+import com.dataMall.adminCenter.entity.GoodsPortalShow;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsFreezeService;
+import com.dataMall.adminCenter.service.GoodsPortalShowService;
 import com.dataMall.adminCenter.service.GoodsService;
 import com.dataMall.adminCenter.utils.OssUtils;
 import com.dataMall.adminCenter.vo.ResultData;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -33,12 +37,27 @@ public class GoodsController {
     @Resource
     private GoodsFreezeService goodsFreezeService;
     @Resource
+    private GoodsPortalShowService goodsPortalShowService;
+    @Resource
     private OssUtils ossUtils;
 
     public GoodsController(OssUtils ossUtils) {
         this.ossUtils = ossUtils;
     }
 
+    
+
+    @PostMapping("/changeGoodsPortalShow")
+    //切换商品是否首页轮播图展示
+    public ResultData changeGoodsPortalShow(@RequestHeader("token") String token, @RequestBody Goods goods) {
+        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        if (!isAdmin) {
+            return ResultData.fail("无权限");
+        }
+        System.out.println(goods.isShowPortal());
+        boolean state = goodsPortalShowService.changeGoodsPortalShow(goods.getId(), goods.isShowPortal());
+        return ResultData.state(state);
+    }
 
     public static String generateFileName(String originalFileName) {
         long timestamp = System.currentTimeMillis();

@@ -118,5 +118,10 @@ public class AdminController {
         }
         return ResultData.success(page);
     }
+    
+    @GetMapping("/isAdmin")
+    public boolean isAdmin(@RequestParam("accountId") Integer accountId){
+        return adminService.isAdmin(accountId);
+    }
 }
 

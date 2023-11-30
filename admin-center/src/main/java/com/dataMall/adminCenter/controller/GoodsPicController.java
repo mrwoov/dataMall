@@ -29,6 +29,7 @@ public class GoodsPicController {
     @Resource
     private GoodsService goodsService;
 
+   
 
     //管理员冻结商品图片
     @GetMapping("/admin")

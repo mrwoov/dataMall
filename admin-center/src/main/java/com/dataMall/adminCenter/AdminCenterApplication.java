@@ -13,5 +13,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class AdminCenterApplication {
     public static void main(String[] args) {
         SpringApplication.run(AdminCenterApplication.class, args);
+        
     }
 }
