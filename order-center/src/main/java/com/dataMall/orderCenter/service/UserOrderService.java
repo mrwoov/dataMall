@@ -27,7 +27,7 @@ public interface UserOrderService extends IService<UserOrder> {
 
     String createTradeNo();
 
-    String toPayPage(String subject, String orderId, String total) throws Exception;
+    String toPayPage(String subject, String orderId, String total,String returnUrl) throws Exception;
 
     void getOrderGoods(UserOrder userOrder);
 }

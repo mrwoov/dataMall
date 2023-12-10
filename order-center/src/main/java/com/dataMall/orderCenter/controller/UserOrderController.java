@@ -206,48 +206,33 @@ public class UserOrderController {
 
     //支付订单
     @GetMapping("/pay")
-    public String pay(@RequestParam("trade_no") String tradeNo) throws Exception {
+    public String pay(@RequestParam("trade_no") String tradeNo,@RequestParam("return_url")String returnUrl) throws Exception {
         UserOrder userOrder = userOrderService.getOneByOption("trade_no", tradeNo);
         Integer total = userOrder.getTotalAmount();
         double money = total / 100.0;
-        return userOrderService.toPayPage(tradeNo, tradeNo, String.valueOf(money));
+        return userOrderService.toPayPage(tradeNo, tradeNo, String.valueOf(money),returnUrl);
     }
 
-    //新增或修改
-    @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody UserOrder userOrder) {
-        return ResultData.state(userOrderService.saveOrUpdate(userOrder));
-    }
-
-    //删除by id
-    @DeleteMapping("/{id}")
-    public Boolean delete(@PathVariable Integer id) {
-        return userOrderService.removeById(id);
-    }
-
-    //批量删除
-    @PostMapping("/del_batch")
-    public Boolean deleteBatch(@RequestBody List<Integer> ids) {
-        return userOrderService.removeByIds(ids);
-    }
-
-    //查找全部
-    @GetMapping
-    public List<UserOrder> findAll() {
-        return userOrderService.list();
-    }
-
-    //查找单个
-    @GetMapping("/{id}")
-    public UserOrder findOne(@PathVariable Integer id) {
-        return userOrderService.getById(id);
-    }
-
-    //分页查询
-    @GetMapping("/page")
-    public Page<UserOrder> findPage(@RequestParam Integer pageNum,
-                                    @RequestParam Integer pageSize) {
-        return userOrderService.page(new Page<>(pageNum, pageSize));
+    //关闭订单
+    @GetMapping("/close")
+    public ResultData close(@RequestHeader("token")String token,@RequestParam("trade_no") String tradeNo){
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登录过期");
+        }
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("trade_no",tradeNo);
+        queryWrapper.eq("account_id",accountId);
+        UserOrder userOrder = userOrderService.getOne(queryWrapper);
+        if (userOrder==null){
+            return ResultData.fail();
+        }
+        if (userOrder.getState()!=0){
+            return ResultData.fail();
+        }
+        userOrder.setState(-1);
+        boolean state = userOrderService.updateById(userOrder);
+        return ResultData.state(state);
     }
 }
 

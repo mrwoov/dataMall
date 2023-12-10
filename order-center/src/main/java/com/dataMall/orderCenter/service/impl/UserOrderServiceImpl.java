@@ -17,10 +17,15 @@ import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.utils.JSONUtils;
 import jakarta.annotation.Resource;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -39,6 +44,8 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     private AccountService accountService;
     @Resource
     private UserOrderGoodsService userOrderGoodsService;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public UserOrder getOneByOption(String column, Object value) {
@@ -109,11 +116,41 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
-    public String toPayPage(String subject, String orderId, String total) throws Exception {
-        AlipayTradePagePayResponse response = Factory.Payment.Page().pay(subject, orderId, total, alipayConfig.return_url);
+    public String toPayPage(String subject, String tradeNo, String total,String returnUrl) throws Exception {
+        this.sendDelayedMessage(tradeNo);
+        AlipayTradePagePayResponse response = Factory.Payment.Page().pay(subject, tradeNo, total, returnUrl);
         return response.getBody();
     }
 
+    @RabbitListener(queues = "delay_queue")
+    public void handleOrderEvent(@Payload String tradeNo) {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("trade_no", tradeNo);
+        UserOrder userOrder = getOne(queryWrapper);
+        if (userOrder.getState()!=0){
+            return;
+        }
+        LocalDateTime orderCreationTime = userOrder.getCreateTime();
+        System.out.println(2);
+        // 计算时间差
+        long minutesElapsed = ChronoUnit.MINUTES.between(orderCreationTime, LocalDateTime.now());
+        if (minutesElapsed>=15){
+            // 如果超过15分钟，则触发订单关闭操作
+            closeOrderByServe(userOrder);
+        }
+        
+    }
+    public void sendDelayedMessage(String orderId) {
+        long delay = 15*60*1000;
+        this.amqpTemplate.convertAndSend("delayed_exchange", "delay_key", orderId, message -> {
+            message.getMessageProperties().setDelay((int) delay);
+            return message;
+        });
+    }
+    public void closeOrderByServe(UserOrder userOrder){
+        userOrder.setState(-1);
+        updateById(userOrder);
+    }
     @Override
     public void getOrderGoods(UserOrder userOrder) {
         List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId());

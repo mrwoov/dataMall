@@ -46,6 +46,7 @@ public class GoodsCollectionController {
         for (GoodsCollection goodsCollection : goodsCollectionList) {
             Goods goods = goodsService.getById(goodsCollection.getGoodsId());
             if (goods.getState() != 0) continue;
+            goods.priceToMoney();
             goodsList.add(goods);
         }
         return ResultData.success(goodsList);

@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: order-center  #服务名称
+  rabbitmq:
+    host: localhost
+    username: root
+    password: root
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/data-mall?serverTimezone=UTC
@@ -66,6 +70,3 @@ alipay:
   sign_type: RSA2
   #字符编码格式
   charset: utf-8
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

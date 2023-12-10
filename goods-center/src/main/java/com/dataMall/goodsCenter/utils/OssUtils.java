@@ -4,11 +4,12 @@ package com.dataMall.goodsCenter.utils;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.PutObjectRequest;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class OssUtils {
     /**
      * 此处的oss是将配置文件中的参数配置后生成bean，通过自动注入来获取配置参数后的对象oss
      */
-    @Resource
+    
+    @Autowired
     private OSS oss;
     /**
      * 为了能在每个方法中使用配置号参数的oss对象，需要将其静态化，如果oss被static修饰，则每次调用时oss都是空，所以这里需要做一下转换
@@ -35,8 +37,9 @@ public class OssUtils {
      * 使用此注解修饰一个方法来实现初始化操作，注解的方法会在自动注入完成后被调用-----执行顺序--》construct构造函数-》@Autowired自动注入-》@PostConstruct
      */
     private static OSS ossP;
+
     @PostConstruct
-    public void ossTransfer(){
+    public void ossTransfer() {
         //该方法会在上面的依赖注入后自动被调用
         ossP = oss;
     }
