@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.orderCenter.config.AlipayConfig;
-import com.dataMall.orderCenter.entity.Account;
 import com.dataMall.orderCenter.entity.GoodsSnapshot;
 import com.dataMall.orderCenter.entity.UserOrder;
 import com.dataMall.orderCenter.feign.AccountService;
@@ -20,7 +19,6 @@ import jakarta.annotation.Resource;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
@@ -90,7 +88,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     /**
-     * 查询交易状态
+     * 查询支付宝交易状态
      *
      * @param outTradeNo 生成的外部订单号 out_trade_no
      */
@@ -102,7 +100,22 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         // 将返回的Object转换为Map后，可以直接使用get方法获取trade_no
         return (Map<String, Object>) map.get("alipay_trade_query_response");
     }
-
+    @Override
+    public boolean checkPayState(String tradeNo, Integer orderId){
+        //查支付宝
+        try {
+            Map<String, Object> res = getTradeState(tradeNo);
+            if ("TRADE_SUCCESS".equals(res.get("trade_status"))) {
+                //执行更新订单状态的操作：order_id,平台订单号
+                String platTradeNo = (String) res.get("trade_no");
+                boolean state = updateOrderSuccess(orderId, platTradeNo);
+                return state;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     @Override
     public String createTradeNo() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -122,6 +135,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         return response.getBody();
     }
 
+    //延迟队列处理
     @RabbitListener(queues = "delay_queue")
     public void handleOrderEvent(@Payload String tradeNo) {
         QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
@@ -130,8 +144,11 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         if (userOrder.getState()!=0){
             return;
         }
+        boolean payState = checkPayState(tradeNo,userOrder.getId());
+        if (payState){
+            return;
+        }
         LocalDateTime orderCreationTime = userOrder.getCreateTime();
-        System.out.println(2);
         // 计算时间差
         long minutesElapsed = ChronoUnit.MINUTES.between(orderCreationTime, LocalDateTime.now());
         if (minutesElapsed>=15){
@@ -140,6 +157,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         }
         
     }
+    //发送延迟消息到延迟交换机
     public void sendDelayedMessage(String orderId) {
         long delay = 15*60*1000;
         this.amqpTemplate.convertAndSend("delayed_exchange", "delay_key", orderId, message -> {

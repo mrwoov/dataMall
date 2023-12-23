@@ -99,6 +99,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
     @Override
     public boolean userUpdateGoodsState(Integer uid, Integer goodsId, Integer state) {
+        //select * from account where id = goodsId
         Goods goods = getById(goodsId);
         if (goods == null) {
             return false;
@@ -106,10 +107,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         if (!goods.getUid().equals(uid)) {
             return false;
         }
-        if (goods.getState() != 1) {
+        if (goods.getState() != 0 && goods.getState()!=1) {
             return false;
         }
-        goods.setState(1);
+        goods.setState(state);
         return updateById(goods);
     }
 

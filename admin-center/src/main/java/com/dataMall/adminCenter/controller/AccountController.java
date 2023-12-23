@@ -1,10 +1,13 @@
 package com.dataMall.adminCenter.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dataMall.adminCenter.entity.Account;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -21,6 +24,10 @@ public class AccountController {
     @Resource
     private AccountService accountService;
 
+    //冻结用户
+//    public ResultData freeze(@RequestParam("token") String token,@PathVariable("accountId") Integer accountId){
+//        
+//    }
     //管理员分页查账号信息
     @PostMapping("/admin/query")
     public ResultData queryUserInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
@@ -46,6 +53,12 @@ public class AccountController {
         }
         Account account = accountService.getById(id);
         return ResultData.success(account);
+    }
+    @GetMapping("/admin/getListByOption")
+    public ResultData usernameLikeList(@RequestParam("username") String username) {
+        QueryWrapper<Account> accountQueryWrapper = new QueryWrapper<>();
+        accountQueryWrapper.like("username", username);
+        return ResultData.success(accountService.list(accountQueryWrapper));
     }
 }
 

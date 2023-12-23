@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 @Accessors(chain = true)
 public class Goods implements Serializable {
 

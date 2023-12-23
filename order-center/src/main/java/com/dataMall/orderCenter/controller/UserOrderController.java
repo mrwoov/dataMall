@@ -43,8 +43,7 @@ public class UserOrderController {
     private UserOrderService userOrderService;
     @Resource
     private GoodsSnapshotService goodsSnapshotService;
-
-    //用户取消订单
+    
 
     //用户下载订单商品的资源
     @GetMapping("/download/{orderId}")
@@ -149,20 +148,8 @@ public class UserOrderController {
         if (userOrder.getState() == 1) {
             return ResultData.success();
         }
-        //查支付宝
-        try {
-            Map<String, Object> res = userOrderService.getTradeState(tradeNo);
-            if ("TRADE_SUCCESS".equals(res.get("trade_status"))) {
-                //执行更新订单状态的操作：order_id,平台订单号
-                Integer orderId = userOrder.getId();
-                String platTradeNo = (String) res.get("trade_no");
-                boolean state = userOrderService.updateOrderSuccess(orderId, platTradeNo);
-                return ResultData.state(state);
-            }
-            return ResultData.fail();
-        } catch (Exception e) {
-            return ResultData.fail();
-        }
+        boolean state = userOrderService.checkPayState(tradeNo,userOrder.getId());
+        return ResultData.state(state);
     }
 
     //提交订单
@@ -179,7 +166,6 @@ public class UserOrderController {
         for (Integer i : goodsIds) {
             System.out.println(i);
             Integer price = goodsService.getGoodsPrice(i);
-//            Goods goods = goodsService.getById(i);
             if (price == null) {
                 return ResultData.fail();
             }

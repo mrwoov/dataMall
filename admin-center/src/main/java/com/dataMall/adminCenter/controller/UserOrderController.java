@@ -58,6 +58,7 @@ public class UserOrderController {
             return ResultData.fail("无权限");
         }
         UserOrder userOrder = userOrderService.getById(id);
+        userOrderService.getOrderGoods(userOrder);
         return ResultData.success(userOrder);
     }
 

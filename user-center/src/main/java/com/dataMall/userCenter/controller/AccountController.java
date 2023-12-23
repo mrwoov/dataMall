@@ -68,10 +68,8 @@ public class AccountController {
         if (token.isEmpty()) {
             return ResultData.fail("账号或密码错误");
         }
-//        account = accountService.getOneByOption("token", token);
         Map<String, String> res = new HashMap<>();
         res.put("token", token);
-//        res.put("admin", String.valueOf(adminService.isAdmin(account.getId())));
         return ResultData.success(res);
     }
 
@@ -164,7 +162,6 @@ public class AccountController {
     public Account getOneByOption(@RequestParam("column") String column, @RequestParam("value") String value) {
         return accountService.getOneByOption(column, value);
     }
-
     @GetMapping("getListByOption")
     public List<Account> usernameLikeList(@RequestParam("username") String username) {
         QueryWrapper<Account> accountQueryWrapper = new QueryWrapper<>();

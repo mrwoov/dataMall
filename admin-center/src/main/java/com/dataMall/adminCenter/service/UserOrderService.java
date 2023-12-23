@@ -37,5 +37,5 @@ public interface UserOrderService extends IService<UserOrder> {
 
     String toPayPage(String subject, String orderId, String total) throws Exception;
 
-    void getOrderGoods(UserOrder userOrder);
+    UserOrder getOrderGoods(UserOrder userOrder);
 }

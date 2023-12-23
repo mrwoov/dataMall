@@ -25,6 +25,8 @@ public interface UserOrderService extends IService<UserOrder> {
 
     Map<String, Object> getTradeState(String outTradeNo) throws Exception;
 
+    boolean checkPayState(String tradeNo, Integer orderId);
+
     String createTradeNo();
 
     String toPayPage(String subject, String orderId, String total,String returnUrl) throws Exception;

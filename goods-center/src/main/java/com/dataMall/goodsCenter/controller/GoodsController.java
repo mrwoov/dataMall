@@ -71,7 +71,16 @@ public class GoodsController {
         boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);
         return ResultData.state(state);
     }
-
+    // 用户下架商品
+    @PostMapping("/release_off")
+    public ResultData releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
+            return ResultData.fail("登录过期");
+        }
+        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 1);
+        return ResultData.state(state);
+    }
     // 用户发布商品
     @PostMapping("/")
     public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
@@ -126,20 +135,12 @@ public class GoodsController {
         if (!owner) {
             return ResultData.fail();
         }
-        boolean state = goodsService.removeById(goodsId);
+        Goods goods = goodsService.getById(goodsId);
+        goods.setState(-2);
+        boolean state = goodsService.updateById(goods);
         return ResultData.state(state);
     }
 
-    // 用户下架商品
-    @PostMapping("/release_off")
-    public ResultData releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
-        if (uid == -1) {
-            return ResultData.fail("登录过期");
-        }
-        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 1);
-        return ResultData.state(state);
-    }
 
     public static String generateFileName(String originalFileName) {
         long timestamp = System.currentTimeMillis();

@@ -152,7 +152,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
-    public void getOrderGoods(UserOrder userOrder){
+    public UserOrder getOrderGoods(UserOrder userOrder){
         List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId());
         userOrder.setGoodsSnapshots(goodsSnapshotList);
         userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
@@ -160,5 +160,6 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         Integer totalAmount = userOrder.getTotalAmount();
         double money = (double) totalAmount / 100;
         userOrder.setMoney(money);
+        return userOrder;
     }
 }
