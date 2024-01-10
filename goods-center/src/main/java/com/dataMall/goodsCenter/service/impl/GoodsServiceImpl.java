@@ -97,21 +97,21 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return goods;
     }
 
-    @Override
+    @Override   //实现接口
     public boolean userUpdateGoodsState(Integer uid, Integer goodsId, Integer state) {
         //select * from account where id = goodsId
-        Goods goods = getById(goodsId);
-        if (goods == null) {
+        Goods goods = getById(goodsId);  //通过id获取id的全部信息，返回goods的实体类
+        if (goods == null) {  //如果为空，商品不存在
             return false;
         }
-        if (!goods.getUid().equals(uid)) {
+        if (!goods.getUid().equals(uid)) {  //如果传进来的用户id跟商品发布人的id不一样，就不能进行上下架操作
             return false;
         }
-        if (goods.getState() != 0 && goods.getState()!=1) {
+        if (goods.getState() != 0 && goods.getState()!=1) {  //只有0、1用户才能操作，其他都只能用户管理员操作
             return false;
         }
-        goods.setState(state);
-        return updateById(goods);
+        goods.setState(state);  //setState：把状态设置进去
+        return updateById(goods);  //执行updateById：更新商品执行状态
     }
 
     @Override

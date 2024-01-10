@@ -3,13 +3,10 @@ package com.dataMall.orderCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dataMall.orderCenter.entity.Goods;
 import com.dataMall.orderCenter.entity.GoodsSnapshot;
 import com.dataMall.orderCenter.entity.UserOrder;
 import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.feign.GoodsService;
-import com.dataMall.orderCenter.service.GoodsSnapshotService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.vo.ResultData;
@@ -41,9 +38,6 @@ public class UserOrderController {
     private AccountService accountService;
     @Resource
     private UserOrderService userOrderService;
-    @Resource
-    private GoodsSnapshotService goodsSnapshotService;
-    
 
     //用户下载订单商品的资源
     @GetMapping("/download/{orderId}")

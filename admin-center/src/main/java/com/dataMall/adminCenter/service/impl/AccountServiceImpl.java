@@ -11,7 +11,6 @@ import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.AdminService;
 import com.dataMall.adminCenter.utils.Sha256;
 import jakarta.annotation.Resource;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;

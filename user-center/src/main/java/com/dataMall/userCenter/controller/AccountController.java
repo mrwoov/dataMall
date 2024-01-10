@@ -49,10 +49,7 @@ public class AccountController {
         if (account == null) {
             return ResultData.fail();
         }
-        account.setPassword("");
-        account.setEmail("");
-        account.setEmail("");
-        account.setToken("");
+        account.declassify();
         return ResultData.success(account);
     }
 

@@ -7,8 +7,6 @@ import com.dataMall.adminCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * <p>
  * 账号表 前端控制器

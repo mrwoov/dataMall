@@ -2,7 +2,6 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.entity.Goods;
-import com.dataMall.adminCenter.entity.GoodsPortalShow;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsFreezeService;
 import com.dataMall.adminCenter.service.GoodsPortalShowService;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**

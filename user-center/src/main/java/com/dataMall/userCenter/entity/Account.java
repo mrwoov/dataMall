@@ -74,4 +74,10 @@ public class Account implements Serializable {
     public String toString() {
         return "Account{" + "id=" + id + ", userName='" + username + '\'' + ", passWord='" + password + '\'' + ", email='" + email + '\'' + ", token='" + token + '\'' + ", state=" + state + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';
     }
+
+    public void declassify(){
+        this.password = "";
+        this.email = "";
+        this.token = "";
+    }
 }
