@@ -61,4 +61,5 @@ public class UserOrderGoodsServiceImpl extends ServiceImpl<UserOrderGoodsMapper,
         }
         return snapshotList;
     }
+
 }

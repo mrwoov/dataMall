@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dataMall.orderCenter.entity.UserOrder;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,11 +26,18 @@ public interface UserOrderService extends IService<UserOrder> {
 
     Map<String, Object> getTradeState(String outTradeNo) throws Exception;
 
-    boolean checkPayState(String tradeNo, Integer orderId);
+
+    boolean checkPlatformPayState(String tradeNo, Integer orderId);
 
     String createTradeNo();
 
     String toPayPage(String subject, String orderId, String total,String returnUrl) throws Exception;
 
     void getOrderGoods(UserOrder userOrder);
+
+    List<UserOrder> getUserOrderList(Integer accountId, Integer state);
+
+    List<UserOrder> getUserOrderList(Integer accountId);
+
+    boolean checkOrderPayState(String tradeNo);
 }

@@ -1,6 +1,7 @@
 package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dataMall.adminCenter.aop.AdminAuth;
 import com.dataMall.adminCenter.entity.Account;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.vo.ResultData;
@@ -22,17 +23,10 @@ public class AccountController {
     @Resource
     private AccountService accountService;
 
-    //冻结用户
-//    public ResultData freeze(@RequestParam("token") String token,@PathVariable("accountId") Integer accountId){
-//        
-//    }
     //管理员分页查账号信息
     @PostMapping("/admin/query")
-    public ResultData queryUserInfoPageByOption(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData queryUserInfoPageByOption(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
         String email = account.getEmail();
         String userName = account.getUsername();
         Integer id = account.getId();
@@ -44,11 +38,8 @@ public class AccountController {
 
     //管理员通过账号id查单个信息
     @GetMapping("/admin/{id}")
-    public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData findOne(@PathVariable Integer id) {
         Account account = accountService.getById(id);
         return ResultData.success(account);
     }

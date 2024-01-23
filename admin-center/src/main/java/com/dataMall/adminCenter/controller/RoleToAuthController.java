@@ -1,10 +1,10 @@
 package com.dataMall.adminCenter.controller;
 
 
+import com.dataMall.adminCenter.aop.AdminAuth;
 import com.dataMall.adminCenter.entity.Auth;
 import com.dataMall.adminCenter.entity.Role;
 import com.dataMall.adminCenter.entity.RoleToAuth;
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.AuthService;
 import com.dataMall.adminCenter.service.RoleService;
 import com.dataMall.adminCenter.service.RoleToAuthService;
@@ -29,19 +29,14 @@ public class RoleToAuthController {
     @Resource
     private RoleToAuthService roleToAuthService;
     @Resource
-    private AccountService accountService;
-    @Resource
     private RoleService roleService;
     @Resource
     private AuthService authService;
 
     //新增或修改
     @PostMapping("/admin")
-    public ResultData save(@RequestBody RoleToAuth roleToAuth, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData save(@RequestBody RoleToAuth roleToAuth) {
         Role role = roleService.getOneByOption("role_name", roleToAuth.getRoleName());
         roleToAuth.setRoleId(role.getId());
         Auth auth = authService.getOneByOption("name", roleToAuth.getAuthName());
@@ -54,33 +49,24 @@ public class RoleToAuthController {
 
     //删除by id
     @DeleteMapping("/admin/{id}")
-    public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData delete(@PathVariable Integer id) {
         boolean state = roleToAuthService.removeById(id);
         return ResultData.state(state);
     }
 
     //批量删除
     @PostMapping("/admin/del_batch")
-    public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData deleteBatch(@RequestBody List<Integer> ids) {
         boolean state = roleToAuthService.removeByIds(ids);
         return ResultData.state(state);
     }
 
     //查找单个
     @GetMapping("/admin/{id}")
-    public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData findOne(@PathVariable Integer id) {
         RoleToAuth roleToAuth = roleToAuthService.getById(id);
         Role role = roleService.getById(roleToAuth.getRoleId());
         roleToAuth.setRoleName(role.getRoleName());
@@ -91,11 +77,8 @@ public class RoleToAuthController {
 
     //分页查询
     @PostMapping("/admin/query")
-    public ResultData findPage(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestHeader("token") String token, @RequestBody RoleToAuth roleToAuth) {
-        boolean isAdmin = accountService.checkAdminHavaAuth("/admin", token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData findPage(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody RoleToAuth roleToAuth) {
         String roleName = roleToAuth.getRoleName();
         String authName = roleToAuth.getAuthName();
         return ResultData.success(roleToAuthService.queryRTAInfoPageByOption(pageSize, pageNum, roleName, authName));

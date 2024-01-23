@@ -57,6 +57,8 @@ public class ResultData {
     public static ResultData state(boolean statement) {
         if (statement) {
             return success();
-        } else return fail();
+        } else {
+            return fail();
+        }
     }
 }

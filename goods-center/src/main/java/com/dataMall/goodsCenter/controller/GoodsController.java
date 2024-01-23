@@ -26,7 +26,6 @@ import java.util.Random;
 @RestController
 @RequestMapping("/goods")
 public class GoodsController {
-    private final String authPath = "goods";
     @Resource
     private AccountService accountService;
     @Resource
@@ -37,8 +36,6 @@ public class GoodsController {
     private GoodsPicService goodsPicService;
     @Resource
     private GoodsFileService goodsFileService;
-    @Resource
-    private GoodsFreezeService goodsFreezeService;
     @Resource
     private OssUtils ossUtils;
     @Resource
@@ -62,13 +59,13 @@ public class GoodsController {
     }
 
     // 用户上架商品
-    @PostMapping("release_on")  //0：正常   1：下架
-    public ResultData releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {  //传了token给goodsid
-        Integer uid = accountService.tokenToUid(token);  //先把token转为用户id
-        if (uid == -1) {  //-1为登录过期或者假的token
+    @PostMapping("release_on")
+    public ResultData releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+        Integer uid = accountService.tokenToUid(token);
+        if (uid == -1) {
             return ResultData.fail("登录过期");
         }
-        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);  //都调用用户更新商品状态的函数
+        boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);
         return ResultData.state(state);
     }
     // 用户下架商品

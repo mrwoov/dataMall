@@ -2,10 +2,8 @@ package com.dataMall.adminCenter.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.dataMall.adminCenter.aop.AdminAuth;
 import com.dataMall.adminCenter.entity.UserOrder;
-import com.dataMall.adminCenter.service.AccountService;
-import com.dataMall.adminCenter.service.GoodsService;
-import com.dataMall.adminCenter.service.UserOrderGoodsService;
 import com.dataMall.adminCenter.service.UserOrderService;
 import com.dataMall.adminCenter.vo.ResultData;
 import jakarta.annotation.Resource;
@@ -26,21 +24,12 @@ import java.util.List;
 public class UserOrderController {
     private final String authPath = "order";
     @Resource
-    UserOrderGoodsService userOrderGoodsService;
-    @Resource
-    private GoodsService goodsService;
-    @Resource
-    private AccountService accountService;
-    @Resource
     private UserOrderService userOrderService;
 
     //管理员分页查找
     @PostMapping("/admin/page")
-    public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData page(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("缺少参数");
         }
@@ -50,11 +39,8 @@ public class UserOrderController {
 
     //管理员获取订单detail
     @GetMapping("/admin/{id}")
-    public ResultData findOne(@RequestHeader("token") String token, @PathVariable Integer id) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData findOne(@PathVariable Integer id) {
         UserOrder userOrder = userOrderService.getById(id);
         userOrderService.getOrderGoods(userOrder);
         return ResultData.success(userOrder);
@@ -84,11 +70,6 @@ public class UserOrderController {
         return userOrderService.list();
     }
 
-    //查找单个
-    @GetMapping("/{id}")
-    public UserOrder findOne(@PathVariable Integer id) {
-        return userOrderService.getById(id);
-    }
 
 }
 

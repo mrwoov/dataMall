@@ -105,15 +105,14 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         return (Map<String, Object>) map.get("alipay_trade_query_response");
     }
     @Override
-    public boolean checkPayState(String tradeNo, Integer orderId){
+    public boolean checkPlatformPayState(String tradeNo, Integer orderId){
         //查支付宝
         try {
             Map<String, Object> res = getTradeState(tradeNo);
             if ("TRADE_SUCCESS".equals(res.get("trade_status"))) {
                 //执行更新订单状态的操作：order_id,平台订单号
                 String platTradeNo = (String) res.get("trade_no");
-                boolean state = updateOrderSuccess(orderId, platTradeNo);
-                return state;
+                return updateOrderSuccess(orderId, platTradeNo);
             }
             return false;
         } catch (Exception e) {
@@ -148,7 +147,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         if (userOrder.getState()!=0){
             return;
         }
-        boolean payState = checkPayState(tradeNo,userOrder.getId());
+        boolean payState = checkPlatformPayState(tradeNo,userOrder.getId());
         if (payState){
             return;
         }
@@ -182,5 +181,49 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         Integer totalAmount = userOrder.getTotalAmount();
         double money = (double) totalAmount / 100;
         userOrder.setMoney(money);
+    }
+
+    @Override
+    public List<UserOrder> getUserOrderList(Integer accountId) {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+
+        List<UserOrder> userOrderList = list(queryWrapper);
+        for (UserOrder userOrder : userOrderList) {
+            //查快照
+            getOrderGoods(userOrder);
+        }
+        return userOrderList;
+    }
+
+    @Override
+    public List<UserOrder> getUserOrderList(Integer accountId, Integer state) {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+        if (state==0){
+            queryWrapper.eq("state", state);
+        }
+        else {
+            queryWrapper.gt("state", state);
+        }
+        List<UserOrder> userOrderList = list(queryWrapper);
+        for (UserOrder userOrder : userOrderList) {
+            //查快照
+            getOrderGoods(userOrder);
+        }
+        return userOrderList;
+    }
+
+    @Override
+    public boolean checkOrderPayState(String tradeNo){
+        UserOrder userOrder = getOneByOption("trade_no", tradeNo);
+        //查数据库
+        if (userOrder == null) {
+            return false;
+        }
+        if (userOrder.getState() == 1) {
+            return true;
+        }
+        return checkPlatformPayState(tradeNo,userOrder.getId());
     }
 }

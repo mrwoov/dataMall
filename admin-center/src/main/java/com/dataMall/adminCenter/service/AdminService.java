@@ -1,5 +1,6 @@
 package com.dataMall.adminCenter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dataMall.adminCenter.entity.Admin;
 
@@ -17,4 +18,6 @@ public interface AdminService extends IService<Admin> {
 
     //根据条件查询一个
     Admin getOneByOption(String column, Object value);
+
+    IPage<Admin> query(String userName, Integer role, Integer pageNum, Integer pageSize);
 }

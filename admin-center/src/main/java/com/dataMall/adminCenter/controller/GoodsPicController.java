@@ -1,13 +1,17 @@
 package com.dataMall.adminCenter.controller;
 
 
+import com.dataMall.adminCenter.aop.AdminAuth;
 import com.dataMall.adminCenter.entity.GoodsPic;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsPicService;
 import com.dataMall.adminCenter.service.GoodsService;
 import com.dataMall.adminCenter.vo.ResultData;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -33,11 +37,8 @@ public class GoodsPicController {
 
     //管理员冻结商品图片
     @GetMapping("/admin")
-    public ResultData freeze(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData freeze(@RequestParam("picId") String picId) {
         GoodsPic goodsPic = goodsPicService.getById(picId);
         if (goodsPic == null) {
             return ResultData.fail();

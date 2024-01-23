@@ -1,6 +1,7 @@
 package com.dataMall.adminCenter.controller;
 
 
+import com.dataMall.adminCenter.aop.AdminAuth;
 import com.dataMall.adminCenter.entity.Auth;
 import com.dataMall.adminCenter.entity.Role;
 import com.dataMall.adminCenter.service.AccountService;
@@ -36,11 +37,8 @@ public class RoleController {
 
     //新增或修改
     @PatchMapping("/admin")
-    public ResultData save(@RequestBody Role role, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData save(@RequestBody Role role) {
         boolean status = roleService.saveOrUpdate(role);
         List<Integer> ids = role.getAuthIds();
         boolean optionStatus = roleToAuthService.resetRoleAuth(role.getId(), ids);
@@ -49,11 +47,8 @@ public class RoleController {
 
     //删除by id
     @DeleteMapping("/admin/{id}")
-    public ResultData delete(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData delete(@PathVariable Integer id) {
         boolean delRoleAuth = roleToAuthService.clearRoleAllAuth(id);
         boolean state = roleService.removeById(id);
         return ResultData.state(state && delRoleAuth);
@@ -61,22 +56,16 @@ public class RoleController {
 
     //批量删除
     @PostMapping("/admin/del_batch")
-    public ResultData deleteBatch(@RequestBody List<Integer> ids, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData deleteBatch(@RequestBody List<Integer> ids) {
         boolean state = roleService.removeByIds(ids);
         return ResultData.state(state);
     }
 
     //管理员查找单个角色权限列表
     @GetMapping("/admin/{id}")
-    public ResultData findOne(@PathVariable Integer id, @RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData findOne(@PathVariable Integer id) {
         Role role = roleService.getById(id);
         List<Auth> authList = roleToAuthService.getRoleAuthList(id);
         role.setAuthList(authList);
@@ -86,24 +75,17 @@ public class RoleController {
 
     //管理员获取角色列表
     @GetMapping("/admin")
-    public ResultData getList(@RequestHeader("token") String token) {
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
-        }
+    @AdminAuth(value = authPath)
+    public ResultData getList() {
         List<Role> list = roleService.list();
         return ResultData.success(list);
     }
 
     //管理员分页查询
     @PostMapping("admin/query")
-    public ResultData findPage(@RequestHeader("token") String token, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Role role) {
+    public ResultData findPage(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Role role) {
         if (pageNum == null || pageSize == null) {
             return ResultData.fail("参数缺少");
-        }
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
-        if (!isAdmin) {
-            return ResultData.fail("无权限");
         }
         String roleName = role.getRoleName();
         return ResultData.success(roleService.queryRoleInfoPageByOption(pageSize, pageNum, roleName));
@@ -118,6 +100,7 @@ public class RoleController {
         Integer roleId = adminService.getOneByOption("account_id", uid).getRole();
         return ResultData.success(roleToAuthService.getRoleAuthList(roleId));
     }
+
     @GetMapping("/getAuths")
     public ResultData getAuths(@RequestHeader("token") String token) {
         Integer uid = accountService.tokenToUid(token);

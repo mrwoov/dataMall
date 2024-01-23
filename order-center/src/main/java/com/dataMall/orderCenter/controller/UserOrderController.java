@@ -29,7 +29,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/order")
 public class UserOrderController {
-    private final String authPath = "order";
     @Resource
     UserOrderGoodsService userOrderGoodsService;
     @Resource
@@ -52,7 +51,6 @@ public class UserOrderController {
         queryWrapper.eq("id", orderId);
         UserOrder userOrder = userOrderService.getOne(queryWrapper);
         if (userOrder==null){
-            System.out.println(1);
             return ResultData.fail();
         }
         //逻辑：查订单是否是token用户的，查订单商品的md5
@@ -85,13 +83,7 @@ public class UserOrderController {
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
-        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account_id", accountId);
-        List<UserOrder> userOrderList = userOrderService.list(queryWrapper);
-        for (UserOrder userOrder : userOrderList) {
-            //查快照
-            userOrderService.getOrderGoods(userOrder);
-        }
+        List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId);
         return ResultData.success(userOrderList);
     }
 
@@ -102,14 +94,7 @@ public class UserOrderController {
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
-        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account_id", accountId);
-        queryWrapper.eq("state", 0);
-        List<UserOrder> userOrderList = userOrderService.list(queryWrapper);
-        for (UserOrder userOrder : userOrderList) {
-            //查快照
-            userOrderService.getOrderGoods(userOrder);
-        }
+        List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, 0);
         return ResultData.success(userOrderList);
     }
 
@@ -120,29 +105,14 @@ public class UserOrderController {
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
-        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account_id", accountId);
-        queryWrapper.gt("state", 1);
-        List<UserOrder> userOrderList = userOrderService.list(queryWrapper);
-        for (UserOrder userOrder : userOrderList) {
-            //查快照
-            userOrderService.getOrderGoods(userOrder);
-        }
+        List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, 1);
         return ResultData.success(userOrderList);
     }
 
     //检查订单
     @GetMapping("/check")
     public ResultData checkOrder(@RequestParam("trade_no") String tradeNo) {
-        UserOrder userOrder = userOrderService.getOneByOption("trade_no", tradeNo);
-        //查数据库
-        if (userOrder == null) {
-            return ResultData.fail();
-        }
-        if (userOrder.getState() == 1) {
-            return ResultData.success();
-        }
-        boolean state = userOrderService.checkPayState(tradeNo,userOrder.getId());
+        boolean state = userOrderService.checkOrderPayState(tradeNo);
         return ResultData.state(state);
     }
 
@@ -158,7 +128,6 @@ public class UserOrderController {
         //计算总价
         int totalPrice = 0;
         for (Integer i : goodsIds) {
-            System.out.println(i);
             Integer price = goodsService.getGoodsPrice(i);
             if (price == null) {
                 return ResultData.fail();
