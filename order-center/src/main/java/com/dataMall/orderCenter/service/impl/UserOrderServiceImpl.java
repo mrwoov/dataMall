@@ -46,6 +46,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     private AccountService accountService;
     @Resource
     private UserOrderGoodsService userOrderGoodsService;
+
     @Autowired
     private AmqpTemplate amqpTemplate;
 

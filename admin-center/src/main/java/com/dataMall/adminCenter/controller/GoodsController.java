@@ -39,8 +39,6 @@ public class GoodsController {
         this.ossUtils = ossUtils;
     }
 
-    
-
     @PostMapping("/changeGoodsPortalShow")
     @AdminAuth(value = authPath)
     //切换商品是否首页轮播图展示

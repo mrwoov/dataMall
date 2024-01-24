@@ -41,8 +41,6 @@ public class RoleToAuthController {
         roleToAuth.setRoleId(role.getId());
         Auth auth = authService.getOneByOption("name", roleToAuth.getAuthName());
         roleToAuth.setAuthId(auth.getId());
-        System.out.println(roleToAuth.getAuthId());
-        System.out.println(roleToAuth.getRoleId());
         boolean state = roleToAuthService.saveOrUpdate(roleToAuth);
         return ResultData.state(state);
     }
