@@ -4,24 +4,26 @@ import com.baomidou.mybatisplus.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
 /**
  * <p>
- * 商品分类表
+ * 
  * </p>
  *
  * @author woov
- * @since 2023-08-29
+ * @since 2024-01-24
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("goods_categories")
-public class GoodsCategories implements Serializable {
+@TableName("xlsx_api")
+public class XlsxApi implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -29,36 +31,25 @@ public class GoodsCategories implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * 商品分类名称
-     */
     private String name;
 
     /**
-     * 分类url
+     * mongodb集合唯一索引
      */
-    private String url;
+    private String apiId;
 
-    private String mobileIcon;
+    private Integer accountId;
 
-    /**
-     * 创建时间
-     */
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private LocalDateTime createdTime;
 
-    /**
-     * 修改时间
-     */
-    @TableField(fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updatedTime;
 
-    /**
-     * 商品分类名称0正常1隐藏-2假删
-     */
     private Integer state;
 
     @TableField(exist = false)
-    private String stateText;
+    private MultipartFile file;
+
 
 }

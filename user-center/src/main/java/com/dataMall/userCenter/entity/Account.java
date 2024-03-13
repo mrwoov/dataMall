@@ -70,6 +70,9 @@ public class Account implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    @TableField(exist = false)
+    private String SsoType;
+
     @Override
     public String toString() {
         return "Account{" + "id=" + id + ", userName='" + username + '\'' + ", passWord='" + password + '\'' + ", email='" + email + '\'' + ", token='" + token + '\'' + ", state=" + state + ", createTime=" + createTime + ", updateTime=" + updateTime + '}';

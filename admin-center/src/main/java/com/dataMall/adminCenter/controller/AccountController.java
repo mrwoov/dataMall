@@ -43,6 +43,8 @@ public class AccountController {
         Account account = accountService.getById(id);
         return ResultData.success(account);
     }
+
+    //根据username查相似的username的list
     @GetMapping("/admin/getListByOption")
     public ResultData usernameLikeList(@RequestParam("username") String username) {
         QueryWrapper<Account> accountQueryWrapper = new QueryWrapper<>();

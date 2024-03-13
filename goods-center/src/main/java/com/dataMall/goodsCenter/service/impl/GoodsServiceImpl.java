@@ -155,4 +155,13 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         getGoodsListOtherParam(goodsList);
         return goodsList;
     }
+
+    @Override
+    public List<Goods> getGoodsListByIds(List<Integer> goodsIds) {
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("id", goodsIds);
+        List<Goods> goodsList = list(queryWrapper);
+        getGoodsListOtherParam(goodsList);
+        return goodsList;
+    }
 }

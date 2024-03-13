@@ -45,6 +45,28 @@ public class GoodsController {
         this.ossUtils = ossUtils;
     }
 
+    public static String generateFileName(String originalFileName) {
+        long timestamp = System.currentTimeMillis();
+        Random random = new Random();
+        int randomNumber = random.nextInt(900000) + 10000;
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String processedFileName = timestamp + "_" + originalFileName + "_" + randomNumber;
+
+        // 对处理后的文件名进行加密，使用MD5
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(processedFileName.getBytes());
+            byte[] digest = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            processedFileName = sb.toString();
+        } catch (NoSuchAlgorithmException ignored) {
+        }
+        return processedFileName + extension;
+    }
+
     @GetMapping("/getPortalIndex")
     public ResultData getPortalIndex() {
         List<GoodsPortalShow> goodsPortalShowList = goodsPortalShowService.list();
@@ -68,6 +90,7 @@ public class GoodsController {
         boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);
         return ResultData.state(state);
     }
+
     // 用户下架商品
     @PostMapping("/release_off")
     public ResultData releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
@@ -78,6 +101,7 @@ public class GoodsController {
         boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 1);
         return ResultData.state(state);
     }
+
     // 用户发布商品
     @PostMapping("/")
     public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
@@ -138,37 +162,22 @@ public class GoodsController {
         return ResultData.state(state);
     }
 
-
-    public static String generateFileName(String originalFileName) {
-        long timestamp = System.currentTimeMillis();
-        Random random = new Random();
-        int randomNumber = random.nextInt(900000) + 10000;
-        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String processedFileName = timestamp + "_" + originalFileName + "_" + randomNumber;
-
-        // 对处理后的文件名进行加密，使用MD5
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(processedFileName.getBytes());
-            byte[] digest = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for (byte b : digest) {
-                sb.append(String.format("%02x", b & 0xff));
-            }
-            processedFileName = sb.toString();
-        } catch (NoSuchAlgorithmException ignored) {
-        }
-        return processedFileName + extension;
-    }
-
     // 获取单个商品信息
     @GetMapping("/info/{goodsId}")
     public ResultData getInfo(@PathVariable("goodsId") Integer goodsId) {
         Goods goods = goodsService.getGoodsInfoById(goodsId);
-        if (goods.getState()==0){
+        if (goods.getState() == 0) {
             return ResultData.success(goods);
         }
         return ResultData.success();
+    }
+
+    //批量获取多个商品信息
+    @PostMapping("/infos")
+    public ResultData getInfos(@RequestBody List<Integer> goodsIds) {
+        List<Goods> goodsList = goodsService.getGoodsListByIds(goodsIds);
+        goodsService.getGoodsListOtherParam(goodsList);
+        return ResultData.success(goodsList);
     }
 
     // 用户修改商品信息

@@ -83,6 +83,8 @@ public class Goods implements Serializable {
      */
     private Integer state;
 
+    private Integer type;
+
     @TableField(exist = false)
     private String username;
 

@@ -49,7 +49,12 @@ public class ResultData {
         resultData.setErrorMsg(message);
         return resultData;
     }
-
+    public static ResultData tokenFail() {
+        ResultData resultData = new ResultData();
+        resultData.setStatus(403); //token错误
+        resultData.setErrorMsg("token失效");
+        return resultData;
+    }
     public static ResultData fail() {
         return fail("操作失败");
     }

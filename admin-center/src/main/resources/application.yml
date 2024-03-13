@@ -55,7 +55,6 @@ alipay:
   alipay_public_key: ${alipay.dev.config.alipay_public_key}
   #支付宝网关，这一项是写死的，正式环境是openapi.alipay.com(不用写http)
   gatewayUrl: openapi-sandbox.dl.alipaydev.com
-
   #format
   format: json
   #异步通知回调地址,不能加?id=123这类自定义参数

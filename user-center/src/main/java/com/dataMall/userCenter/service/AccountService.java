@@ -22,6 +22,8 @@ public interface AccountService extends IService<Account> {
     //注册
     boolean reg(String username, String password, String email);
 
+    String login(int uid);
+
     //根据一个条件查找
     Account getOneByOption(String column, Object value);
 

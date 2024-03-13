@@ -91,6 +91,7 @@ public class AdminController {
         return ResultData.success(page);
     }
 
+    //是否是管理员
     @GetMapping("/isAdmin")
     public boolean isAdmin(@RequestParam("accountId") Integer accountId) {
         return adminService.isAdmin(accountId);

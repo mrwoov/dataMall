@@ -52,7 +52,27 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         operations.set(token, account.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
         return token;
     }
-
+    @Override
+    public String login(int uid){
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", uid);
+        Account account;
+        try {
+            account = getOne(queryWrapper);
+            if (account == null) {
+                return "";
+            }
+        } catch (Exception e) {
+            return "";
+        }
+        String token = Sha256.getSha256Str(account.getUsername() + account.getPassword() + System.currentTimeMillis());
+        account.setToken(token);
+        update(account, queryWrapper);
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        operations.set(String.valueOf(account.getId()), token, 60 * 60 * 24, TimeUnit.SECONDS);
+        operations.set(token, account.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
+        return token;
+    }
     //根据条件查询单个
     @Override
     public Account getOneByOption(String column, Object value) {

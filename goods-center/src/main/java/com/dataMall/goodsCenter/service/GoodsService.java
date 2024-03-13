@@ -33,4 +33,6 @@ public interface GoodsService extends IService<Goods> {
     IPage<Goods> getGoodsPage(String name, String categoriesName, String username, Integer pageNum, Integer pageSize);
 
     List<Goods> getGoodsList(QueryWrapper<Goods> queryWrapper);
+
+    List<Goods> getGoodsListByIds(List<Integer> goodsIds);
 }

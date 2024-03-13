@@ -69,6 +69,7 @@ public class GoodsFileController {
         //处理上传的数据文件
         //计算文件md5
         String fileMd5 = calculateFileMD5(file);
+
         //生成文件链接
         String dataFileUrl = ossUtils.getPicUrlUser(accountId, processedFileName);
         //保存至商品数据文件表
