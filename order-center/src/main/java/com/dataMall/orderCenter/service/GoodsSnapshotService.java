@@ -20,4 +20,6 @@ public interface GoodsSnapshotService extends IService<GoodsSnapshot> {
 
     Integer isExistSnapshot(Goods goods);
 
+
+
 }

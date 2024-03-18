@@ -62,4 +62,11 @@ public class UserOrderGoodsServiceImpl extends ServiceImpl<UserOrderGoodsMapper,
         return snapshotList;
     }
 
+    @Override
+    public boolean deleteGoodsSnapshot(Integer orderId) {
+        QueryWrapper<UserOrderGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_id",orderId);
+        return remove(queryWrapper);
+    }
+
 }

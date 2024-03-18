@@ -1,19 +1,19 @@
 package com.dataMall.orderCenter.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.dataMall.orderCenter.entity.GoodsSnapshot;
+import com.dataMall.orderCenter.entity.Account;
 import com.dataMall.orderCenter.entity.UserOrder;
 import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.feign.GoodsService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
+import com.dataMall.orderCenter.utils.MailService;
 import com.dataMall.orderCenter.vo.ResultData;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,29 +37,54 @@ public class UserOrderController {
     private AccountService accountService;
     @Resource
     private UserOrderService userOrderService;
+    @Autowired
+    private MailService mailService;
 
     //用户下载订单商品的资源
-    @GetMapping("/download/{orderId}")
-    public ResultData downloadGoodsSource(@PathVariable Integer orderId, @RequestHeader("token") String token) {
+    @GetMapping("/download/{tradeNo}")
+    public ResultData downloadGoodsSource(@PathVariable String tradeNo, @RequestHeader("token") String token) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
             return ResultData.fail("登陆过期");
         }
-        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account_id", accountId);
-        queryWrapper.ge("state", 1);
-        queryWrapper.eq("id", orderId);
-        UserOrder userOrder = userOrderService.getOne(queryWrapper);
-        if (userOrder==null){
+        UserOrder userOrder = userOrderService.getUserPayedOrderByTradeNo(tradeNo, accountId);
+        if (userOrder == null) {
             return ResultData.fail();
         }
-        //逻辑：查订单是否是token用户的，查订单商品的md5
-        List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(orderId);
-        List<String> md5List = new ArrayList<>();
-        for (GoodsSnapshot goodsSnapshot:goodsSnapshotList){
-            md5List.add(goodsSnapshot.getFileMd5());
-        }
+        List<String> md5List = userOrderService.downloadByMd5List(userOrder.getId());
         return ResultData.success(md5List);
+    }
+
+    //发送下载链接
+    @GetMapping("/sendDownload/{tradeNo}")
+    public ResultData sendDownload( @PathVariable String tradeNo,@RequestHeader("token") String token) {
+        Integer accountId = accountService.tokenToUid(token);
+        if (accountId == -1) {
+            return ResultData.fail("登陆过期");
+        }
+        UserOrder userOrder = userOrderService.getUserPayedOrderByTradeNo(tradeNo, accountId);
+        if (userOrder == null) {
+            return ResultData.fail();
+        }
+        List<String> md5List = userOrderService.downloadByMd5List(userOrder.getId());
+        if (md5List.isEmpty()) {
+            return ResultData.fail("没有资源");
+        }
+        Account account = accountService.getById(accountId);
+        if (account == null) {
+            return ResultData.fail("用户不存在");
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("tradeNo", tradeNo);
+        map.put("md5List", md5List);
+        String html = "";
+        int i = 1;
+        for (String md5 : md5List) {
+            html = html + "<p>资源" + i + "：" + md5 + "</p> <a href='http://localhost:8080/order/download/" + tradeNo + "'>点击下载</a>";
+            i++;
+        }
+        mailService.sendTextMailMessage(account.getEmail(), "资源下载链接", "资源下载链接：" +html);
+        return ResultData.success();
     }
 
     //用户分页查订单
@@ -155,32 +180,21 @@ public class UserOrderController {
 
     //支付订单
     @GetMapping("/pay")
-    public String pay(@RequestParam("trade_no") String tradeNo,@RequestParam("return_url")String returnUrl) throws Exception {
+    public String pay(@RequestParam("trade_no") String tradeNo, @RequestParam("return_url") String returnUrl) throws Exception {
         UserOrder userOrder = userOrderService.getOneByOption("trade_no", tradeNo);
         Integer total = userOrder.getTotalAmount();
         double money = total / 100.0;
-        return userOrderService.toPayPage(tradeNo, tradeNo, String.valueOf(money),returnUrl);
+        return userOrderService.toPayPage(tradeNo, tradeNo, String.valueOf(money), returnUrl);
     }
 
-    //关闭订单
+    //删除订单
     @GetMapping("/close")
-    public ResultData close(@RequestHeader("token")String token,@RequestParam("trade_no") String tradeNo){
+    public ResultData close(@RequestHeader("token") String token, @RequestParam("trade_no") String tradeNo) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
             return ResultData.fail("登录过期");
         }
-        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("trade_no",tradeNo);
-        queryWrapper.eq("account_id",accountId);
-        UserOrder userOrder = userOrderService.getOne(queryWrapper);
-        if (userOrder==null){
-            return ResultData.fail();
-        }
-        if (userOrder.getState()!=0){
-            return ResultData.fail();
-        }
-        userOrder.setState(-1);
-        boolean state = userOrderService.updateById(userOrder);
+        boolean state = userOrderService.deleteOrder(tradeNo, accountId);
         return ResultData.state(state);
     }
 }

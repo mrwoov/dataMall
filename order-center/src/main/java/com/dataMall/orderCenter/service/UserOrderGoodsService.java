@@ -21,4 +21,6 @@ public interface UserOrderGoodsService extends IService<UserOrderGoods> {
     boolean saveOrderGoods(Integer goodsId, Integer orderId);
 
     List<GoodsSnapshot> getOrderGoodsSnapshot(Integer orderId);
+
+    boolean deleteGoodsSnapshot(Integer orderId);
 }

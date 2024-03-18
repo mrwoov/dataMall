@@ -12,6 +12,7 @@ import com.dataMall.orderCenter.entity.GoodsSnapshot;
 import com.dataMall.orderCenter.entity.UserOrder;
 import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.mapper.UserOrderMapper;
+import com.dataMall.orderCenter.service.GoodsSnapshotService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.utils.JSONUtils;
@@ -25,10 +26,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * <p>
@@ -49,6 +47,9 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
 
     @Autowired
     private AmqpTemplate amqpTemplate;
+
+    @Resource
+    private GoodsSnapshotService goodsSnapshotService;
 
     @Override
     public UserOrder getOneByOption(String column, Object value) {
@@ -75,8 +76,8 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     public IPage<UserOrder> page(Integer pageSize, Integer pageNum, Integer accountId, String tradeNo, Integer state) {
         QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_id", accountId);
-        if (state!=null){
-            queryWrapper.eq("state",state);
+        if (state != null) {
+            queryWrapper.eq("state", state);
         }
         if (tradeNo != null) {
             queryWrapper.like("trade_no", tradeNo);
@@ -105,8 +106,9 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         // 将返回的Object转换为Map后，可以直接使用get方法获取trade_no
         return (Map<String, Object>) map.get("alipay_trade_query_response");
     }
+
     @Override
-    public boolean checkPlatformPayState(String tradeNo, Integer orderId){
+    public boolean checkPlatformPayState(String tradeNo, Integer orderId) {
         //查支付宝
         try {
             Map<String, Object> res = getTradeState(tradeNo);
@@ -120,6 +122,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
             return false;
         }
     }
+
     @Override
     public String createTradeNo() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -133,7 +136,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
-    public String toPayPage(String subject, String tradeNo, String total,String returnUrl) throws Exception {
+    public String toPayPage(String subject, String tradeNo, String total, String returnUrl) throws Exception {
         this.sendDelayedMessage(tradeNo);
         AlipayTradePagePayResponse response = Factory.Payment.Page().pay(subject, tradeNo, total, returnUrl);
         return response.getBody();
@@ -145,34 +148,37 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("trade_no", tradeNo);
         UserOrder userOrder = getOne(queryWrapper);
-        if (userOrder.getState()!=0){
+        if (userOrder.getState() != 0) {
             return;
         }
-        boolean payState = checkPlatformPayState(tradeNo,userOrder.getId());
-        if (payState){
+        boolean payState = checkPlatformPayState(tradeNo, userOrder.getId());
+        if (payState) {
             return;
         }
         LocalDateTime orderCreationTime = userOrder.getCreateTime();
         // 计算时间差
         long minutesElapsed = ChronoUnit.MINUTES.between(orderCreationTime, LocalDateTime.now());
-        if (minutesElapsed>=15){
+        if (minutesElapsed >= 15) {
             // 如果超过15分钟，则触发订单关闭操作
             closeOrderByServe(userOrder);
         }
-        
+
     }
+
     //发送延迟消息到延迟交换机
     public void sendDelayedMessage(String orderId) {
-        long delay = 15*60*1000;
+        long delay = 15 * 60 * 1000;
         this.amqpTemplate.convertAndSend("delayed_exchange", "delay_key", orderId, message -> {
             message.getMessageProperties().setDelay((int) delay);
             return message;
         });
     }
-    public void closeOrderByServe(UserOrder userOrder){
+
+    public void closeOrderByServe(UserOrder userOrder) {
         userOrder.setState(-1);
         updateById(userOrder);
     }
+
     @Override
     public void getOrderGoods(UserOrder userOrder) {
         List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId());
@@ -188,7 +194,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     public List<UserOrder> getUserOrderList(Integer accountId) {
         QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_id", accountId);
-
+        queryWrapper.orderByDesc("id");
         List<UserOrder> userOrderList = list(queryWrapper);
         for (UserOrder userOrder : userOrderList) {
             //查快照
@@ -201,10 +207,9 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     public List<UserOrder> getUserOrderList(Integer accountId, Integer state) {
         QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_id", accountId);
-        if (state==0){
+        if (state == 0) {
             queryWrapper.eq("state", state);
-        }
-        else {
+        } else {
             queryWrapper.gt("state", state);
         }
         List<UserOrder> userOrderList = list(queryWrapper);
@@ -216,7 +221,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     }
 
     @Override
-    public boolean checkOrderPayState(String tradeNo){
+    public boolean checkOrderPayState(String tradeNo) {
         UserOrder userOrder = getOneByOption("trade_no", tradeNo);
         //查数据库
         if (userOrder == null) {
@@ -225,6 +230,43 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         if (userOrder.getState() == 1) {
             return true;
         }
-        return checkPlatformPayState(tradeNo,userOrder.getId());
+        return checkPlatformPayState(tradeNo, userOrder.getId());
+    }
+
+    @Override
+    public boolean deleteOrder(String tradeNo, Integer accountId) {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("trade_no", tradeNo);
+        queryWrapper.eq("account_id", accountId);
+        UserOrder userOrder = getOne(queryWrapper);
+        if (userOrder == null) {
+            return false;
+        }
+        if (userOrder.getState() != 0 && userOrder.getState() != -1) {
+            return false;
+        }
+        boolean state = userOrderGoodsService.deleteGoodsSnapshot(userOrder.getId());
+        state &= remove(queryWrapper);
+        return state;
+    }
+
+    @Override
+    public UserOrder getUserPayedOrderByTradeNo(String tradeNo, Integer accountId) {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+        queryWrapper.ge("state", 1);
+        queryWrapper.eq("trade_no", tradeNo);
+        return getOne(queryWrapper);
+    }
+
+    @Override
+    public List<String> downloadByMd5List(Integer orderId) {
+        //逻辑：查订单是否是token用户的，查订单商品的md5
+        List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(orderId);
+        List<String> md5List = new ArrayList<>();
+        for (GoodsSnapshot goodsSnapshot:goodsSnapshotList){
+            md5List.add(goodsSnapshot.getFileMd5());
+        }
+        return md5List;
     }
 }

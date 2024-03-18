@@ -40,4 +40,10 @@ public interface UserOrderService extends IService<UserOrder> {
     List<UserOrder> getUserOrderList(Integer accountId);
 
     boolean checkOrderPayState(String tradeNo);
+
+    boolean deleteOrder(String tradeNo,Integer accountId);
+
+    UserOrder getUserPayedOrderByTradeNo(String tradeNo, Integer accountId);
+
+    List<String> downloadByMd5List(Integer orderId);
 }
