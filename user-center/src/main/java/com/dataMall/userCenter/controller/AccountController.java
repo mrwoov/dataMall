@@ -86,7 +86,7 @@ public class AccountController {
         System.out.println(code);
         JSONObject jsonObject = new JSONObject();
         try {
-            if (code == null || code.equals("")) {
+            if (code == null || code.isEmpty()) {
                 return ResultData.fail("缺少参数");
             }
             String url = "https://api.weixin.qq.com/sns/jscode2session" + "?appid=" + "wxa3242af9fc3e0245" + "&secret=" + "7ae0dfbf845f37db0d75b90628259b6b" + "&js_code=" + code + "&grant_type=authorization_code";
