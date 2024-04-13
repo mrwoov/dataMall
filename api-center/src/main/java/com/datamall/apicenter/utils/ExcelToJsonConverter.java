@@ -1,4 +1,4 @@
-package com.dataMall.goodsCenter.utils;
+package com.datamall.apicenter.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -73,11 +73,11 @@ public class ExcelToJsonConverter {
             case STRING:
                 return cell.getStringCellValue();
             case NUMERIC:
+                // 日期格式
                 if (DateUtil.isCellDateFormatted(cell)) {
                     return cell.getDateCellValue();
-                } else {
-                    return cell.getDateCellValue();
                 }
+                return cell.getNumericCellValue();
             case BOOLEAN:
                 return cell.getBooleanCellValue();
             case FORMULA:
@@ -94,6 +94,21 @@ public class ExcelToJsonConverter {
                 return null;
             default:
                 return null;
+        }
+    }
+
+    public static List<String> getHeaderList(MultipartFile excelFile) {
+        try (InputStream inputStream = excelFile.getInputStream()) {
+            Workbook workbook = new XSSFWorkbook(inputStream);
+            Sheet sheet = workbook.getSheetAt(0);
+            Row headerRow = sheet.getRow(0);
+            List<String> header = new ArrayList<>();
+            for (Cell cell : headerRow) {
+                header.add(cell.getStringCellValue());
+            }
+            return header;
+        } catch (IOException e) {
+            throw new RuntimeException("Error processing Excel file: " + e.getMessage(), e);
         }
     }
 }

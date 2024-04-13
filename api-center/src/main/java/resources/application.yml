@@ -1,0 +1,67 @@
+server:
+  port: 8500
+
+spring:
+  application:
+    name: api-center  #服务名称
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data-mall?serverTimezone=UTC
+    username: root
+    password: ${mysql.password}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    hiddenmethod:
+      filter:
+        enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mail:
+    host: smtp.163.com
+    username: ${mail.username}
+    password: ${mail.password}
+    default-encoding: UTF-8
+  main:
+    allow-circular-references: true
+  data:
+    redis:
+      host: ${redis.host}
+      port: 6379
+      password: ${redis.password}
+aliyun:
+  oss:
+    endpoint: oss-cn-chengdu.aliyuncs.com
+    accessKeyId: ${accessKeyId}
+    accessKeySecret: ${accessKeySecret}
+alipay:
+  #正式环境
+  #  #应用ID
+  #  app_id: ${alipay.config.appid}
+  #  #应用私钥
+  #  merchant_private_key: ${alipay.config.merchant_private_key}
+  #  #支付宝公钥
+  #  alipay_public_key: ${alipay.config.alipay_public_key}
+  #  #支付宝网关，这一项是写死的，正式环境是openapi.alipay.com(不用写http)
+  #  gatewayUrl: openapi.alipay.com
+
+  # 测试环境：
+  #应用ID
+  app_id: ${alipay.dev.config.appid}
+  #应用私钥
+  merchant_private_key: ${alipay.dev.config.merchant_private_key}
+  #支付宝公钥
+  alipay_public_key: ${alipay.dev.config.alipay_public_key}
+  #支付宝网关，这一项是写死的，正式环境是openapi.alipay.com(不用写http)
+  gatewayUrl: openapi-sandbox.dl.alipaydev.com
+  #format
+  format: json
+  #异步通知回调地址,不能加?id=123这类自定义参数
+  notify_url: "http://localhost:8081/order/notify"
+  #即支付成功之后，需要跳转到的页面
+  return_url: "http://localhost:8080/pay_success"
+  #签名方式
+  sign_type: RSA2
+  #字符编码格式
+  charset: utf-8

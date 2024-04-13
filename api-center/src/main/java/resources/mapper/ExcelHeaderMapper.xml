@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.datamall.apicenter.mapper.ExcelHeaderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.datamall.apicenter.entity.ExcelHeader">
+        <id column="id" property="id" />
+        <result column="app_id" property="appId" />
+        <result column="header_name" property="headerName" />
+        <result column="header_type" property="headerType" />
+        <result column="query_able" property="queryAble" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, excel_app_id, header_name, header_type, query_able, create_time, update_time, status
+    </sql>
+
+</mapper>

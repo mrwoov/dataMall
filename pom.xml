@@ -23,6 +23,7 @@
         <module>order-center</module>
         <module>user-center</module>
         <module>gateway</module>
+        <module>api-center</module>
     </modules>
 
     <!--版本号统一管理-->
@@ -67,11 +68,7 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+
     </dependencies>
     <build>
         <plugins>

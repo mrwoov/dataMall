@@ -9,15 +9,12 @@ import com.dataMall.goodsCenter.service.XlsxApiService;
 import com.dataMall.goodsCenter.utils.ExcelToJsonConverter;
 import com.dataMall.goodsCenter.vo.ResultData;
 import jakarta.annotation.Resource;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -48,9 +45,9 @@ public class XlsxApiController {
         List<String> jsonList = ExcelToJsonConverter.convertExcelToJson(file);
         //生成api_id,当前时间加随机数加文件名的md5
         Integer random = (int) (Math.random() * 100000);
-        String temp = DateTime.now().toString() + String.valueOf(random) + Objects.requireNonNull(file.getOriginalFilename()).hashCode();
+        String temp = DateTime.now().toString() + random + Objects.requireNonNull(file.getOriginalFilename()).hashCode();
         //将temp转为md5
-        String apiId = SecureUtil.md5(temp);
+        String apiId = "app"+SecureUtil.md5(temp);
         //将json存入mongodb
         mongoTemplate.createCollection(apiId);
         for (String json : jsonList) {
@@ -92,8 +89,7 @@ public class XlsxApiController {
 
     //分页查询
     @GetMapping("/page")
-    public Page<XlsxApi> findPage(@RequestParam Integer pageNum,
-                                  @RequestParam Integer pageSize) {
+    public Page<XlsxApi> findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         return xlsxApiService.page(new Page<>(pageNum, pageSize));
     }
 }
