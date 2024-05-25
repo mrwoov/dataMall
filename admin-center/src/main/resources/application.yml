@@ -1,6 +1,5 @@
 server:
   port: 8000
-
 spring:
   application:
     name: admin-center  #服务名称
@@ -45,7 +44,6 @@ alipay:
   #  alipay_public_key: ${alipay.config.alipay_public_key}
   #  #支付宝网关，这一项是写死的，正式环境是openapi.alipay.com(不用写http)
   #  gatewayUrl: openapi.alipay.com
-
   # 测试环境：
   #应用ID
   app_id: ${alipay.dev.config.appid}

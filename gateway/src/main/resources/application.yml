@@ -36,6 +36,13 @@ spring:
           filters:
             - StripPrefix=1
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: api
+          uri: lb://api-center
+          predicates:
+            - Path= /api/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
         cors-configurations:
           '[/**]':

@@ -148,6 +148,11 @@
             <artifactId>spring-boot-maven-plugin</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
+        <!--kafaka-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -5,6 +5,15 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.datamall.apicenter.entity.ExcelApp;
+import com.datamall.apicenter.entity.ExcelHeader;
+import com.datamall.apicenter.service.ExcelAppService;
+import com.datamall.apicenter.service.ExcelColDropdownService;
+import com.datamall.apicenter.service.ExcelHeaderService;
+import com.datamall.apicenter.utils.ExcelExportUtils;
+import com.datamall.apicenter.utils.ExcelToJsonConverter;
+import com.datamall.apicenter.vo.ExcelQueryConditionVo;
+import com.datamall.apicenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,15 +25,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.datamall.apicenter.entity.ExcelApp;
-import com.datamall.apicenter.entity.ExcelHeader;
-import com.datamall.apicenter.service.ExcelAppService;
-import com.datamall.apicenter.service.ExcelColDropdownService;
-import com.datamall.apicenter.service.ExcelHeaderService;
-import com.datamall.apicenter.utils.ExcelExportUtils;
-import com.datamall.apicenter.utils.ExcelToJsonConverter;
-import com.datamall.apicenter.vo.ExcelQueryConditionVo;
-import com.datamall.apicenter.vo.ResultData;
 
 import java.io.*;
 import java.util.*;
@@ -49,6 +49,11 @@ public class ExcelAppController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 上传excel文件
+     * @param file 文件
+     * @return ResultData
+     */
     @PostMapping("/upload")
     public ResultData upload(@RequestPart MultipartFile file) {
         //判断文件是否是xls或者xlsx
@@ -69,8 +74,8 @@ public class ExcelAppController {
         }
         //将excel存入数据库
         ExcelApp excelApp = new ExcelApp();
-        //将state设为-2，标识未初始化
-        excelApp.setAppId(appId).setName(file.getOriginalFilename()).setStatus(-1);
+        //将state设为-2，标识为被审核，-3审核中
+        excelApp.setAppId(appId).setName(file.getOriginalFilename()).setStatus(-2);
         boolean state = excelAppService.save(excelApp);
         if (!state) {
             return ResultData.fail("excel存入数据库失败");
@@ -95,7 +100,11 @@ public class ExcelAppController {
         return ResultData.success(appId);
     }
 
-    //获取excel表头
+    /**
+     * 获取excel表头
+     * @param appId appId
+     * @return ResultData
+     */
     @GetMapping("/getHeader/{appId}")
     public ResultData getHeader(@PathVariable String appId) {
         List<ExcelHeader> list = excelHeaderService.listByAppId(appId);
@@ -216,7 +225,7 @@ public class ExcelAppController {
         return ResultData.success();
     }
 
-    //查excelApp数据
+    //owner查excelApp数据
     @GetMapping("/listExcelApp")
     public ResultData listExcelApp() {
         QueryWrapper<ExcelApp> queryWrapper = new QueryWrapper<>();
@@ -224,29 +233,36 @@ public class ExcelAppController {
         List<ExcelApp> list = excelAppService.list(queryWrapper);
         return ResultData.success(list);
     }
+    //其余用户查excelApp数据
+    @GetMapping("/listExcelAppOther")
+    public ResultData listExcelAppOther() {
+        QueryWrapper<ExcelApp> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("status", 0);
+        List<ExcelApp> list = excelAppService.list(queryWrapper);
+        return ResultData.success(list);
+    }
     //download file
     @GetMapping("/download/{fileName}")
     public void download(HttpServletResponse response, @PathVariable String fileName) {
-        File file = new File( "tmp/"+ fileName);
-        if(!file.exists()){
-            return ;
+        File file = new File("tmp/" + fileName);
+        if (!file.exists()) {
+            return;
         }
         response.reset();
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + fileName );
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
 
-        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
             byte[] buff = new byte[1024];
-            OutputStream os  = response.getOutputStream();
+            OutputStream os = response.getOutputStream();
             int i = 0;
             while ((i = bis.read(buff)) != -1) {
                 os.write(buff, 0, i);
                 os.flush();
             }
         } catch (IOException e) {
-            return;
         }
     }
 
@@ -282,13 +298,14 @@ public class ExcelAppController {
         //调用导出excel工具类
         //ExcelExportUtils.exportData(response, result, header, fileName);
         //对文件名与时间戳md5加密
-        String newFileName = SecureUtil.md5(fileName+System.currentTimeMillis());
+        String newFileName = SecureUtil.md5(fileName + System.currentTimeMillis());
         String path = ExcelExportUtils.exportData(result, header, newFileName);
-        Map<String,String> res = new HashMap<>();
-        res.put("fileName",fileName);
-        res.put("path",path);
+        Map<String, String> res = new HashMap<>();
+        res.put("fileName", fileName);
+        res.put("path", path);
         return ResultData.success(res);
     }
+
     //删除excelApp数据
     @DeleteMapping("/deleteExcelApp/{appId}")
     public ResultData deleteExcelApp(@PathVariable String appId) {
@@ -304,6 +321,7 @@ public class ExcelAppController {
         mongoTemplate.dropCollection(appId);
         return ResultData.success();
     }
+
     //修改excelApp数据
     @PutMapping("/updateExcelApp")
     public ResultData updateExcelApp(@RequestBody ExcelApp excelApp) {

@@ -30,13 +30,14 @@ spring:
       host: ${redis.host}
       port: 6379
       password: ${redis.password}
+    mongodb:
+      uri: mongodb://localhost:27017/zd
 aliyun:
   oss:
     endpoint: oss-cn-chengdu.aliyuncs.com
     accessKeyId: ${accessKeyId}
     accessKeySecret: ${accessKeySecret}
-alipay:
-  #正式环境
+alipay: #正式环境
   #  #应用ID
   #  app_id: ${alipay.config.appid}
   #  #应用私钥
