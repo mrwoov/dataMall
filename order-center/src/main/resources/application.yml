@@ -6,8 +6,8 @@ spring:
     name: order-center  #服务名称
   rabbitmq:
     host: localhost
-    username: root
-    password: root
+    username: guest
+    password: guest
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/data-mall?serverTimezone=UTC

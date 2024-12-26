@@ -3,9 +3,12 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.Admin;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.*;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +41,7 @@ public class AdminController {
 
     @GetMapping("/panel")
     @AdminAuth(value = authPath)
-    public ResultData panelInfo() {
+    public BaseResponse<Map<String, String>> panelInfo() {
         Map<String, String> res = new HashMap<>();
         //订单数据
         res.put("order_today_num", String.valueOf(userOrderService.getTodayOrderCount()));
@@ -53,42 +56,54 @@ public class AdminController {
         res.put("user_yesterday_num", String.valueOf(accountService.getYesterdayNewUserCount()));
         res.put("user_total_num", String.valueOf(accountService.getUserTotal()));
         res.put("user_month_num", String.valueOf(accountService.getThisMonthNewUserCount()));
-        return ResultData.success(res);
+        return ResultUtils.success(res);
     }
 
     //管理员新增或修改管理员
     @PatchMapping("/")
     @AdminAuth(value = authPath)
-    public ResultData saveOrUpdate( @RequestBody Admin admin) {
+    public BaseResponse saveOrUpdate(@RequestBody Admin admin) {
         if (admin.getAccountId() == null) {
             admin.setAccountId(accountService.getOneByOption("username", admin.getUsername()).getId());
         }
         if (admin.getRole() == null) {
             admin.setRole(roleService.getOneByOption("roleName", admin.getRoleName()).getId());
         }
-        return ResultData.state(adminService.saveOrUpdate(admin));
+        boolean state = adminService.saveOrUpdate(admin);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     @DeleteMapping("/{id}")
     @AdminAuth(value = authPath)
     //管理员删除管理员
-    public ResultData del( @PathVariable Integer id) {
-        return ResultData.state(adminService.removeById(id));
+    public BaseResponse<Object> del(@PathVariable Integer id) {
+        boolean state = adminService.removeById(id);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //管理员批量删除管理员
     @PostMapping("/del_batch")
     @AdminAuth(value = authPath)
-    public ResultData delBatch( @RequestBody List<Integer> ids) {
-        return ResultData.state(adminService.removeBatchByIds(ids));
+    public BaseResponse<Object> delBatch(@RequestBody List<Integer> ids) {
+        boolean state = adminService.removeBatchByIds(ids);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //分页查询查询管理员
     @PostMapping("/query")
     @AdminAuth(value = authPath)
-    public ResultData query( @RequestBody Admin admin, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
+    public BaseResponse<IPage<Admin>> query(@RequestBody Admin admin, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         IPage<Admin> page = adminService.query(admin.getUsername(), admin.getRole(), pageNum, pageSize);
-        return ResultData.success(page);
+        return ResultUtils.success(page);
     }
 
     //是否是管理员

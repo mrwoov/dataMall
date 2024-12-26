@@ -1,12 +1,18 @@
 package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.Account;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.AccountService;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -26,30 +32,30 @@ public class AccountController {
     //管理员分页查账号信息
     @PostMapping("/admin/query")
     @AdminAuth(value = authPath)
-    public ResultData queryUserInfoPageByOption(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
+    public BaseResponse<IPage<Account>> queryUserInfoPageByOption(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody Account account) {
         String email = account.getEmail();
         String userName = account.getUsername();
         Integer id = account.getId();
         if (pageNum == null || pageSize == null) {
-            return ResultData.fail("缺少参数");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        return ResultData.success(accountService.query(id, userName, email, pageNum, pageSize));
+        return ResultUtils.success(accountService.query(id, userName, email, pageNum, pageSize));
     }
 
     //管理员通过账号id查单个信息
     @GetMapping("/admin/{id}")
     @AdminAuth(value = authPath)
-    public ResultData findOne(@PathVariable Integer id) {
+    public BaseResponse<Account> findOne(@PathVariable Integer id) {
         Account account = accountService.getById(id);
-        return ResultData.success(account);
+        return ResultUtils.success(account);
     }
 
     //根据username查相似的username的list
     @GetMapping("/admin/getListByOption")
-    public ResultData usernameLikeList(@RequestParam("username") String username) {
+    public BaseResponse<List<Account>> usernameLikeList(@RequestParam("username") String username) {
         QueryWrapper<Account> accountQueryWrapper = new QueryWrapper<>();
         accountQueryWrapper.like("username", username);
-        return ResultData.success(accountService.list(accountQueryWrapper));
+        return ResultUtils.success(accountService.list(accountQueryWrapper));
     }
 }
 

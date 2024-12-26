@@ -2,11 +2,14 @@ package com.datamall.apicenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.datamall.apicenter.common.BaseResponse;
+import com.datamall.apicenter.common.ErrorCode;
+import com.datamall.apicenter.entity.ExcelColDropdown;
+import com.datamall.apicenter.exception.BusinessException;
+import com.datamall.apicenter.service.ExcelColDropdownService;
+import com.datamall.apicenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-import com.datamall.apicenter.entity.ExcelColDropdown;
-import com.datamall.apicenter.service.ExcelColDropdownService;
-import com.datamall.apicenter.vo.ResultData;
 
 import java.util.List;
 
@@ -26,8 +29,12 @@ public class ExcelColDropdownController {
 
     //新增或修改
     @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody ExcelColDropdown excelColDropdown) {
-        return ResultData.state(excelColDropdownService.saveOrUpdate(excelColDropdown));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody ExcelColDropdown excelColDropdown) {
+        boolean state = excelColDropdownService.saveOrUpdate(excelColDropdown);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //删除by id

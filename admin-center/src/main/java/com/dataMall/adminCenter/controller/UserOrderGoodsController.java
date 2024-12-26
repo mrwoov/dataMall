@@ -2,9 +2,12 @@ package com.dataMall.adminCenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.UserOrderGoods;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.UserOrderGoodsService;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +29,12 @@ public class UserOrderGoodsController {
 
     //新增或修改
     @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody UserOrderGoods userOrderGoods) {
-        return ResultData.state(userOrderGoodsService.saveOrUpdate(userOrderGoods));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody UserOrderGoods userOrderGoods) {
+        boolean state = userOrderGoodsService.saveOrUpdate(userOrderGoods);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //删除by id

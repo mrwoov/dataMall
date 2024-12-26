@@ -2,9 +2,12 @@ package com.datamall.apicenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.datamall.apicenter.common.BaseResponse;
+import com.datamall.apicenter.common.ErrorCode;
 import com.datamall.apicenter.entity.ExcelHeader;
+import com.datamall.apicenter.exception.BusinessException;
 import com.datamall.apicenter.service.ExcelHeaderService;
-import com.datamall.apicenter.vo.ResultData;
+import com.datamall.apicenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +29,12 @@ public class ExcelHeaderController {
 
     //新增或修改
     @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody ExcelHeader excelHeader) {
-        return ResultData.state(excelHeaderService.saveOrUpdate(excelHeader));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody ExcelHeader excelHeader) {
+        boolean state = excelHeaderService.saveOrUpdate(excelHeader);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //删除by id

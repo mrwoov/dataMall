@@ -2,9 +2,12 @@ package com.dataMall.goodsCenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dataMall.goodsCenter.common.BaseResponse;
+import com.dataMall.goodsCenter.common.ErrorCode;
 import com.dataMall.goodsCenter.entity.GoodsPortalShow;
+import com.dataMall.goodsCenter.exception.BusinessException;
 import com.dataMall.goodsCenter.service.GoodsPortalShowService;
-import com.dataMall.goodsCenter.vo.ResultData;
+import com.dataMall.goodsCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +29,12 @@ private GoodsPortalShowService goodsPortalShowService;
 
 //新增或修改
 @PatchMapping("/")
-public ResultData saveOrUpdate(@RequestBody GoodsPortalShow goodsPortalShow){
-        return ResultData.state(goodsPortalShowService.saveOrUpdate(goodsPortalShow));
+public BaseResponse<Object> saveOrUpdate(@RequestBody GoodsPortalShow goodsPortalShow){
+        boolean state = goodsPortalShowService.saveOrUpdate(goodsPortalShow);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
         }
 //删除by id
 @DeleteMapping("/{id}")

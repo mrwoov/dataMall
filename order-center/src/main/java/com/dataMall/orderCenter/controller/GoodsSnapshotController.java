@@ -1,18 +1,17 @@
 package com.dataMall.orderCenter.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dataMall.orderCenter.common.BaseResponse;
 import com.dataMall.orderCenter.common.ErrorCode;
 import com.dataMall.orderCenter.common.ResultUtils;
 import com.dataMall.orderCenter.entity.GoodsSnapshot;
 import com.dataMall.orderCenter.exception.BusinessException;
 import com.dataMall.orderCenter.service.GoodsSnapshotService;
-import com.dataMall.orderCenter.vo.ResultData;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>

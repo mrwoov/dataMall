@@ -29,7 +29,5 @@ public class GoodsFileController {
     public GoodsFileController(OssUtils ossUtils) {
         this.ossUtils = ossUtils;
     }
-
-    //todo:del
 }
 

@@ -3,9 +3,12 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.UserOrder;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.UserOrderService;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,27 +32,31 @@ public class UserOrderController {
     //管理员分页查找
     @PostMapping("/admin/page")
     @AdminAuth(value = authPath)
-    public ResultData page(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
+    public BaseResponse<IPage<UserOrder>> page(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
         if (pageNum == null || pageSize == null) {
-            return ResultData.fail("缺少参数");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         IPage<UserOrder> page = userOrderService.page(pageSize, pageNum, userOrder.getUsername(), userOrder.getTradeNo());
-        return ResultData.success(page);
+        return ResultUtils.success(page);
     }
 
     //管理员获取订单detail
     @GetMapping("/admin/{id}")
     @AdminAuth(value = authPath)
-    public ResultData findOne(@PathVariable Integer id) {
+    public BaseResponse<UserOrder> findOne(@PathVariable Integer id) {
         UserOrder userOrder = userOrderService.getById(id);
         userOrderService.getOrderGoods(userOrder);
-        return ResultData.success(userOrder);
+        return ResultUtils.success(userOrder);
     }
 
     //新增或修改
     @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody UserOrder userOrder) {
-        return ResultData.state(userOrderService.saveOrUpdate(userOrder));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody UserOrder userOrder) {
+        boolean state = userOrderService.saveOrUpdate(userOrder);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+        }
+        return ResultUtils.success();
     }
 
     //删除by id

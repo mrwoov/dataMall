@@ -1,9 +1,10 @@
 package com.dataMall.goodsCenter.controller;
 
 
+import com.dataMall.goodsCenter.common.BaseResponse;
 import com.dataMall.goodsCenter.entity.GoodsCategories;
 import com.dataMall.goodsCenter.service.GoodsCategoriesService;
-import com.dataMall.goodsCenter.vo.ResultData;
+import com.dataMall.goodsCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +29,10 @@ public class GoodsCategoriesController {
 
     //查询商品分类
     @GetMapping("/")
-    public ResultData getList() {
+    public BaseResponse<List<GoodsCategories>> getList() {
         List<GoodsCategories> list = goodsCategoriesService.list();
         list.removeIf(goodsCategories -> goodsCategories.getState() != 0);
-        return ResultData.success(list);
+        return ResultUtils.success(list);
     }
 }
 

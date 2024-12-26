@@ -1,11 +1,14 @@
 package com.dataMall.goodsCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dataMall.goodsCenter.common.BaseResponse;
+import com.dataMall.goodsCenter.common.ErrorCode;
 import com.dataMall.goodsCenter.entity.*;
+import com.dataMall.goodsCenter.exception.BusinessException;
 import com.dataMall.goodsCenter.feign.AccountService;
 import com.dataMall.goodsCenter.service.*;
 import com.dataMall.goodsCenter.utils.OssUtils;
-import com.dataMall.goodsCenter.vo.ResultData;
+import com.dataMall.goodsCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,7 +71,7 @@ public class GoodsController {
     }
 
     @GetMapping("/getPortalIndex")
-    public ResultData getPortalIndex() {
+    public BaseResponse<List<Goods>> getPortalIndex() {
         List<GoodsPortalShow> goodsPortalShowList = goodsPortalShowService.list();
         List<Goods> goodsList = new ArrayList<>();
         for (GoodsPortalShow goodsPortalShow : goodsPortalShowList) {
@@ -77,42 +80,48 @@ public class GoodsController {
             goodsService.getGoodsOtherParam(goods);
             goodsList.add(goods);
         }
-        return ResultData.success(goodsList);
+        return ResultUtils.success(goodsList);
     }
 
     // 用户上架商品
     @PostMapping("release_on")
-    public ResultData releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+    public BaseResponse<Object> releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
         Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     // 用户下架商品
     @PostMapping("/release_off")
-    public ResultData releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+    public BaseResponse<Object> releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
         Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 1);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     // 用户发布商品
     @PostMapping("/")
-    public ResultData release(@RequestHeader("token") String token, @RequestBody Goods goods) {
+    public BaseResponse<Object> release(@RequestHeader("token") String token, @RequestBody Goods goods) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         String fileMd5 = goods.getFileMd5();
         GoodsFile goodsFile = goodsFileService.getOneByOption("md5", fileMd5);
         if (goodsFile == null) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         List<String> imagesFilesMd5 = goods.getImagesMd5();
         List<GoodsFile> goodsImages = new ArrayList<>();
@@ -130,7 +139,7 @@ public class GoodsController {
         //保存至商品表
         boolean goodsStatus = goodsService.save(goods);
         if (!goodsStatus) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         Integer goodsId = goods.getId();
         boolean flag = true;
@@ -142,92 +151,101 @@ public class GoodsController {
             boolean goodsPicState = goodsPicService.save(goodsPic);
             flag = flag & goodsPicState;
         }
-        return ResultData.state(flag);
+        if (!flag) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     // 用户删除商品
     @DeleteMapping("/")
-    public ResultData del(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
+    public BaseResponse<Object> del(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
         Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         boolean owner = goodsService.isOwner(uid, goodsId);
         if (!owner) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         Goods goods = goodsService.getById(goodsId);
         goods.setState(-2);
         boolean state = goodsService.updateById(goods);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     // 获取单个商品信息
     @GetMapping("/info/{goodsId}")
-    public ResultData getInfo(@PathVariable("goodsId") Integer goodsId) {
+    public BaseResponse<Goods> getInfo(@PathVariable("goodsId") Integer goodsId) {
         Goods goods = goodsService.getGoodsInfoById(goodsId);
         if (goods.getState() == 0) {
-            return ResultData.success(goods);
+            return ResultUtils.success(goods);
         }
-        return ResultData.success();
+        return ResultUtils.success();
     }
 
     //批量获取多个商品信息
     @PostMapping("/infos")
-    public ResultData getInfos(@RequestBody List<Integer> goodsIds) {
+    public BaseResponse<List<Goods>> getInfos(@RequestBody List<Integer> goodsIds) {
         List<Goods> goodsList = goodsService.getGoodsListByIds(goodsIds);
         goodsService.getGoodsListOtherParam(goodsList);
-        return ResultData.success(goodsList);
+        return ResultUtils.success(goodsList);
     }
 
     // 用户修改商品信息
     @PostMapping("/update")
-    public ResultData updateGoods(@RequestHeader("token") String token, @RequestBody Goods goods) {
+    public BaseResponse<Object> updateGoods(@RequestHeader("token") String token, @RequestBody Goods goods) {
         Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         boolean owner = goodsService.isOwner(uid, goods.getId());
         if (!owner) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         boolean state = goodsService.updateById(goods.dealUserUpdateGoods());
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //搜索商品
     @GetMapping("/search")
-    public ResultData search(@RequestParam("keyword") String keyword) {
+    public BaseResponse<List<Goods>> search(@RequestParam("keyword") String keyword) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("name", keyword);
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
         goodsList.removeIf(goods -> goods.getState() != 0);
-        return ResultData.success(goodsList);
+        return ResultUtils.success(goodsList);
     }
 
     //获取类别下的商品
     @GetMapping("/categories")
-    public ResultData categoriesGoods(@RequestParam("categories") String categories) {
+    public BaseResponse<List<Goods>> categoriesGoods(@RequestParam("categories") String categories) {
         GoodsCategories goodsCategories = goodsCategoriesService.getOneByOption("url", categories);
         if (goodsCategories == null) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         Integer categoriesId = goodsCategories.getId();
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("categories_id", categoriesId);
         queryWrapper.eq("state", 0);
         List<Goods> goodsList = goodsService.getGoodsList(queryWrapper);
-        return ResultData.success(goodsList);
+        return ResultUtils.success(goodsList);
     }
 
     // 查询单个用户发布的商品列表
     @GetMapping("/list/{uid}")
-    public ResultData getUserGoodsList(@PathVariable("uid") String uid) {
+    public BaseResponse<List<Goods>> getUserGoodsList(@PathVariable("uid") String uid) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("uid", uid);
         List<Goods> list = goodsService.list(queryWrapper);
         goodsService.getGoodsListOtherParam(list);
-        return ResultData.success(list);
+        return ResultUtils.success(list);
     }
 
     @GetMapping("/getById/{id}")

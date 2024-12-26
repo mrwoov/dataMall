@@ -4,10 +4,13 @@ package com.dataMall.goodsCenter.controller;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dataMall.goodsCenter.common.BaseResponse;
+import com.dataMall.goodsCenter.common.ErrorCode;
 import com.dataMall.goodsCenter.entity.XlsxApi;
+import com.dataMall.goodsCenter.exception.BusinessException;
 import com.dataMall.goodsCenter.service.XlsxApiService;
 import com.dataMall.goodsCenter.utils.ExcelToJsonConverter;
-import com.dataMall.goodsCenter.vo.ResultData;
+import com.dataMall.goodsCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -36,10 +39,10 @@ public class XlsxApiController {
 
     //上传execl
     @PostMapping("/upload")
-    public ResultData upload(@RequestPart MultipartFile file) {
+    public BaseResponse<String> upload(@RequestPart MultipartFile file) {
         //判断文件是否是xls或者xlsx
         if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
-            return ResultData.fail("文件格式错误");
+            throw new BusinessException(ErrorCode.FAIL, "文件格式错误");
         }
         //将execl数据json化
         List<String> jsonList = ExcelToJsonConverter.convertExcelToJson(file);
@@ -53,14 +56,18 @@ public class XlsxApiController {
         for (String json : jsonList) {
             mongoTemplate.insert(json, apiId);
         }
-        return ResultData.success(apiId);
+        return ResultUtils.success(apiId);
     }
 
 
     //新增或修改
     @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody XlsxApi xlsxApi) {
-        return ResultData.state(xlsxApiService.saveOrUpdate(xlsxApi));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody XlsxApi xlsxApi) {
+        boolean state = xlsxApiService.saveOrUpdate(xlsxApi);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //删除by id

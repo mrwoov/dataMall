@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.SystemDict;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.SystemDictService;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,10 +34,10 @@ public class SystemDictController {
     //分页查图标
     @PostMapping("/admin/icon_page")
     @AdminAuth(value = authPath)
-    public ResultData iconPage(@RequestParam Integer pageNum,
-                               @RequestParam Integer pageSize, @RequestBody SystemDict systemDict) {
+    public BaseResponse<IPage<SystemDict>> iconPage(@RequestParam Integer pageNum,
+                                                    @RequestParam Integer pageSize, @RequestBody SystemDict systemDict) {
         if (pageNum == null || pageSize == null) {
-            return ResultData.fail("参数缺少");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         QueryWrapper<SystemDict> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", "icon");
@@ -45,35 +48,47 @@ public class SystemDictController {
             queryWrapper.like("value", systemDict.getValue());
         }
         IPage<SystemDict> page = systemDictService.page(new Page<>(pageNum, pageSize), queryWrapper);
-        return ResultData.success(page);
+        return ResultUtils.success(page);
     }
 
     //新增或修改
     @PatchMapping("/admin")
     @AdminAuth(value = authPath)
-    public ResultData saveOrUpdate(@RequestBody SystemDict systemDict) {
-        return ResultData.state(systemDictService.saveOrUpdate(systemDict));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody SystemDict systemDict) {
+        boolean state = systemDictService.saveOrUpdate(systemDict);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+        }
+        return ResultUtils.success();
     }
 
     //删除by id
     @DeleteMapping("/admin/{id}")
     @AdminAuth(value = authPath)
-    public ResultData delete(@PathVariable Integer id) {
-        return ResultData.state(systemDictService.removeById(id));
+    public BaseResponse<Object> delete(@PathVariable Integer id) {
+        boolean state = systemDictService.removeById(id);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //批量删除
     @PostMapping("/admin/del_batch")
     @AdminAuth(value = authPath)
-    public ResultData deleteBatch(@RequestBody List<Integer> ids) {
-        return ResultData.state(systemDictService.removeByIds(ids));
+    public BaseResponse<Object> deleteBatch(@RequestBody List<Integer> ids) {
+        boolean state = systemDictService.removeByIds(ids);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+        }
+        return ResultUtils.success();
     }
 
     //管理员查找全部
     @GetMapping("/")
     @AdminAuth(value = authPath)
-    public ResultData findAll() {
-        return ResultData.success(systemDictService.list());
+    public BaseResponse<List<SystemDict>> findAll() {
+        return ResultUtils.success(systemDictService.list());
     }
 
     //分页查询

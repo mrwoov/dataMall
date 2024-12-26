@@ -2,11 +2,14 @@ package com.dataMall.adminCenter.controller;
 
 
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.GoodsPic;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsPicService;
 import com.dataMall.adminCenter.service.GoodsService;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,14 +41,17 @@ public class GoodsPicController {
     //管理员冻结商品图片
     @GetMapping("/admin")
     @AdminAuth(value = authPath)
-    public ResultData freeze(@RequestParam("picId") String picId) {
+    public BaseResponse<Object> freeze(@RequestParam("picId") String picId) {
         GoodsPic goodsPic = goodsPicService.getById(picId);
         if (goodsPic == null) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         goodsPic.setStates(-1);
         boolean state = goodsPicService.updateById(goodsPic);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 }
 

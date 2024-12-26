@@ -3,11 +3,14 @@ package com.dataMall.goodsCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dataMall.goodsCenter.common.BaseResponse;
+import com.dataMall.goodsCenter.common.ErrorCode;
 import com.dataMall.goodsCenter.entity.GoodsFile;
+import com.dataMall.goodsCenter.exception.BusinessException;
 import com.dataMall.goodsCenter.feign.AccountService;
 import com.dataMall.goodsCenter.service.GoodsFileService;
 import com.dataMall.goodsCenter.utils.OssUtils;
-import com.dataMall.goodsCenter.vo.ResultData;
+import com.dataMall.goodsCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,19 +52,19 @@ public class GoodsFileController {
 
     //用户下载商品数据
     @GetMapping("/download/{md5}")
-    public ResultData download(@PathVariable String md5, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public BaseResponse<String> download(@PathVariable String md5, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         QueryWrapper<GoodsFile> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("md5",md5);
         GoodsFile goodsFile = goodsFileService.getOne(queryWrapper);
         String url = goodsFile.getFilePath();
-        return ResultData.success(url);
+        return ResultUtils.success(url);
     }
     //用户上传图片
     @PostMapping("/user/upload_pic")
-    public ResultData userUploadPic(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {
+    public BaseResponse<Map<String, String>> userUploadPic(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         //处理图片
         String originalName = file.getOriginalFilename();
@@ -76,28 +79,28 @@ public class GoodsFileController {
         GoodsFile goodsFile = new GoodsFile(accountId, processedFileName, dataFileUrl, fileMd5);
         boolean state = goodsFileService.save(goodsFile);
         if (!state) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         //开始上传
         boolean uploadStatus = ossUtils.uploadPicUser(accountId, processedFileName, file);
         //上传失败操作
         if (!uploadStatus) {
             goodsFileService.removeById(goodsFile.getId());
-            return ResultData.fail("文件上传失败");
+            throw new BusinessException(ErrorCode.FAIL, "文件上传失败");
         }
         //上传成功
         Map<String, String> map = new HashMap<>();
         map.put("md5", goodsFile.getMd5());
         map.put("name", originalName);
-        return ResultData.success(map);
+        return ResultUtils.success(map);
     }
 
     //用户上传文件
     @PostMapping("/user/upload_file")
-    public ResultData userUploadFile(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {
+    public BaseResponse<Map<String, String>> userUploadFile(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         String originalName = file.getOriginalFilename();
         String processedFileName = generateFileName(Objects.requireNonNull(originalName));
@@ -110,7 +113,7 @@ public class GoodsFileController {
         GoodsFile goodsFile = new GoodsFile(accountId, originalName, dataFileUrl, fileMd5);
         boolean state = goodsFileService.save(goodsFile);
         if (!state) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         System.out.println(file);
         //开始上传
@@ -118,13 +121,13 @@ public class GoodsFileController {
         //上传失败操作
         if (!uploadStatus) {
             goodsFileService.removeById(goodsFile.getId());
-            return ResultData.fail("文件上传失败");
+            throw new BusinessException(ErrorCode.FAIL, "文件上传失败");
         }
         //上传成功
         Map<String, String> map = new HashMap<>();
         map.put("md5", goodsFile.getMd5());
         map.put("name", originalName);
-        return ResultData.success(map);
+        return ResultUtils.success(map);
     }
 
     //计算文件md5值
@@ -155,8 +158,12 @@ public class GoodsFileController {
 
     //新增或修改
     @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody GoodsFile goodsFile) {
-        return ResultData.state(goodsFileService.saveOrUpdate(goodsFile));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody GoodsFile goodsFile) {
+        boolean state = goodsFileService.saveOrUpdate(goodsFile);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //删除by id

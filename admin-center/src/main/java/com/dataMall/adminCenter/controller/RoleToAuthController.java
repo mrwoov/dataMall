@@ -1,14 +1,18 @@
 package com.dataMall.adminCenter.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.Auth;
 import com.dataMall.adminCenter.entity.Role;
 import com.dataMall.adminCenter.entity.RoleToAuth;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.AuthService;
 import com.dataMall.adminCenter.service.RoleService;
 import com.dataMall.adminCenter.service.RoleToAuthService;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,50 +40,59 @@ public class RoleToAuthController {
     //新增或修改
     @PostMapping("/admin")
     @AdminAuth(value = authPath)
-    public ResultData save(@RequestBody RoleToAuth roleToAuth) {
+    public BaseResponse<Object> save(@RequestBody RoleToAuth roleToAuth) {
         Role role = roleService.getOneByOption("role_name", roleToAuth.getRoleName());
         roleToAuth.setRoleId(role.getId());
         Auth auth = authService.getOneByOption("name", roleToAuth.getAuthName());
         roleToAuth.setAuthId(auth.getId());
         boolean state = roleToAuthService.saveOrUpdate(roleToAuth);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //删除by id
     @DeleteMapping("/admin/{id}")
     @AdminAuth(value = authPath)
-    public ResultData delete(@PathVariable Integer id) {
+    public BaseResponse<Object> delete(@PathVariable Integer id) {
         boolean state = roleToAuthService.removeById(id);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //批量删除
     @PostMapping("/admin/del_batch")
     @AdminAuth(value = authPath)
-    public ResultData deleteBatch(@RequestBody List<Integer> ids) {
+    public BaseResponse<Object> deleteBatch(@RequestBody List<Integer> ids) {
         boolean state = roleToAuthService.removeByIds(ids);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //查找单个
     @GetMapping("/admin/{id}")
     @AdminAuth(value = authPath)
-    public ResultData findOne(@PathVariable Integer id) {
+    public BaseResponse<RoleToAuth> findOne(@PathVariable Integer id) {
         RoleToAuth roleToAuth = roleToAuthService.getById(id);
         Role role = roleService.getById(roleToAuth.getRoleId());
         roleToAuth.setRoleName(role.getRoleName());
         Auth auth = authService.getById(roleToAuth.getAuthId());
         roleToAuth.setAuthName(auth.getName());
-        return ResultData.success(roleToAuth);
+        return ResultUtils.success(roleToAuth);
     }
 
     //分页查询
     @PostMapping("/admin/query")
     @AdminAuth(value = authPath)
-    public ResultData findPage(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody RoleToAuth roleToAuth) {
+    public BaseResponse<IPage<RoleToAuth>> findPage(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestBody RoleToAuth roleToAuth) {
         String roleName = roleToAuth.getRoleName();
         String authName = roleToAuth.getAuthName();
-        return ResultData.success(roleToAuthService.queryRTAInfoPageByOption(pageSize, pageNum, roleName, authName));
+        return ResultUtils.success(roleToAuthService.queryRTAInfoPageByOption(pageSize, pageNum, roleName, authName));
     }
 }
 

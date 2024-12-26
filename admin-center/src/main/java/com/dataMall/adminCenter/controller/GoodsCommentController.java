@@ -1,10 +1,13 @@
 package com.dataMall.adminCenter.controller;
 
 
+import com.dataMall.adminCenter.common.BaseResponse;
+import com.dataMall.adminCenter.common.ErrorCode;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsCommentService;
 import com.dataMall.adminCenter.service.GoodsService;
-import com.dataMall.adminCenter.vo.ResultData;
+import com.dataMall.adminCenter.common.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,14 +33,14 @@ public class GoodsCommentController {
 
     // 删除评论：发评论er，商品所有者，管理员
     @DeleteMapping("/del")
-    public ResultData del(@RequestHeader("token") String token, @RequestParam("commentId") Integer commentId) {
+    public BaseResponse<Object> del(@RequestHeader("token") String token, @RequestParam("commentId") Integer commentId) {
         Integer uid = accountService.tokenToUid(token);
         if (uid == -1) {
-            return ResultData.fail("登陆过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         Integer goodsId = goodsCommentService.commentIdToGoodsId(commentId);
         if (goodsId == -1) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         //商品所有者删除评论逻辑：拿到uid，拿到评论所属商品id，判断是不是商品owner，是的话就可以删除，否则不行
         boolean owner = goodsService.isOwner(uid, goodsId);
@@ -46,10 +49,13 @@ public class GoodsCommentController {
         //管理员删除逻辑
         boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
         if (!(owner || sender || isAdmin)) {
-            return ResultData.fail();
+           throw new BusinessException(ErrorCode.FAIL);
         }
         boolean state = goodsCommentService.removeById(commentId);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
 }
