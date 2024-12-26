@@ -2,8 +2,12 @@ package com.dataMall.orderCenter.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.dataMall.orderCenter.common.BaseResponse;
+import com.dataMall.orderCenter.common.ErrorCode;
+import com.dataMall.orderCenter.common.ResultUtils;
 import com.dataMall.orderCenter.entity.Account;
 import com.dataMall.orderCenter.entity.UserOrder;
+import com.dataMall.orderCenter.exception.BusinessException;
 import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.feign.GoodsService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
@@ -45,11 +49,11 @@ public class UserOrderController {
     public ResultData downloadGoodsSource(@PathVariable String tradeNo, @RequestHeader("token") String token) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登陆过期");
+           throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         UserOrder userOrder = userOrderService.getUserPayedOrderByTradeNo(tradeNo, accountId);
         if (userOrder == null) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         List<String> md5List = userOrderService.downloadByMd5List(userOrder.getId());
         return ResultData.success(md5List);
@@ -57,22 +61,22 @@ public class UserOrderController {
 
     //发送下载链接
     @GetMapping("/sendDownload/{tradeNo}")
-    public ResultData sendDownload( @PathVariable String tradeNo,@RequestHeader("token") String token) {
+    public BaseResponse<Object> sendDownload(@PathVariable String tradeNo, @RequestHeader("token") String token) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登陆过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         UserOrder userOrder = userOrderService.getUserPayedOrderByTradeNo(tradeNo, accountId);
         if (userOrder == null) {
-            return ResultData.fail();
+            throw new BusinessException(ErrorCode.FAIL);
         }
         List<String> md5List = userOrderService.downloadByMd5List(userOrder.getId());
         if (md5List.isEmpty()) {
-            return ResultData.fail("没有资源");
+            throw new BusinessException(ErrorCode.FAIL, "没有资源");
         }
         Account account = accountService.getById(accountId);
         if (account == null) {
-            return ResultData.fail("用户不存在");
+            throw new BusinessException(ErrorCode.FAIL, "用户不存在");
         }
         Map<String, Object> map = new HashMap<>();
         map.put("tradeNo", tradeNo);
@@ -84,69 +88,72 @@ public class UserOrderController {
             i++;
         }
         mailService.sendTextMailMessage(account.getEmail(), "资源下载链接", "资源下载链接：" +html);
-        return ResultData.success();
+        return ResultUtils.success();
     }
 
     //用户分页查订单
     @PostMapping("/user/page")
-    public ResultData page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
+    public BaseResponse<IPage<UserOrder>> page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登陆过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         if (pageNum == null || pageSize == null) {
-            return ResultData.fail("缺少参数");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         IPage<UserOrder> page = userOrderService.page(pageSize, pageNum, accountId, userOrder.getTradeNo(), userOrder.getState());
-        return ResultData.success(page);
+        return ResultUtils.success(page);
     }
 
     //查用户全部订单
     @GetMapping("user_get_all")
-    public ResultData getUserALlOrder(@RequestHeader("token") String token) {
+    public BaseResponse<List<UserOrder>> getUserALlOrder(@RequestHeader("token") String token) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登陆过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId);
-        return ResultData.success(userOrderList);
+        return ResultUtils.success(userOrderList);
     }
 
     //查用户未付款订单
     @GetMapping("user_get_noPay")
-    public ResultData getUserNoPayOrder(@RequestHeader("token") String token) {
+    public BaseResponse<List<UserOrder>> getUserNoPayOrder(@RequestHeader("token") String token) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登陆过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, 0);
-        return ResultData.success(userOrderList);
+        return ResultUtils.success(userOrderList);
     }
 
     //查用户已购买订单
     @GetMapping("user_get_buy")
-    public ResultData getUserBuyOrder(@RequestHeader("token") String token) {
+    public BaseResponse<List<UserOrder>> getUserBuyOrder(@RequestHeader("token") String token) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登陆过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, 1);
-        return ResultData.success(userOrderList);
+        return ResultUtils.success(userOrderList);
     }
 
     //检查订单
     @GetMapping("/check")
-    public ResultData checkOrder(@RequestParam("trade_no") String tradeNo) {
+    public BaseResponse<Object> checkOrder(@RequestParam("trade_no") String tradeNo) {
         boolean state = userOrderService.checkOrderPayState(tradeNo);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //提交订单
     @PostMapping("/submit")
-    public ResultData submitOrder(@RequestHeader("token") String token, @RequestBody List<Integer> goodsIds) {
+    public BaseResponse<Map<String, String>> submitOrder(@RequestHeader("token") String token, @RequestBody List<Integer> goodsIds) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
 
         UserOrder userOrder = new UserOrder();
@@ -155,7 +162,7 @@ public class UserOrderController {
         for (Integer i : goodsIds) {
             Integer price = goodsService.getGoodsPrice(i);
             if (price == null) {
-                return ResultData.fail();
+                throw new BusinessException(ErrorCode.FAIL);
             }
             totalPrice = totalPrice + price;
         }
@@ -170,12 +177,12 @@ public class UserOrderController {
         for (Integer i : goodsIds) {
             boolean state = userOrderGoodsService.saveOrderGoods(i, userOrder.getId());
             if (!state) {
-                return ResultData.fail();
+               throw new BusinessException(ErrorCode.FAIL);
             }
         }
         Map<String, String> map = new HashMap<>();
         map.put("trade_no", tradeNo);
-        return ResultData.success(map);
+        return ResultUtils.success(map);
     }
 
     //支付订单
@@ -189,13 +196,16 @@ public class UserOrderController {
 
     //删除订单
     @GetMapping("/close")
-    public ResultData close(@RequestHeader("token") String token, @RequestParam("trade_no") String tradeNo) {
+    public BaseResponse<Object> close(@RequestHeader("token") String token, @RequestParam("trade_no") String tradeNo) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
-            return ResultData.fail("登录过期");
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         boolean state = userOrderService.deleteOrder(tradeNo, accountId);
-        return ResultData.state(state);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 }
 
