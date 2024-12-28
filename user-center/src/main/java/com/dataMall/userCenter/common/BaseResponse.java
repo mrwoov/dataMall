@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 public class BaseResponse<T> implements Serializable {
 
-    private int code;
+    private int status;
 
     private T data;
 
@@ -16,7 +16,7 @@ public class BaseResponse<T> implements Serializable {
     private String description;
 
     public BaseResponse(int code, T data, String message, String description) {
-        this.code = code;
+        this.status = code;
         this.data = data;
         this.message = message;
         this.description = description;

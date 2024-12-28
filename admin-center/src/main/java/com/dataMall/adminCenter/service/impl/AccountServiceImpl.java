@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dataMall.adminCenter.common.ErrorCode;
 import com.dataMall.adminCenter.entity.Account;
 import com.dataMall.adminCenter.entity.Admin;
+import com.dataMall.adminCenter.exception.BusinessException;
 import com.dataMall.adminCenter.mapper.AccountMapper;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.AdminService;
@@ -35,6 +37,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Resource
     private AdminService adminService;
 
+    /**
+     * 获取今日新增用户数
+     *
+     * @return 今日新增用户数
+     */
     @Override
     public int getTodayNewUserCount() {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
@@ -42,6 +49,12 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         queryWrapper.lt("create_time", java.time.LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999)); // 小于今天的结束时间
         return (int) count(queryWrapper);
     }
+
+    /**
+     * 获取昨日新增用户数
+     *
+     * @return 昨日新增用户数
+     */
     @Override
     public int getYesterdayNewUserCount() {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
@@ -49,6 +62,12 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         queryWrapper.lt("create_time", java.time.LocalDateTime.now().minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999)); // 小于昨天的结束时间
         return (int) count(queryWrapper);
     }
+
+    /**
+     * 获取本月新增用户数
+     *
+     * @return 本月新增用户数
+     */
     @Override
     public int getThisMonthNewUserCount() {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
@@ -56,13 +75,26 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         queryWrapper.lt("create_time", java.time.LocalDateTime.now());
         return (int) count(queryWrapper);
     }
+
+    /**
+     * 获取用户总数
+     *
+     * @return 用户总数
+     */
     @Override
-    public int getUserTotal(){
+    public int getUserTotal() {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         return (int) count(queryWrapper);
     }
 
-    //登录
+    /**
+     * 登录
+     *
+     * @param userName 用户名
+     * @param passWord 密码
+     * @return token
+     * PS: 该方法废除，用ssoLogin代替
+     */
     @Override
     public String login(String userName, String passWord) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
@@ -72,10 +104,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         try {
             account = getOne(queryWrapper);
             if (account == null) {
-                return "";
+                throw new BusinessException(ErrorCode.FAIL, "用户名或密码错误");
             }
         } catch (Exception e) {
-            return "";
+            throw new BusinessException(ErrorCode.FAIL, "用户名或密码错误");
         }
         String token = Sha256.getSha256Str(userName + passWord + System.currentTimeMillis());
         account.setToken(token);

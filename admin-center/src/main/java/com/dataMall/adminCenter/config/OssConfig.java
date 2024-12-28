@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 阿里云OSS配置类
+ */
 @Configuration
 public class OssConfig {
     @Value("${aliyun.oss.endpoint}")

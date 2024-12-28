@@ -28,7 +28,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     private RoleService roleService;
     @Autowired
     private AccountService accountService;
-    //判断是否为管理员
+
+    /**
+     * 判断是否是管理员
+     *
+     * @param accountId 账户id
+     * @return 是否是管理员
+     */
     @Override
     public boolean isAdmin(Integer accountId) {
         Admin admin = getOneByOption("account_id", accountId);
@@ -49,7 +55,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();
         if (userName != null && !userName.isEmpty()) {
             Account account = accountService.getOneByOption("username", userName);
-            if (account==null){
+            if (account == null) {
                 return null;
             }
             queryWrapper.like("account_id", account.getId());
@@ -57,7 +63,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         if (role != null) {
             queryWrapper.like("role", role);
         }
-        IPage<Admin> iPage =  page(new Page<>(pageNum, pageSize), queryWrapper);
+        IPage<Admin> iPage = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (Admin admin : iPage.getRecords()) {
             admin.setUsername(accountService.getById(admin.getAccountId()).getUsername());
             admin.setRoleName(roleService.getById(admin.getRole()).getRoleName());

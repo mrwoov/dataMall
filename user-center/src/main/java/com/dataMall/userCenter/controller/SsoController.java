@@ -2,9 +2,12 @@ package com.dataMall.userCenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dataMall.userCenter.common.BaseResponse;
+import com.dataMall.userCenter.common.ErrorCode;
+import com.dataMall.userCenter.common.ResultUtils;
 import com.dataMall.userCenter.entity.Sso;
+import com.dataMall.userCenter.exception.BusinessException;
 import com.dataMall.userCenter.service.SsoService;
-import com.dataMall.userCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +29,12 @@ public class SsoController {
 
     //新增或修改
     @PatchMapping("/")
-    public ResultData saveOrUpdate(@RequestBody Sso sso) {
-        return ResultData.state(ssoService.saveOrUpdate(sso));
+    public BaseResponse<Object> saveOrUpdate(@RequestBody Sso sso) {
+        boolean state = ssoService.saveOrUpdate(sso);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL);
+         }
+        return ResultUtils.success();
     }
 
     //删除by id

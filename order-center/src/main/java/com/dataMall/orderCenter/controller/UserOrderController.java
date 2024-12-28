@@ -13,7 +13,6 @@ import com.dataMall.orderCenter.feign.GoodsService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.utils.MailService;
-import com.dataMall.orderCenter.vo.ResultData;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +45,7 @@ public class UserOrderController {
 
     //用户下载订单商品的资源
     @GetMapping("/download/{tradeNo}")
-    public ResultData downloadGoodsSource(@PathVariable String tradeNo, @RequestHeader("token") String token) {
+    public BaseResponse<List<String>> downloadGoodsSource(@PathVariable String tradeNo, @RequestHeader("token") String token) {
         Integer accountId = accountService.tokenToUid(token);
         if (accountId == -1) {
            throw new BusinessException(ErrorCode.NOT_LOGIN);
@@ -56,7 +55,7 @@ public class UserOrderController {
             throw new BusinessException(ErrorCode.FAIL);
         }
         List<String> md5List = userOrderService.downloadByMd5List(userOrder.getId());
-        return ResultData.success(md5List);
+        return ResultUtils.success(md5List);
     }
 
     //发送下载链接

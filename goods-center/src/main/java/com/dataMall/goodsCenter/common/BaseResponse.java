@@ -1,6 +1,5 @@
 package com.dataMall.goodsCenter.common;
 
-import com.dataMall.goodsCenter.common.ErrorCode;
 import lombok.Data;
 
 import java.io.Serializable;

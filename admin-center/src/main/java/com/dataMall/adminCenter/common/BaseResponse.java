@@ -1,6 +1,5 @@
 package com.dataMall.adminCenter.common;
 
-import com.dataMall.adminCenter.common.ErrorCode;
 import lombok.Data;
 
 import java.io.Serializable;
