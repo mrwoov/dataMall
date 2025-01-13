@@ -1,8 +1,8 @@
 package com.dataMall.orderCenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.orderCenter.entity.Goods;
-import com.dataMall.orderCenter.entity.GoodsSnapshot;
+import com.dataMall.common.entity.Goods;
+import com.dataMall.common.entity.GoodsSnapshot;
 
 /**
  * <p>

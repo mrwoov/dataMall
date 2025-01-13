@@ -1,7 +1,7 @@
 package com.dataMall.orderCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dataMall.orderCenter.entity.UserOrder;
+import com.dataMall.common.entity.UserOrder;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

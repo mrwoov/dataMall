@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.userCenter.mapper.SsoTypeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.userCenter.entity.SsoType">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.SsoType">
         <id column="id" property="id" />
         <result column="type" property="type" />
         <result column="create_time" property="createTime" />

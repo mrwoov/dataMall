@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.goodsCenter.mapper.GoodsFreezeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.goodsCenter.entity.GoodsFreeze">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.GoodsFreeze">
         <id column="id" property="id"/>
         <result column="goods_id" property="goodsId"/>
         <result column="content" property="content"/>

@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.adminCenter.entity.GoodsFreeze;
+import com.dataMall.common.entity.GoodsFreeze;
 import com.dataMall.adminCenter.mapper.GoodsFreezeMapper;
 import com.dataMall.adminCenter.service.GoodsFreezeService;
 import org.springframework.stereotype.Service;

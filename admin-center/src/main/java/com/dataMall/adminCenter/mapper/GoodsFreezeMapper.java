@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dataMall.adminCenter.entity.GoodsFreeze;
+import com.dataMall.common.entity.GoodsFreeze;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

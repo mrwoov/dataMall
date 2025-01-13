@@ -2,11 +2,11 @@ package com.dataMall.adminCenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dataMall.adminCenter.common.BaseResponse;
-import com.dataMall.adminCenter.common.ErrorCode;
-import com.dataMall.adminCenter.common.ResultUtils;
-import com.dataMall.adminCenter.entity.UserOrderGoods;
-import com.dataMall.adminCenter.exception.BusinessException;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ErrorCode;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.entity.UserOrderGoods;
+import com.dataMall.common.exception.BusinessException;
 import com.dataMall.adminCenter.service.UserOrderGoodsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;

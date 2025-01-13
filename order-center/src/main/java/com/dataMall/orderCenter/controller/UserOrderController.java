@@ -2,12 +2,12 @@ package com.dataMall.orderCenter.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.dataMall.orderCenter.common.BaseResponse;
-import com.dataMall.orderCenter.common.ErrorCode;
-import com.dataMall.orderCenter.common.ResultUtils;
-import com.dataMall.orderCenter.entity.Account;
-import com.dataMall.orderCenter.entity.UserOrder;
-import com.dataMall.orderCenter.exception.BusinessException;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ErrorCode;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.entity.Account;
+import com.dataMall.common.entity.UserOrder;
+import com.dataMall.common.exception.BusinessException;
 import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.feign.GoodsService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;

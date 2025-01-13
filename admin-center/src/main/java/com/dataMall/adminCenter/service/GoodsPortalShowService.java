@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.adminCenter.entity.GoodsPortalShow;
+import com.dataMall.common.entity.GoodsPortalShow;
 
 /**
  * <p>

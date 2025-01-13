@@ -1,7 +1,7 @@
 package com.dataMall.goodsCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dataMall.goodsCenter.entity.GoodsComment;
+import com.dataMall.common.entity.GoodsComment;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,7 +1,7 @@
 package com.dataMall.userCenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.userCenter.entity.Account;
+import com.dataMall.common.entity.Account;
 
 
 /**

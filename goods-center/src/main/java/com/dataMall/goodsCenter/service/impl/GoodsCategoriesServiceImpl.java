@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.goodsCenter.entity.GoodsCategories;
+import com.dataMall.common.entity.GoodsCategories;
 import com.dataMall.goodsCenter.mapper.GoodsCategoriesMapper;
 import com.dataMall.goodsCenter.service.GoodsCategoriesService;
 import org.springframework.stereotype.Service;

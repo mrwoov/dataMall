@@ -2,11 +2,11 @@ package com.dataMall.goodsCenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dataMall.goodsCenter.common.BaseResponse;
-import com.dataMall.goodsCenter.common.ErrorCode;
-import com.dataMall.goodsCenter.common.ResultUtils;
-import com.dataMall.goodsCenter.entity.GoodsPortalShow;
-import com.dataMall.goodsCenter.exception.BusinessException;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ErrorCode;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.entity.GoodsPortalShow;
+import com.dataMall.common.exception.BusinessException;
 import com.dataMall.goodsCenter.service.GoodsPortalShowService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;

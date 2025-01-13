@@ -1,9 +1,9 @@
 package com.dataMall.goodsCenter.controller;
 
 
-import com.dataMall.goodsCenter.common.BaseResponse;
-import com.dataMall.goodsCenter.common.ResultUtils;
-import com.dataMall.goodsCenter.entity.GoodsCategories;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.entity.GoodsCategories;
 import com.dataMall.goodsCenter.service.GoodsCategoriesService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;

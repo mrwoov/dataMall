@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dataMall.adminCenter.entity.GoodsPic;
+import com.dataMall.common.entity.GoodsPic;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

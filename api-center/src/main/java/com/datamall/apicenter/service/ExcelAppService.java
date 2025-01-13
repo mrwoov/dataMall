@@ -1,7 +1,7 @@
-package com.datamall.apicenter.service;
+package com.dataMall.apicenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.datamall.apicenter.entity.ExcelApp;
+import com.dataMall.common.entity.ExcelApp;
 
 /**
  * <p>

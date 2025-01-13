@@ -1,7 +1,7 @@
-package com.datamall.apicenter.mapper;
+package com.dataMall.apicenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.datamall.apicenter.entity.ExcelHeader;
+import com.dataMall.common.entity.ExcelHeader;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

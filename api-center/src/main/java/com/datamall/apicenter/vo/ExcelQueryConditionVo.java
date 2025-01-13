@@ -1,4 +1,4 @@
-package com.datamall.apicenter.vo;
+package com.dataMall.apicenter.vo;
 
 import lombok.Data;
 

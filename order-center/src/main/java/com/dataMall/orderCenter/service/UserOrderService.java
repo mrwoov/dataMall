@@ -2,7 +2,7 @@ package com.dataMall.orderCenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.orderCenter.entity.UserOrder;
+import com.dataMall.common.entity.UserOrder;
 
 import java.util.List;
 import java.util.Map;

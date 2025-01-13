@@ -2,8 +2,8 @@ package com.dataMall.adminCenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.adminCenter.entity.GoodsSnapshot;
-import com.dataMall.adminCenter.entity.UserOrderGoods;
+import com.dataMall.common.entity.GoodsSnapshot;
+import com.dataMall.common.entity.UserOrderGoods;
 import com.dataMall.adminCenter.mapper.UserOrderGoodsMapper;
 import com.dataMall.adminCenter.service.GoodsSnapshotService;
 import com.dataMall.adminCenter.service.UserOrderGoodsService;

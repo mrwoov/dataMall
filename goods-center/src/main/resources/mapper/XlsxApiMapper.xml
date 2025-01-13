@@ -3,7 +3,7 @@
 <mapper namespace="com.example.datamall.mapper.XlsxApiMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.goodsCenter.entity.XlsxApi">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.XlsxApi">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="api_id" property="apiId" />

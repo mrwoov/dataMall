@@ -1,10 +1,10 @@
-package com.datamall.apicenter.service.impl;
+package com.dataMall.apicenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.datamall.apicenter.entity.ExcelApp;
-import com.datamall.apicenter.mapper.ExcelAppMapper;
-import com.datamall.apicenter.service.ExcelAppService;
+import com.dataMall.common.entity.ExcelApp;
+import com.dataMall.apicenter.mapper.ExcelAppMapper;
+import com.dataMall.apicenter.service.ExcelAppService;
 import org.springframework.stereotype.Service;
 
 /**

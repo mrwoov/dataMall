@@ -1,10 +1,10 @@
 package com.dataMall.adminCenter.controller;
 
 
-import com.dataMall.adminCenter.common.BaseResponse;
-import com.dataMall.adminCenter.common.ErrorCode;
-import com.dataMall.adminCenter.common.ResultUtils;
-import com.dataMall.adminCenter.exception.BusinessException;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ErrorCode;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.exception.BusinessException;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsCommentService;
 import com.dataMall.adminCenter.service.GoodsService;

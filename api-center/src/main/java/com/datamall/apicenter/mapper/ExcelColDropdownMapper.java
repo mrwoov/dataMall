@@ -1,7 +1,7 @@
-package com.datamall.apicenter.mapper;
+package com.dataMall.apicenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.datamall.apicenter.entity.ExcelColDropdown;
+import com.dataMall.common.entity.ExcelColDropdown;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

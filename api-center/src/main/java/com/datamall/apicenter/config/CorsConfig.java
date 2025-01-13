@@ -1,4 +1,4 @@
-package com.datamall.apicenter.config;
+package com.dataMall.apicenter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

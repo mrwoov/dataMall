@@ -3,7 +3,7 @@ package com.dataMall.adminCenter.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.adminCenter.entity.Goods;
+import com.dataMall.common.entity.Goods;
 
 import java.util.List;
 

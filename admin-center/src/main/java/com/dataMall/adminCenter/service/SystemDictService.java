@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.adminCenter.entity.SystemDict;
+import com.dataMall.common.entity.SystemDict;
 
 import java.util.List;
 

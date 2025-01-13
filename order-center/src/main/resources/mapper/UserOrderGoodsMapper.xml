@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.orderCenter.mapper.UserOrderGoodsMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.orderCenter.entity.UserOrderGoods">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.UserOrderGoods">
         <id column="id" property="id"/>
         <result column="order_id" property="orderId"/>
         <result column="goods_snapshot_id" property="goodsSnapshotId"/>

@@ -1,7 +1,7 @@
 package com.dataMall.userCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dataMall.userCenter.entity.Sso;
+import com.dataMall.common.entity.Sso;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

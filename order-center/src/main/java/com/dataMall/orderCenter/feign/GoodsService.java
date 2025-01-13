@@ -1,6 +1,6 @@
 package com.dataMall.orderCenter.feign;
 
-import com.dataMall.orderCenter.entity.Goods;
+import com.dataMall.common.entity.Goods;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;

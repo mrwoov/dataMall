@@ -2,7 +2,7 @@ package com.dataMall.userCenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.userCenter.entity.Account;
+import com.dataMall.common.entity.Account;
 import com.dataMall.userCenter.mapper.AccountMapper;
 import com.dataMall.userCenter.service.AccountService;
 import com.dataMall.userCenter.utils.Sha256;

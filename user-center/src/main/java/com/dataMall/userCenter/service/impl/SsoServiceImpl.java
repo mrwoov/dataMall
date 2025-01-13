@@ -2,8 +2,8 @@ package com.dataMall.userCenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.userCenter.entity.Sso;
-import com.dataMall.userCenter.entity.SsoType;
+import com.dataMall.common.entity.Sso;
+import com.dataMall.common.entity.SsoType;
 import com.dataMall.userCenter.mapper.SsoMapper;
 import com.dataMall.userCenter.service.SsoService;
 import com.dataMall.userCenter.service.SsoTypeService;

@@ -1,11 +1,11 @@
 package com.dataMall.orderCenter.controller;
 
 
-import com.dataMall.orderCenter.common.BaseResponse;
-import com.dataMall.orderCenter.common.ErrorCode;
-import com.dataMall.orderCenter.common.ResultUtils;
-import com.dataMall.orderCenter.entity.UserOrderGoods;
-import com.dataMall.orderCenter.exception.BusinessException;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ErrorCode;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.entity.UserOrderGoods;
+import com.dataMall.common.exception.BusinessException;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PatchMapping;

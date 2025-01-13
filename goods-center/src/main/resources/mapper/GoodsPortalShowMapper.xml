@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.goodsCenter.mapper.GoodsPortalShowMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.goodsCenter.entity.GoodsPortalShow">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.GoodsPortalShow">
         <id column="id" property="id" />
         <result column="goods_id" property="goodsId" />
         <result column="create_time" property="createTime" />

@@ -2,7 +2,7 @@ package com.dataMall.adminCenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.adminCenter.entity.GoodsPic;
+import com.dataMall.common.entity.GoodsPic;
 import com.dataMall.adminCenter.mapper.GoodsPicMapper;
 import com.dataMall.adminCenter.service.GoodsPicService;
 import org.springframework.stereotype.Service;

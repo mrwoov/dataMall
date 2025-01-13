@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.adminCenter.mapper.UserOrderMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.adminCenter.entity.UserOrder">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.UserOrder">
         <id column="id" property="id"/>
         <result column="account_id" property="accountId"/>
         <result column="trade_no" property="tradeNo"/>

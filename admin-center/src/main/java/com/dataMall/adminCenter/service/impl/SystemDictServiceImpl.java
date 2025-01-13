@@ -2,7 +2,7 @@ package com.dataMall.adminCenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.adminCenter.entity.SystemDict;
+import com.dataMall.common.entity.SystemDict;
 import com.dataMall.adminCenter.mapper.SystemDictMapper;
 import com.dataMall.adminCenter.service.SystemDictService;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,11 @@
 package com.dataMall.goodsCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dataMall.goodsCenter.common.BaseResponse;
-import com.dataMall.goodsCenter.common.ErrorCode;
-import com.dataMall.goodsCenter.common.ResultUtils;
-import com.dataMall.goodsCenter.entity.*;
-import com.dataMall.goodsCenter.exception.BusinessException;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ErrorCode;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.entity.*;
+import com.dataMall.common.exception.BusinessException;
 import com.dataMall.goodsCenter.feign.AccountService;
 import com.dataMall.goodsCenter.service.*;
 import com.dataMall.goodsCenter.utils.OssUtils;

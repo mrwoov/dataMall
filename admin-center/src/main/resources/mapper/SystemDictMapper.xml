@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.adminCenter.mapper.SystemDictMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.adminCenter.entity.SystemDict">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.SystemDict">
         <result column="name" property="name"/>
         <result column="value" property="value"/>
         <result column="type" property="type"/>

@@ -2,11 +2,11 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
-import com.dataMall.adminCenter.common.BaseResponse;
-import com.dataMall.adminCenter.common.ErrorCode;
-import com.dataMall.adminCenter.common.ResultUtils;
-import com.dataMall.adminCenter.entity.Goods;
-import com.dataMall.adminCenter.exception.BusinessException;
+import com.dataMall.common.common.BaseResponse;
+import com.dataMall.common.common.ErrorCode;
+import com.dataMall.common.common.ResultUtils;
+import com.dataMall.common.entity.Goods;
+import com.dataMall.common.exception.BusinessException;
 import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsFreezeService;
 import com.dataMall.adminCenter.service.GoodsPortalShowService;

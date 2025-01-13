@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.userCenter.mapper.AccountMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.userCenter.entity.Account">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.Account">
         <id column="id" property="id" />
         <result column="user_name" property="username" />
         <result column="pass_word" property="password" />

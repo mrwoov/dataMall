@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dataMall.adminCenter.entity.SystemDict;
+import com.dataMall.common.entity.SystemDict;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

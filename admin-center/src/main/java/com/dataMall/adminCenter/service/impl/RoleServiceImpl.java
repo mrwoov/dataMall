@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.adminCenter.entity.Role;
+import com.dataMall.common.entity.Role;
 import com.dataMall.adminCenter.mapper.RoleMapper;
 import com.dataMall.adminCenter.service.RoleService;
 import org.springframework.stereotype.Service;

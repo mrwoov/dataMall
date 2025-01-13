@@ -1,7 +1,7 @@
 package com.dataMall.userCenter.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.userCenter.entity.SsoType;
+import com.dataMall.common.entity.SsoType;
 import com.dataMall.userCenter.mapper.SsoTypeMapper;
 import com.dataMall.userCenter.service.SsoTypeService;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,7 @@
 <mapper namespace="com.dataMall.adminCenter.mapper.GoodsSnapshotMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dataMall.adminCenter.entity.GoodsSnapshot">
+    <resultMap id="BaseResultMap" type="com.dataMall.common.entity.GoodsSnapshot">
         <id column="id" property="id"/>
         <result column="owner_id" property="ownerId"/>
         <result column="goods_id" property="goodsId"/>

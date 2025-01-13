@@ -2,7 +2,7 @@ package com.dataMall.goodsCenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.goodsCenter.entity.GoodsCategories;
+import com.dataMall.common.entity.GoodsCategories;
 
 /**
  * <p>

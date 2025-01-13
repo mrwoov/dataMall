@@ -1,7 +1,7 @@
 package com.dataMall.goodsCenter.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.goodsCenter.entity.XlsxApi;
+import com.dataMall.common.entity.XlsxApi;
 import com.dataMall.goodsCenter.mapper.XlsxApiMapper;
 import com.dataMall.goodsCenter.service.XlsxApiService;
 import org.springframework.stereotype.Service;
