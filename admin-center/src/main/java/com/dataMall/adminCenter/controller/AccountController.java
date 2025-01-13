@@ -29,6 +29,8 @@ public class AccountController {
     @Resource
     private AccountService accountService;
 
+    //todo:冻结账号
+
     //管理员分页查账号信息
     @PostMapping("/admin/query")
     @AdminAuth(value = authPath)

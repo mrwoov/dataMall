@@ -1,4 +1,4 @@
-package com.dataMall.adminCenter.entity;
+package com.dataMall.common.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Getter;

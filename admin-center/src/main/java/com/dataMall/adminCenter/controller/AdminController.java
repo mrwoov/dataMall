@@ -62,7 +62,7 @@ public class AdminController {
     //管理员新增或修改管理员
     @PatchMapping("/")
     @AdminAuth(value = authPath)
-    public BaseResponse saveOrUpdate(@RequestBody Admin admin) {
+    public BaseResponse<Object> saveOrUpdate(@RequestBody Admin admin) {
         if (admin.getAccountId() == null) {
             admin.setAccountId(accountService.getOneByOption("username", admin.getUsername()).getId());
         }
