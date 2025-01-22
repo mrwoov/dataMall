@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.common.entity.Auth;
-import com.dataMall.common.entity.Role;
-import com.dataMall.common.entity.RoleToAuth;
 import com.dataMall.adminCenter.mapper.RoleToAuthMapper;
 import com.dataMall.adminCenter.service.AuthService;
 import com.dataMall.adminCenter.service.RoleService;
 import com.dataMall.adminCenter.service.RoleToAuthService;
+import com.dataMall.common.entity.Auth;
+import com.dataMall.common.entity.Role;
+import com.dataMall.common.entity.RoleToAuth;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

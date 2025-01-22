@@ -3,12 +3,12 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.service.GoodsCategoriesService;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.GoodsCategories;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.adminCenter.service.GoodsCategoriesService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 

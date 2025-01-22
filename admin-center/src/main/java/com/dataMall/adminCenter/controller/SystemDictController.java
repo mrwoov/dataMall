@@ -5,12 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.service.SystemDictService;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.SystemDict;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.adminCenter.service.SystemDictService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,14 +1,14 @@
 package com.dataMall.adminCenter.controller;
 
 import com.dataMall.adminCenter.aop.AdminAuth;
+import com.dataMall.adminCenter.service.AuthService;
+import com.dataMall.adminCenter.service.SystemDictService;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.Auth;
 import com.dataMall.common.entity.SystemDict;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.adminCenter.service.AuthService;
-import com.dataMall.adminCenter.service.SystemDictService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,8 +1,5 @@
 package com.dataMall.common.common;
 
-import com.dataMall.common.common.BaseResponse;
-import com.dataMall.common.common.ErrorCode;
-
 public class ResultUtils {
     public static <T> BaseResponse<T> success(T data) {
         return new BaseResponse<>(200, data, "ok");

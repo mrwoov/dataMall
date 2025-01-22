@@ -1,6 +1,5 @@
 package com.dataMall.searchCenter.service.impl;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.dataMall.common.entity.Goods;
 import com.dataMall.searchCenter.dto.GoodsEsDTO;

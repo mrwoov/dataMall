@@ -1,6 +1,5 @@
 package com.dataMall.searchCenter.feign;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dataMall.common.entity.Goods;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;

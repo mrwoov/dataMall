@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.dataMall.common.entity.Auth;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
