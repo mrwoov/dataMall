@@ -93,7 +93,7 @@ public class GoodsController {
         boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 0);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
@@ -107,7 +107,7 @@ public class GoodsController {
         boolean state = goodsService.userUpdateGoodsState(uid, goodsId, 1);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
@@ -153,7 +153,7 @@ public class GoodsController {
         }
         if (!flag) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
@@ -173,7 +173,7 @@ public class GoodsController {
         boolean state = goodsService.updateById(goods);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
@@ -209,7 +209,7 @@ public class GoodsController {
         boolean state = goodsService.updateById(goods.dealUserUpdateGoods());
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
@@ -258,5 +258,22 @@ public class GoodsController {
     @GetMapping("/getGoodsPrice/{id}")
     public Integer getGoodsPrice(@PathVariable Integer id) {
         return goodsService.getById(id).getPrice();
+    }
+
+    @GetMapping("/getGoodsListAll")
+    public List<Goods> getGoodsListAll() {
+        return goodsService.list();
+    }
+
+    @PostMapping("/getGoodsListByIds")
+    public List<Goods> getGoodsListByIds(@RequestBody List<Integer> ids) {
+        List<Goods> goodsList = goodsService.listByIds(ids);
+        return goodsList.stream().peek(Goods::priceToMoney)
+                .peek(goods -> goodsService.getGoodsOtherParam(goods)).toList();
+    }
+    
+    @GetMapping("/getGoodsWithFiveMinutesAgoUpdate")
+    public List<Goods> getGoodsWithFiveMinutesAgoUpdate() {
+        return goodsService.getGoodsWithFiveMinutesAgoUpdate();
     }
 }

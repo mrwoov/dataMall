@@ -15,6 +15,10 @@ public class ResultUtils {
     public static BaseResponse error(ErrorCode errorCode) {
         return new BaseResponse<>(errorCode);
     }
+    
+    public static BaseResponse error(String message) {
+        return new BaseResponse(ErrorCode.SYSTEM_ERROR.getCode(), null, message);
+    }
 
     public static BaseResponse error(int code, String message, String description) {
         return new BaseResponse(code, null, message, description);

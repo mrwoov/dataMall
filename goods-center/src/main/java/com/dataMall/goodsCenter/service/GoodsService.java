@@ -35,4 +35,6 @@ public interface GoodsService extends IService<Goods> {
     List<Goods> getGoodsList(QueryWrapper<Goods> queryWrapper);
 
     List<Goods> getGoodsListByIds(List<Integer> goodsIds);
+
+    List<Goods> getGoodsWithFiveMinutesAgoUpdate();
 }

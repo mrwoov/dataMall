@@ -25,6 +25,9 @@
         <module>gateway</module>
         <module>api-center</module>
         <module>common</module>
+        <module>search-center</module>
+        <module>blog-center</module>
+
     </modules>
 
     <!--版本号统一管理-->

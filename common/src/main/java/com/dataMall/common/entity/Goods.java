@@ -28,7 +28,6 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class Goods implements Serializable {
-
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -84,6 +83,8 @@ public class Goods implements Serializable {
     private Integer state;
 
     private Integer type;
+
+    private String tags;
 
     @TableField(exist = false)
     private String username;

@@ -13,6 +13,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -160,6 +161,16 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public List<Goods> getGoodsListByIds(List<Integer> goodsIds) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("id", goodsIds);
+        List<Goods> goodsList = list(queryWrapper);
+        getGoodsListOtherParam(goodsList);
+        return goodsList;
+    }
+
+    @Override
+    public List<Goods> getGoodsWithFiveMinutesAgoUpdate() {
+        Date fiveMinutesAgoDate = new Date(new Date().getTime() - 5 * 60 * 1000L);
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.gt("update_time", fiveMinutesAgoDate);
         List<Goods> goodsList = list(queryWrapper);
         getGoodsListOtherParam(goodsList);
         return goodsList;

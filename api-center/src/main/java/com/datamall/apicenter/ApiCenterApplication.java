@@ -1,4 +1,4 @@
-package com.datamall.apicenter;
+package com.dataMall.apicenter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

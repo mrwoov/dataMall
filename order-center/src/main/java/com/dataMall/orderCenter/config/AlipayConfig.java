@@ -3,11 +3,13 @@ package com.dataMall.orderCenter.config;
 
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.kernel.Config;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class AlipayConfig implements ApplicationRunner {
     // 应用ID,您的APPID，收款账号既是您的APPID对应支付宝账号
@@ -55,6 +57,6 @@ public class AlipayConfig implements ApplicationRunner {
         config.notifyUrl = this.notify_url;
         //初始化支付宝SDK
         Factory.setOptions(config);
-        System.out.println("=======支付宝SDK初始化成功");
+        log.info("=======支付宝SDK初始化成功=======");
     }
 }

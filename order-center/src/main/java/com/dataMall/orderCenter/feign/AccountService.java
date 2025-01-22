@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Component
-@FeignClient(value = "user-center",path = "/accounts")
+@FeignClient(value = "user-center", path = "/accounts")
 public interface AccountService {
     @GetMapping("/tokenToUid")
     Integer tokenToUid(@RequestHeader("token") String token);
@@ -20,7 +20,7 @@ public interface AccountService {
     Account getById(@PathVariable Integer id);
 
     @GetMapping("/getOneByOption")
-    Account getOneByOption(@RequestParam("column")String column, @RequestParam("value") String value);
+    Account getOneByOption(@RequestParam("column") String column, @RequestParam("value") String value);
 
     @GetMapping("getListByOption")
     List<Account> usernameLikeList(@RequestParam("username") String username);
