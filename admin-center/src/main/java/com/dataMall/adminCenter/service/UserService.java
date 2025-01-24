@@ -2,7 +2,7 @@ package com.dataMall.adminCenter.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dataMall.common.entity.Account;
+import com.dataMall.common.entity.User;
 
 /**
  * <p>
@@ -12,7 +12,7 @@ import com.dataMall.common.entity.Account;
  * @author woov
  * @since 2023-09-14
  */
-public interface AccountService extends IService<Account> {
+public interface UserService extends IService<User> {
     int getTodayNewUserCount();
 
     int getYesterdayNewUserCount();
@@ -31,7 +31,7 @@ public interface AccountService extends IService<Account> {
     boolean reg(String username, String password, String email);
 
     //根据一个条件查找
-    Account getOneByOption(String column, Object value);
+    User getOneByOption(String column, Object value);
 
     //通过redis检查token
     boolean checkTokenByRedis(String token);
@@ -40,7 +40,7 @@ public interface AccountService extends IService<Account> {
     boolean checkAdminHavaAuth(String pathNow, String token);
 
     //管理员分页查找
-    IPage<Account> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
+    IPage<User> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize);
 
     //token转accountId
     Integer tokenToUid(String token);

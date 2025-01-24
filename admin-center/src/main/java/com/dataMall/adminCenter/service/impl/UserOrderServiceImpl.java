@@ -9,12 +9,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.adminCenter.config.AlipayConfig;
 import com.dataMall.adminCenter.mapper.UserOrderMapper;
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.UserOrderGoodsService;
 import com.dataMall.adminCenter.service.UserOrderService;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.adminCenter.utils.JSONUtils;
-import com.dataMall.common.entity.Account;
 import com.dataMall.common.entity.GoodsSnapshot;
+import com.dataMall.common.entity.User;
 import com.dataMall.common.entity.UserOrder;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     @Resource
     private AlipayConfig alipayConfig;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private UserOrderGoodsService userOrderGoodsService;
 
@@ -97,14 +97,14 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     @Override
     public IPage<UserOrder> page(Integer pageSize, Integer pageNum, String username, String tradeNo) {
         QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
-        QueryWrapper<Account> accountQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> accountQueryWrapper = new QueryWrapper<>();
 
         if (username != null) {
             accountQueryWrapper.like("username", username);
-            List<Account> accountList = accountService.list(accountQueryWrapper);
+            List<User> userList = userService.list(accountQueryWrapper);
             List<Integer> accounts = new ArrayList<>();
-            for (Account account : accountList) {
-                accounts.add(account.getId());
+            for (User user : userList) {
+                accounts.add(user.getId());
             }
             queryWrapper.in("account_id", accounts);
         }
@@ -113,7 +113,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         }
         IPage<UserOrder> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (UserOrder userOrder : page.getRecords()) {
-            userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
+            userOrder.setUsername(userService.getById(userOrder.getAccountId()).getUsername());
             double money = (double) userOrder.getTotalAmount() / 100;
             userOrder.setMoney(money);
         }
@@ -156,7 +156,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     public UserOrder getOrderGoods(UserOrder userOrder){
         List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId());
         userOrder.setGoodsSnapshots(goodsSnapshotList);
-        userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
+        userOrder.setUsername(userService.getById(userOrder.getAccountId()).getUsername());
         userOrder.setTradeNo(userOrder.getTradeNo());
         Integer totalAmount = userOrder.getTotalAmount();
         double money = (double) totalAmount / 100;

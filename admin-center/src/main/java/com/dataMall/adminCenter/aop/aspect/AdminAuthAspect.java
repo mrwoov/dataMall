@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.aop.aspect;
 
 import com.dataMall.adminCenter.aop.AdminAuth;
-import com.dataMall.adminCenter.service.AccountService;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.exception.BusinessException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class AdminAuthAspect {
 
     @Autowired
-    private AccountService accountService;
+    private UserService userService;
     @Autowired
     private HttpServletRequest request;
     @Autowired
@@ -28,7 +28,7 @@ public class AdminAuthAspect {
         String authPath = adminAuth.value();
         // 从请求头中获取token
         String token = request.getHeader("token");
-        boolean isAdmin = accountService.checkAdminHavaAuth(authPath, token);
+        boolean isAdmin = userService.checkAdminHavaAuth(authPath, token);
         if (!isAdmin) {
             // 没有权限时直接返回响应给前端
             throw new BusinessException(ErrorCode.FORBIDDEN);

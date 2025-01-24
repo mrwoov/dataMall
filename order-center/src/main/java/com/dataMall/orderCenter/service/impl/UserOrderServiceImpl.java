@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.common.entity.GoodsSnapshot;
 import com.dataMall.common.entity.UserOrder;
 import com.dataMall.orderCenter.config.AlipayConfig;
-import com.dataMall.orderCenter.feign.AccountService;
+import com.dataMall.orderCenter.feign.UserService;
 import com.dataMall.orderCenter.mapper.UserOrderMapper;
 import com.dataMall.orderCenter.service.GoodsSnapshotService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
@@ -41,7 +41,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     @Resource
     private AlipayConfig alipayConfig;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private UserOrderGoodsService userOrderGoodsService;
 
@@ -85,7 +85,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         queryWrapper.orderByDesc("id");
         IPage<UserOrder> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (UserOrder userOrder : page.getRecords()) {
-            userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
+            userOrder.setUsername(userService.getById(userOrder.getAccountId()).getUsername());
             double money = (double) userOrder.getTotalAmount() / 100;
             userOrder.setMoney(money);
             userOrder.setGoodsSnapshots(userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId()));
@@ -183,7 +183,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     public void getOrderGoods(UserOrder userOrder) {
         List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(userOrder.getId());
         userOrder.setGoodsSnapshots(goodsSnapshotList);
-        userOrder.setUsername(accountService.getById(userOrder.getAccountId()).getUsername());
+        userOrder.setUsername(userService.getById(userOrder.getAccountId()).getUsername());
         userOrder.setTradeNo(userOrder.getTradeNo());
         Integer totalAmount = userOrder.getTotalAmount();
         double money = (double) totalAmount / 100;

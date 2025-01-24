@@ -1,4 +1,4 @@
-package com.dataMall.apicenter.service;
+package com.dataMall.apiCenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dataMall.common.entity.ExcelApp;
@@ -15,4 +15,7 @@ public interface ExcelAppService extends IService<ExcelApp> {
     ExcelApp getOneByOption(String colum,String value);
 
     boolean removeByAppId(String appId);
+
+
+    boolean checkCreateAuth(Integer uid, String appId);
 }

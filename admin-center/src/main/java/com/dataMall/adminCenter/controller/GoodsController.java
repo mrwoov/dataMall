@@ -2,10 +2,10 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsFreezeService;
 import com.dataMall.adminCenter.service.GoodsPortalShowService;
 import com.dataMall.adminCenter.service.GoodsService;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.adminCenter.utils.OssUtils;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 public class GoodsController {
     private final String authPath = "goods";
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private GoodsService goodsService;
     @Resource
@@ -57,7 +57,7 @@ public class GoodsController {
     @PostMapping("/admin/freeze")
     @AdminAuth(value = authPath)
     public BaseResponse<Object> freeze(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }

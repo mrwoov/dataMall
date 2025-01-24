@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
-import com.dataMall.common.entity.Account;
+import com.dataMall.common.entity.User;
 import com.dataMall.common.entity.UserOrder;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.orderCenter.feign.AccountService;
 import com.dataMall.orderCenter.feign.GoodsService;
+import com.dataMall.orderCenter.feign.UserService;
 import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.utils.MailService;
@@ -37,7 +37,7 @@ public class UserOrderController {
     @Resource
     private GoodsService goodsService;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private UserOrderService userOrderService;
     @Autowired
@@ -46,7 +46,7 @@ public class UserOrderController {
     //用户下载订单商品的资源
     @GetMapping("/download/{tradeNo}")
     public BaseResponse<List<String>> downloadGoodsSource(@PathVariable String tradeNo, @RequestHeader("token") String token) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
            throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -61,7 +61,7 @@ public class UserOrderController {
     //发送下载链接
     @GetMapping("/sendDownload/{tradeNo}")
     public BaseResponse<Object> sendDownload(@PathVariable String tradeNo, @RequestHeader("token") String token) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -73,8 +73,8 @@ public class UserOrderController {
         if (md5List.isEmpty()) {
             throw new BusinessException(ErrorCode.FAIL, "没有资源");
         }
-        Account account = accountService.getById(accountId);
-        if (account == null) {
+        User user = userService.getById(accountId);
+        if (user == null) {
             throw new BusinessException(ErrorCode.FAIL, "用户不存在");
         }
         Map<String, Object> map = new HashMap<>();
@@ -86,14 +86,14 @@ public class UserOrderController {
             html = html + "<p>资源" + i + "：" + md5 + "</p> <a href='http://localhost:8080/order/download/" + tradeNo + "'>点击下载</a>";
             i++;
         }
-        mailService.sendTextMailMessage(account.getEmail(), "资源下载链接", "资源下载链接：" +html);
+        mailService.sendTextMailMessage(user.getEmail(), "资源下载链接", "资源下载链接：" +html);
         return ResultUtils.success();
     }
 
     //用户分页查订单
     @PostMapping("/user/page")
     public BaseResponse<IPage<UserOrder>> page(@RequestHeader("token") String token, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody UserOrder userOrder) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -107,7 +107,7 @@ public class UserOrderController {
     //查用户全部订单
     @GetMapping("user_get_all")
     public BaseResponse<List<UserOrder>> getUserALlOrder(@RequestHeader("token") String token) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -118,7 +118,7 @@ public class UserOrderController {
     //查用户未付款订单
     @GetMapping("user_get_noPay")
     public BaseResponse<List<UserOrder>> getUserNoPayOrder(@RequestHeader("token") String token) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -129,7 +129,7 @@ public class UserOrderController {
     //查用户已购买订单
     @GetMapping("user_get_buy")
     public BaseResponse<List<UserOrder>> getUserBuyOrder(@RequestHeader("token") String token) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -150,7 +150,7 @@ public class UserOrderController {
     //提交订单
     @PostMapping("/submit")
     public BaseResponse<Map<String, String>> submitOrder(@RequestHeader("token") String token, @RequestBody List<Integer> goodsIds) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -196,7 +196,7 @@ public class UserOrderController {
     //删除订单
     @GetMapping("/close")
     public BaseResponse<Object> close(@RequestHeader("token") String token, @RequestParam("trade_no") String tradeNo) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }

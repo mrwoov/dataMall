@@ -6,7 +6,7 @@ import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.*;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.goodsCenter.feign.AccountService;
+import com.dataMall.goodsCenter.feign.UserService;
 import com.dataMall.goodsCenter.service.*;
 import com.dataMall.goodsCenter.utils.OssUtils;
 import jakarta.annotation.Resource;
@@ -30,7 +30,7 @@ import java.util.Random;
 @RequestMapping("/goods")
 public class GoodsController {
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private GoodsService goodsService;
     @Resource
@@ -86,7 +86,7 @@ public class GoodsController {
     // 用户上架商品
     @PostMapping("release_on")
     public BaseResponse<Object> releaseOn(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -100,7 +100,7 @@ public class GoodsController {
     // 用户下架商品
     @PostMapping("/release_off")
     public BaseResponse<Object> releaseOff(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -114,7 +114,7 @@ public class GoodsController {
     // 用户发布商品
     @PostMapping("/")
     public BaseResponse<Object> release(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -160,7 +160,7 @@ public class GoodsController {
     // 用户删除商品
     @DeleteMapping("/")
     public BaseResponse<Object> del(@RequestHeader("token") String token, @RequestParam("goodsId") Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -198,7 +198,7 @@ public class GoodsController {
     // 用户修改商品信息
     @PostMapping("/update")
     public BaseResponse<Object> updateGoods(@RequestHeader("token") String token, @RequestBody Goods goods) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -214,6 +214,7 @@ public class GoodsController {
     }
 
     //搜索商品
+    @Deprecated
     @GetMapping("/search")
     public BaseResponse<List<Goods>> search(@RequestParam("keyword") String keyword) {
         QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();

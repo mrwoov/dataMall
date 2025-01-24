@@ -3,10 +3,10 @@ package com.dataMall.adminCenter.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.adminCenter.aop.AdminAuth;
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.AdminService;
 import com.dataMall.adminCenter.service.RoleService;
 import com.dataMall.adminCenter.service.RoleToAuthService;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
@@ -33,7 +33,7 @@ public class RoleController {
     @Resource
     private RoleService roleService;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private RoleToAuthService roleToAuthService;
     @Resource
@@ -107,7 +107,7 @@ public class RoleController {
     //用户查询权限列表
     @GetMapping("/getAuthList")
     public BaseResponse<List<Auth>> getAuthList(@RequestHeader("token") String token) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -117,7 +117,7 @@ public class RoleController {
 
     @GetMapping("/getAuths")
     public BaseResponse<List<Auth>> getAuths(@RequestHeader("token") String token) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }

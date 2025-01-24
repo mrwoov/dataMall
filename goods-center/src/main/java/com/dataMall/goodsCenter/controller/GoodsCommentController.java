@@ -7,7 +7,7 @@ import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.GoodsComment;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.goodsCenter.feign.AccountService;
+import com.dataMall.goodsCenter.feign.UserService;
 import com.dataMall.goodsCenter.service.GoodsCommentService;
 import com.dataMall.goodsCenter.service.GoodsService;
 import jakarta.annotation.Resource;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class GoodsCommentController {
     private final String authPath = "comment";
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private GoodsCommentService goodsCommentService;
     @Resource
@@ -35,7 +35,7 @@ public class GoodsCommentController {
     //发起或回复评论
     @PostMapping("/send")
     public BaseResponse<Object> send(@RequestHeader("token") String token, @RequestBody GoodsComment goodsComment) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -57,7 +57,7 @@ public class GoodsCommentController {
     // 删除评论：发评论er，商品所有者，管理员
     @DeleteMapping("/del")
     public BaseResponse<Object> del(@RequestHeader("token") String token, @RequestParam("commentId") Integer commentId) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }

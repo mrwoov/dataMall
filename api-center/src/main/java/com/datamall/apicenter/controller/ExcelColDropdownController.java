@@ -1,8 +1,8 @@
-package com.dataMall.apicenter.controller;
+package com.dataMall.apiCenter.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dataMall.apicenter.service.ExcelColDropdownService;
+import com.dataMall.apiCenter.service.ExcelColDropdownService;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;

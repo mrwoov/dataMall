@@ -35,14 +35,26 @@ public class ExcelApp implements Serializable {
     /**
      * 应用名称
      */
-    private String name;
+    private String filename;
 
     /**
      * 描述
      */
     private String description;
 
+    /**
+     * 标签
+     */
+    private String tags;
+
+    /**
+     * 展示图片
+     */
+    private String picIndex;
+
     private Integer sort;
+    
+    private Integer uid;
 
     /**
      * 创建时间
@@ -60,6 +72,5 @@ public class ExcelApp implements Serializable {
      * 0正常-1冻结
      */
     private Integer status;
-
 
 }

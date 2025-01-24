@@ -48,3 +48,5 @@ build/
 
 admin-center/Dockerfile
 *.vm
+
+application-local.yml

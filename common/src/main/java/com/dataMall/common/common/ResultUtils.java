@@ -1,5 +1,8 @@
 package com.dataMall.common.common;
 
+import com.dataMall.common.exception.BusinessException;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
 public class ResultUtils {
     public static <T> BaseResponse<T> success(T data) {
         return new BaseResponse<>(200, data, "ok");
@@ -25,6 +28,10 @@ public class ResultUtils {
         return new BaseResponse(errorCode.getCode(), null, message, description);
     }
 
+    public static BaseResponse error(ErrorCode errorCode, String message) {
+        return new BaseResponse(errorCode.getCode(), null, message, null);
+    }
+
     public static BaseResponse error(int code, String message) {
         return new BaseResponse(code, null, message);
     }
@@ -34,6 +41,18 @@ public class ResultUtils {
             return success(null);
         } else {
             return error(ErrorCode.SYSTEM_ERROR);
+        }
+    }
+    
+    public static void throwIf(boolean statement, ErrorCode errorCode, String message) {
+        if (statement) {
+            throw new BusinessException(errorCode, message);
+        }
+    }
+    public static void throwIfAndRollback(boolean statement, ErrorCode errorCode, String message) {
+        if (statement) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new BusinessException(errorCode, message);
         }
     }
 }

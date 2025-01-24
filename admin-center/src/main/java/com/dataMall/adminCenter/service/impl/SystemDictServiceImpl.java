@@ -26,4 +26,16 @@ public class SystemDictServiceImpl extends ServiceImpl<SystemDictMapper, SystemD
         queryWrapper.eq("type", type);
         return list(queryWrapper);
     }
+
+    @Override
+    public String getSetting(String key) {
+        QueryWrapper<SystemDict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("type", "setting");
+        queryWrapper.eq("name", key);
+        SystemDict systemDict = getOne(queryWrapper);
+        if (systemDict == null) {
+            return null;
+        }
+        return systemDict.getValue();
+    }
 }

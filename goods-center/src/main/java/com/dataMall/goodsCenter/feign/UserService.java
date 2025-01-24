@@ -1,6 +1,6 @@
-package com.dataMall.orderCenter.feign;
+package com.dataMall.goodsCenter.feign;
 
-import com.dataMall.common.entity.Account;
+import com.dataMall.common.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,20 +8,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Component
-@FeignClient(value = "user-center", path = "/accounts")
-public interface AccountService {
+@FeignClient(value = "user-center",path = "/users")
+public interface UserService {
     @GetMapping("/tokenToUid")
     Integer tokenToUid(@RequestHeader("token") String token);
 
     @GetMapping("/getById/{id}")
-    Account getById(@PathVariable Integer id);
+    User getById(@PathVariable Integer id);
 
     @GetMapping("/getOneByOption")
-    Account getOneByOption(@RequestParam("column") String column, @RequestParam("value") String value);
-
-    @GetMapping("getListByOption")
-    List<Account> usernameLikeList(@RequestParam("username") String username);
+    User getOneByOption(@RequestParam("column")String column, @RequestParam("value") String value);
 }

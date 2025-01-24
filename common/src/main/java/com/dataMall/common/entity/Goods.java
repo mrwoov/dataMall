@@ -81,8 +81,7 @@ public class Goods implements Serializable {
      * 商品状态0正常1下架-1冻结-2假删
      */
     private Integer state;
-
-    private Integer type;
+    
 
     private String tags;
 

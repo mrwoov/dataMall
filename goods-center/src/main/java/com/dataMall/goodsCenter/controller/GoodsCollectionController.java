@@ -8,7 +8,7 @@ import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.Goods;
 import com.dataMall.common.entity.GoodsCollection;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.goodsCenter.feign.AccountService;
+import com.dataMall.goodsCenter.feign.UserService;
 import com.dataMall.goodsCenter.service.GoodsCollectionService;
 import com.dataMall.goodsCenter.service.GoodsService;
 import jakarta.annotation.Resource;
@@ -31,14 +31,14 @@ public class GoodsCollectionController {
     @Resource
     private GoodsCollectionService goodsCollectionService;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private GoodsService goodsService;
 
     //获取用户收藏的商品
     @GetMapping("/get_user_follow")
     public BaseResponse<List<Goods>> getUserFollowGoods(@RequestHeader("token") String token) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -60,7 +60,7 @@ public class GoodsCollectionController {
     //收藏商品
     @GetMapping("/follow/{goodsId}")
     public BaseResponse<Object> follow(@RequestHeader("token") String token, @PathVariable("goodsId") Integer goodsId) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -77,7 +77,7 @@ public class GoodsCollectionController {
     //取消收藏商品
     @GetMapping("/unfollow/{goodsId}")
     public BaseResponse<Object> unfollow(@RequestHeader("token") String token, @PathVariable("goodsId") Integer goodsId) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -100,7 +100,7 @@ public class GoodsCollectionController {
     //判断用户是否收藏
     @GetMapping("/isCollection/{goodsId}")
     public BaseResponse<Object> userIsCollection(@RequestHeader("token") String token, @PathVariable Integer goodsId) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }

@@ -1,4 +1,4 @@
-package com.dataMall.apicenter.mapper;
+package com.dataMall.apiCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dataMall.common.entity.ExcelColDropdown;

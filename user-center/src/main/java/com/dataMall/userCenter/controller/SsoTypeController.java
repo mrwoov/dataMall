@@ -40,12 +40,20 @@ public class SsoTypeController {
     //删除by id
     @DeleteMapping("/{id}")
     public Boolean delete(@PathVariable Integer id) {
+        //id为1和2的不可删除
+        if (id == 1 || id == 2) {
+            ResultUtils.error(ErrorCode.FAIL);
+        }
         return ssoTypeService.removeById(id);
     }
 
     //批量删除
     @PostMapping("/del_batch")
     public Boolean deleteBatch(@RequestBody List<Integer> ids) {
+        //id为1和2的不可删除
+        if (ids.contains(1) || ids.contains(2)) {
+            ResultUtils.error(ErrorCode.FAIL);
+        }
         return ssoTypeService.removeByIds(ids);
     }
 

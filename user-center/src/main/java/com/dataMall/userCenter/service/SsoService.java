@@ -12,10 +12,7 @@ import com.dataMall.common.entity.Sso;
  * @since 2024-03-02
  */
 public interface SsoService extends IService<Sso> {
-    //用户名或邮箱登录
-    int login(String userName, String passWord);
-
-    //三方登录
+    //登录通用接口
     int login(String ssoType, String ssoUser, String ssoToken);
 
     //三方绑定账号

@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.adminCenter.mapper.GoodsCommentMapper;
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsCommentService;
-import com.dataMall.common.entity.Account;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.common.entity.GoodsComment;
+import com.dataMall.common.entity.User;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoodsCommentServiceImpl extends ServiceImpl<GoodsCommentMapper, GoodsComment> implements GoodsCommentService {
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Override
     public GoodsComment getOneByOption(String column, Object value) {
         QueryWrapper<GoodsComment> queryWrapper = new QueryWrapper<>();
@@ -55,9 +55,9 @@ public class GoodsCommentServiceImpl extends ServiceImpl<GoodsCommentMapper, Goo
         queryWrapper.eq("goods_id", goodsId);
         IPage<GoodsComment> page = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (GoodsComment goodsComment : page.getRecords()) {
-            Account account = accountService.getById(goodsComment.getUid());
-            goodsComment.setUsername(account.getUsername());
-            goodsComment.setAvatar(account.getAvatar());
+            User user = userService.getById(goodsComment.getUid());
+            goodsComment.setUsername(user.getUsername());
+            goodsComment.setAvatar(user.getAvatar());
         }
         return page;
     }

@@ -1,0 +1,30 @@
+server:
+  port: 8700
+  
+spring:
+  application:
+    name: pic-center  #服务名称
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data-mall?serverTimezone=UTC
+    username: root
+    password: ${mysql.password}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    hiddenmethod:
+      filter:
+        enabled: true
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: -1
+
+cos:
+  client:
+    host: ${tx.cos.client.host}
+    secretId: ${tx.cos.client.secretId}
+    secretKey: ${tx.cos.client.secretKey}
+    region: ${tx.cos.client.region}
+    bucket: ${tx.cos.client.bucket}

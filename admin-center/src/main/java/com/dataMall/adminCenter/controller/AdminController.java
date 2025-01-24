@@ -29,7 +29,7 @@ import java.util.Map;
 public class AdminController {
     private final String authPath = "admins";
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private AdminService adminService;
     @Resource
@@ -52,10 +52,10 @@ public class AdminController {
         res.put("goods_not_audit", String.valueOf(goodsService.getNotAuditGoodsCount()));
         res.put("goods_normal", String.valueOf(goodsService.getNormalGoodsCount()));
         //用户数据
-        res.put("user_today_num", String.valueOf(accountService.getTodayNewUserCount()));
-        res.put("user_yesterday_num", String.valueOf(accountService.getYesterdayNewUserCount()));
-        res.put("user_total_num", String.valueOf(accountService.getUserTotal()));
-        res.put("user_month_num", String.valueOf(accountService.getThisMonthNewUserCount()));
+        res.put("user_today_num", String.valueOf(userService.getTodayNewUserCount()));
+        res.put("user_yesterday_num", String.valueOf(userService.getYesterdayNewUserCount()));
+        res.put("user_total_num", String.valueOf(userService.getUserTotal()));
+        res.put("user_month_num", String.valueOf(userService.getThisMonthNewUserCount()));
         return ResultUtils.success(res);
     }
 
@@ -64,7 +64,7 @@ public class AdminController {
     @AdminAuth(value = authPath)
     public BaseResponse<Object> saveOrUpdate(@RequestBody Admin admin) {
         if (admin.getAccountId() == null) {
-            admin.setAccountId(accountService.getOneByOption("username", admin.getUsername()).getId());
+            admin.setAccountId(userService.getOneByOption("username", admin.getUsername()).getId());
         }
         if (admin.getRole() == null) {
             admin.setRole(roleService.getOneByOption("roleName", admin.getRoleName()).getId());

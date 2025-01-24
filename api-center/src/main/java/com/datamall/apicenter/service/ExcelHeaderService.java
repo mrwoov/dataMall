@@ -1,4 +1,4 @@
-package com.dataMall.apicenter.service;
+package com.dataMall.apiCenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dataMall.common.entity.ExcelHeader;

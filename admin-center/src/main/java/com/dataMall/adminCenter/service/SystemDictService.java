@@ -15,4 +15,6 @@ import java.util.List;
  */
 public interface SystemDictService extends IService<SystemDict> {
     List<SystemDict> getOneType(String type);
+
+    String getSetting(String key);
 }

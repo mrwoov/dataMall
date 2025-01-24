@@ -1,8 +1,8 @@
 package com.dataMall.adminCenter.controller;
 
 
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsFileService;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.adminCenter.utils.OssUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class GoodsFileController {
     @Resource
     private GoodsFileService goodsFileService;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private OssUtils ossUtils;
 

@@ -98,5 +98,11 @@ public class SystemDictController {
                                      @RequestParam Integer pageSize) {
         return systemDictService.page(new Page<>(pageNum, pageSize));
     }
+    
+    // 获取配置：这个接口是给feign调用的，所以不需要token
+    @GetMapping("/admin/getSetting")
+    public String getSetting(@RequestParam("key") String key) {
+        return systemDictService.getSetting(key);
+    }
 }
 

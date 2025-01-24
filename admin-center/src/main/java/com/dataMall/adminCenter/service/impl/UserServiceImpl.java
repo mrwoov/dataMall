@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.adminCenter.mapper.AccountMapper;
-import com.dataMall.adminCenter.service.AccountService;
+import com.dataMall.adminCenter.mapper.UserMapper;
 import com.dataMall.adminCenter.service.AdminService;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.adminCenter.utils.Sha256;
 import com.dataMall.common.common.ErrorCode;
-import com.dataMall.common.entity.Account;
 import com.dataMall.common.entity.Admin;
+import com.dataMall.common.entity.User;
 import com.dataMall.common.exception.BusinessException;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
  * @since 2023-09-14
  */
 @Service
-public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private RedisTemplate<String, String> redisTemplate;
     @Resource
@@ -44,7 +44,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
      */
     @Override
     public int getTodayNewUserCount() {
-        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("create_time", java.time.LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0)); // 大于等于今天的开始时间
         queryWrapper.lt("create_time", java.time.LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999)); // 小于今天的结束时间
         return (int) count(queryWrapper);
@@ -57,7 +57,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
      */
     @Override
     public int getYesterdayNewUserCount() {
-        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("create_time", java.time.LocalDateTime.now().minusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0)); // 大于等于昨天的开始时间
         queryWrapper.lt("create_time", java.time.LocalDateTime.now().minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999)); // 小于昨天的结束时间
         return (int) count(queryWrapper);
@@ -70,7 +70,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
      */
     @Override
     public int getThisMonthNewUserCount() {
-        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("create_time", java.time.LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0)); // 大于等于本月的开始时间
         queryWrapper.lt("create_time", java.time.LocalDateTime.now());
         return (int) count(queryWrapper);
@@ -83,7 +83,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
      */
     @Override
     public int getUserTotal() {
-        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         return (int) count(queryWrapper);
     }
 
@@ -97,31 +97,31 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
      */
     @Override
     public String login(String userName, String passWord) {
-        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", userName);
         queryWrapper.eq("password", passWord);
-        Account account;
+        User user;
         try {
-            account = getOne(queryWrapper);
-            if (account == null) {
+            user = getOne(queryWrapper);
+            if (user == null) {
                 throw new BusinessException(ErrorCode.FAIL, "用户名或密码错误");
             }
         } catch (Exception e) {
             throw new BusinessException(ErrorCode.FAIL, "用户名或密码错误");
         }
         String token = Sha256.getSha256Str(userName + passWord + System.currentTimeMillis());
-        account.setToken(token);
-        update(account, queryWrapper);
+        user.setToken(token);
+        update(user, queryWrapper);
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.set(String.valueOf(account.getId()), token, 60 * 60 * 24, TimeUnit.SECONDS);
-        operations.set(token, account.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
+        operations.set(String.valueOf(user.getId()), token, 60 * 60 * 24, TimeUnit.SECONDS);
+        operations.set(token, user.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
         return token;
     }
 
     //根据条件查询单个
     @Override
-    public Account getOneByOption(String column, Object value) {
-        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+    public User getOneByOption(String column, Object value) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(column, value);
         return getOne(queryWrapper);
     }
@@ -150,8 +150,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
             return false;
         }
         try {
-            Account account = getOneByOption("token", token);
-            Integer accountId = account.getId();
+            User user = getOneByOption("token", token);
+            Integer accountId = user.getId();
             Admin admin = adminService.getOneByOption("account_id", accountId);
             if (admin.getId() == null) {
                 return false;
@@ -166,8 +166,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
 
     // 管理员分页查询账号
     @Override
-    public IPage<Account> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize) {
-        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+    public IPage<User> query(Integer id, String userName, String email, Integer pageNum, Integer pageSize) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         if (id != null) {
             queryWrapper.eq("id", id);
         }
@@ -183,9 +183,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     //忘记账号密码
     @Override
     public void forget(String email, String password) {
-        Account account = getOneByOption("email", email);
-        account.setPassword(password);
-        updateById(account);
+        User user = getOneByOption("email", email);
+        user.setPassword(password);
+        updateById(user);
     }
 
     //根据redis记录提取内容
@@ -213,10 +213,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     //注册
     @Override
     public boolean reg(String username, String password, String email) {
-        Account accountInsert = new Account();
-        accountInsert.setUsername(username);
-        accountInsert.setPassword(password);
-        accountInsert.setEmail(email);
-        return save(accountInsert);
+        User userInsert = new User();
+        userInsert.setUsername(username);
+        userInsert.setPassword(password);
+        userInsert.setEmail(email);
+        return save(userInsert);
     }
 }

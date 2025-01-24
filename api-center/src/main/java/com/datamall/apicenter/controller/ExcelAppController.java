@@ -1,19 +1,21 @@
-package com.dataMall.apicenter.controller;
+package com.dataMall.apiCenter.controller;
 
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.dataMall.apicenter.service.ExcelAppService;
-import com.dataMall.apicenter.service.ExcelColDropdownService;
-import com.dataMall.apicenter.service.ExcelHeaderService;
-import com.dataMall.apicenter.vo.ExcelQueryConditionVo;
+import com.dataMall.apiCenter.feign.UserService;
+import com.dataMall.apiCenter.service.ExcelAppService;
+import com.dataMall.apiCenter.service.ExcelColDropdownService;
+import com.dataMall.apiCenter.service.ExcelHeaderService;
+import com.dataMall.apiCenter.vo.ExcelQueryConditionVo;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.ExcelApp;
 import com.dataMall.common.entity.ExcelHeader;
+import com.dataMall.common.enums.ExcelAppStateTypeEnum;
 import com.dataMall.common.exception.BusinessException;
 import com.datamall.apicenter.utils.ExcelExportUtils;
 import com.datamall.apicenter.utils.ExcelToJsonConverter;
@@ -49,21 +51,51 @@ public class ExcelAppController {
     private ExcelColDropdownService excelColDropdownService;
     @Resource
     private ExcelHeaderService excelHeaderService;
+    @Resource
+    private UserService userService;
     @Autowired
     private MongoTemplate mongoTemplate;
 
     /**
+     * 新建excelApp
+     */
+    @PostMapping("/createExcelApp")
+    public BaseResponse<Object> createExcelApp(@RequestBody ExcelApp excelApp, @RequestHeader("token") String token) {
+        //逻辑：先拿到userId，判断是否是owner，如果是owner，判断该excelApp是否已经存在，如果存在，且状态为ONLY_UPLOAD，则更新，否则返回错误信息
+        Integer uid = userService.tokenToUid(token);
+        if (uid == -1) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
+        }
+        boolean createAuth = excelAppService.checkCreateAuth(uid, excelApp.getAppId());
+        if (!createAuth) {
+            throw new BusinessException(ErrorCode.FAIL, "无权限");
+        }
+        //设置状态码
+        excelApp.setStatus(ExcelAppStateTypeEnum.WAITING_CHECK.getValue());
+        boolean state = excelAppService.save(excelApp);
+        if (!state) {
+            throw new BusinessException(ErrorCode.FAIL, "新建失败");
+        }
+        return ResultUtils.success();
+    }
+
+    /**
      * 上传excel文件
+     *
      * @param file 文件
      * @return ResultUtils
      */
     @PostMapping("/upload")
-    public BaseResponse<String> upload(@RequestPart MultipartFile file) {
+    public BaseResponse<String> upload(@RequestPart MultipartFile file, @RequestHeader("token") String token) {
+        Integer uid = userService.tokenToUid(token);
+        if (uid == -1) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN);
+        }
         //判断文件是否是xls或者xlsx
         if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
             throw new BusinessException(ErrorCode.FAIL, "文件格式错误");
         }
-        //将execl数据json化
+        //将excel数据json化
         List<String> jsonList = ExcelToJsonConverter.convertExcelToJson(file);
         //生成api_id,当前时间加随机数加文件名的md5
         int random = (int) (Math.random() * 100000);
@@ -77,8 +109,8 @@ public class ExcelAppController {
         }
         //将excel存入数据库
         ExcelApp excelApp = new ExcelApp();
-        //将state设为-2，标识为被审核，-3审核中
-        excelApp.setAppId(appId).setName(file.getOriginalFilename()).setStatus(-2);
+        excelApp.setAppId(appId).setFilename(file.getOriginalFilename()).setStatus(ExcelAppStateTypeEnum.ONLY_UPLOAD.getValue());
+        excelApp.setUid(uid);
         boolean state = excelAppService.save(excelApp);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL, "excel存入数据库失败");
@@ -105,6 +137,7 @@ public class ExcelAppController {
 
     /**
      * 获取excel表头
+     *
      * @param appId appId
      * @return ResultUtils
      */
@@ -143,7 +176,7 @@ public class ExcelAppController {
             boolean state = excelHeaderService.updateBatchById(excelHeaders);
             if (!state) {
                 throw new BusinessException(ErrorCode.FAIL);
-             }
+            }
         }
         return ResultUtils.success();
     }
@@ -236,6 +269,7 @@ public class ExcelAppController {
         List<ExcelApp> list = excelAppService.list(queryWrapper);
         return ResultUtils.success(list);
     }
+
     //其余用户查excelApp数据
     @GetMapping("/listExcelAppOther")
     public BaseResponse<List<ExcelApp>> listExcelAppOther() {
@@ -244,6 +278,7 @@ public class ExcelAppController {
         List<ExcelApp> list = excelAppService.list(queryWrapper);
         return ResultUtils.success(list);
     }
+
     //download file
     @GetMapping("/download/{fileName}")
     public void download(HttpServletResponse response, @PathVariable String fileName) {
@@ -297,7 +332,7 @@ public class ExcelAppController {
             header.add(excelHeader.getHeaderName());
         }
         //拿到文件名
-        String fileName = excelAppService.getOneByOption("app_id", appId).getName();
+        String fileName = excelAppService.getOneByOption("app_id", appId).getFilename();
         //调用导出excel工具类
         //ExcelExportUtils.exportData(response, result, header, fileName);
         //对文件名与时间戳md5加密

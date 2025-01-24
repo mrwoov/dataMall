@@ -27,6 +27,9 @@
         <module>common</module>
         <module>search-center</module>
         <module>blog-center</module>
+        <module>pic-center</module>
+        <module>customer-service-center</module>
+
 
     </modules>
 

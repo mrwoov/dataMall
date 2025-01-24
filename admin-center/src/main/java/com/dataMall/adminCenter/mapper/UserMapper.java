@@ -1,7 +1,7 @@
 package com.dataMall.adminCenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dataMall.common.entity.Account;
+import com.dataMall.common.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-09-14
  */
 @Mapper
-public interface AccountMapper extends BaseMapper<Account> {
+public interface UserMapper extends BaseMapper<User> {
 
 }

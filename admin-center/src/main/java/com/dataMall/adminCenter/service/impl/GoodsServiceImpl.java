@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.adminCenter.mapper.GoodsMapper;
 import com.dataMall.adminCenter.service.*;
-import com.dataMall.common.entity.Account;
 import com.dataMall.common.entity.Goods;
+import com.dataMall.common.entity.User;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Resource
     private GoodsCategoriesService goodsCategoriesService;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private GoodsCollectionService goodsCollectionService;
     @Resource
@@ -74,9 +74,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     //获取Goods其他外键参数
     @Override
     public void getGoodsOtherParam(Goods goods) {
-        Account account = accountService.getById(goods.getUid());
-        goods.setUsername(account.getUsername());
-        goods.setAvatar(account.getAvatar());
+        User user = userService.getById(goods.getUid());
+        goods.setUsername(user.getUsername());
+        goods.setAvatar(user.getAvatar());
         goods.setCategoriesName(goodsCategoriesService.getById(goods.getCategoriesId()).getName());
         goods.priceToMoney();
         goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
@@ -171,11 +171,11 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             queryWrapper.eq("categories_id", categoriesId);
         }
         if (username != null && !username.isEmpty()) {
-            Account account = accountService.getOneByOption("username", username);
-            if (account == null) {
+            User user = userService.getOneByOption("username", username);
+            if (user == null) {
                 return new Page<>();
             }
-            queryWrapper.eq("uid", account.getId());
+            queryWrapper.eq("uid", user.getId());
         }
         queryWrapper.eq("state", 0).or().eq("state", 1).or().eq("state", -1);
         IPage<Goods> page = page(new Page<>(pageNum, pageSize), queryWrapper);

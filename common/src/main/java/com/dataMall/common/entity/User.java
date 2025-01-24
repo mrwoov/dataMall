@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class Account implements Serializable {
+public class User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -39,6 +39,7 @@ public class Account implements Serializable {
     /**
      * 密码
      */
+    @TableField(exist = false)
     private String password;
 
     /**

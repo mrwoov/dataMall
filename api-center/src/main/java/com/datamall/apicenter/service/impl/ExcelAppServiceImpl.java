@@ -1,10 +1,11 @@
-package com.dataMall.apicenter.service.impl;
+package com.dataMall.apiCenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dataMall.apicenter.mapper.ExcelAppMapper;
-import com.dataMall.apicenter.service.ExcelAppService;
+import com.dataMall.apiCenter.mapper.ExcelAppMapper;
+import com.dataMall.apiCenter.service.ExcelAppService;
 import com.dataMall.common.entity.ExcelApp;
+import com.dataMall.common.enums.ExcelAppStateTypeEnum;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,5 +31,14 @@ public class ExcelAppServiceImpl extends ServiceImpl<ExcelAppMapper, ExcelApp> i
         QueryWrapper<ExcelApp> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("app_id",appId);
         return remove(queryWrapper);
+    }
+
+    @Override
+    public boolean checkCreateAuth(Integer uid, String appId) {
+        QueryWrapper<ExcelApp> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("app_id",appId);
+        queryWrapper.eq("uid",uid);
+        queryWrapper.eq("states", ExcelAppStateTypeEnum.ONLY_UPLOAD.getValue());
+        return count(queryWrapper) == 1;
     }
 }

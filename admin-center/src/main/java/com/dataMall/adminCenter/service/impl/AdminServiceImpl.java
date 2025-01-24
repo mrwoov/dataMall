@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dataMall.adminCenter.mapper.AdminMapper;
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.AdminService;
 import com.dataMall.adminCenter.service.RoleService;
-import com.dataMall.common.entity.Account;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.common.entity.Admin;
+import com.dataMall.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Autowired
     private RoleService roleService;
     @Autowired
-    private AccountService accountService;
+    private UserService userService;
 
     /**
      * 判断是否是管理员
@@ -54,18 +54,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public IPage<Admin> query(String userName, Integer role, Integer pageNum, Integer pageSize) {
         QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();
         if (userName != null && !userName.isEmpty()) {
-            Account account = accountService.getOneByOption("username", userName);
-            if (account == null) {
+            User user = userService.getOneByOption("username", userName);
+            if (user == null) {
                 return null;
             }
-            queryWrapper.like("account_id", account.getId());
+            queryWrapper.like("account_id", user.getId());
         }
         if (role != null) {
             queryWrapper.like("role", role);
         }
         IPage<Admin> iPage = page(new Page<>(pageNum, pageSize), queryWrapper);
         for (Admin admin : iPage.getRecords()) {
-            admin.setUsername(accountService.getById(admin.getAccountId()).getUsername());
+            admin.setUsername(userService.getById(admin.getAccountId()).getUsername());
             admin.setRoleName(roleService.getById(admin.getRole()).getRoleName());
         }
         return iPage;

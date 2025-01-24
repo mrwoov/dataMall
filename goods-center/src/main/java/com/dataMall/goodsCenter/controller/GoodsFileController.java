@@ -8,7 +8,7 @@ import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.GoodsFile;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.goodsCenter.feign.AccountService;
+import com.dataMall.goodsCenter.feign.UserService;
 import com.dataMall.goodsCenter.service.GoodsFileService;
 import com.dataMall.goodsCenter.utils.OssUtils;
 import jakarta.annotation.Resource;
@@ -42,7 +42,7 @@ public class GoodsFileController {
     @Resource
     private GoodsFileService goodsFileService;
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private OssUtils ossUtils;
 
@@ -62,7 +62,7 @@ public class GoodsFileController {
     //用户上传图片
     @PostMapping("/user/upload_pic")
     public BaseResponse<Map<String, String>> userUploadPic(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -98,7 +98,7 @@ public class GoodsFileController {
     //用户上传文件
     @PostMapping("/user/upload_file")
     public BaseResponse<Map<String, String>> userUploadFile(@RequestHeader("token") String token, @RequestPart("file") MultipartFile file) {
-        Integer accountId = accountService.tokenToUid(token);
+        Integer accountId = userService.tokenToUid(token);
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }

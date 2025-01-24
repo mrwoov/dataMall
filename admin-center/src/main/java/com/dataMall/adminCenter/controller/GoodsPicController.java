@@ -2,9 +2,9 @@ package com.dataMall.adminCenter.controller;
 
 
 import com.dataMall.adminCenter.aop.AdminAuth;
-import com.dataMall.adminCenter.service.AccountService;
 import com.dataMall.adminCenter.service.GoodsPicService;
 import com.dataMall.adminCenter.service.GoodsService;
+import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GoodsPicController {
     private final String authPath = "goodsPic";
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private GoodsPicService goodsPicService;
     @Resource

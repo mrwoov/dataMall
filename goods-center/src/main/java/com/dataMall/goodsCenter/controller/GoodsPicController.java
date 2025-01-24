@@ -7,7 +7,7 @@ import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.GoodsPic;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.goodsCenter.feign.AccountService;
+import com.dataMall.goodsCenter.feign.UserService;
 import com.dataMall.goodsCenter.service.GoodsPicService;
 import com.dataMall.goodsCenter.service.GoodsService;
 import jakarta.annotation.Resource;
@@ -28,7 +28,7 @@ import java.util.List;
 public class GoodsPicController {
     private final String authPath = "goodsPic";
     @Resource
-    private AccountService accountService;
+    private UserService userService;
     @Resource
     private GoodsPicService goodsPicService;
     @Resource
@@ -37,7 +37,7 @@ public class GoodsPicController {
     //用户新增商品图片
     @PatchMapping("/")
     public BaseResponse<Object> save(@RequestHeader("token") String token, @RequestBody GoodsPic goodsPic) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
@@ -51,7 +51,7 @@ public class GoodsPicController {
     //用户删除商品图片
     @DeleteMapping("/")
     public BaseResponse<Object> del(@RequestHeader("token") String token, @RequestParam("picId") String picId) {
-        Integer uid = accountService.tokenToUid(token);
+        Integer uid = userService.tokenToUid(token);
         if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
