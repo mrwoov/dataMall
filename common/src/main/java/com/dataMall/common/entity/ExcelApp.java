@@ -52,8 +52,12 @@ public class ExcelApp implements Serializable {
      */
     private String picIndex;
 
-    private Integer sort;
+    private long price;
+
+    private long num;
     
+    private Integer sort;
+
     private Integer uid;
 
     /**

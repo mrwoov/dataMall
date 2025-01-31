@@ -81,12 +81,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         goods.priceToMoney();
         goods.setCollection(goodsCollectionService.goodsCollectionNum(goods.getId()));
         goods.priceToMoney();
-        if (goodsPortalShowService.getOneByOption("goods_id", goods.getId()) != null){
-            goods.setShowPortal(true);
-        }else {
-            goods.setShowPortal(false);
-        }
-        
+        goods.setShowPortal(goodsPortalShowService.getOneByOption("goods_id", goods.getId()) != null);
     }
 
     //获取Goods List的其他外键参数

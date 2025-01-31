@@ -54,7 +54,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         queryWrapper.between("create_time", java.time.LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0), java.time.LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999));
         queryWrapper.ge("state", 1);
         List<UserOrder> userOrderList = list(queryWrapper);
-        Integer total = 0;
+        long total = 0;
         for (UserOrder userOrder : userOrderList) {
             total += userOrder.getTotalAmount();
         }
@@ -66,7 +66,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         queryWrapper.between("create_time",java.time.LocalDateTime.now().minusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0),java.time.LocalDateTime.now().minusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(999999999));
         queryWrapper.ge("state", 1);
         List<UserOrder> userOrderList = list(queryWrapper);
-        Integer total = 0;
+        long total = 0;
         for (UserOrder userOrder : userOrderList) {
             total += userOrder.getTotalAmount();
         }
@@ -158,7 +158,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         userOrder.setGoodsSnapshots(goodsSnapshotList);
         userOrder.setUsername(userService.getById(userOrder.getAccountId()).getUsername());
         userOrder.setTradeNo(userOrder.getTradeNo());
-        Integer totalAmount = userOrder.getTotalAmount();
+        long totalAmount = userOrder.getTotalAmount();
         double money = (double) totalAmount / 100;
         userOrder.setMoney(money);
         return userOrder;

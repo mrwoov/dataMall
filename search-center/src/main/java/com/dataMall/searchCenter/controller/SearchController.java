@@ -62,13 +62,10 @@ public class SearchController {
         }
 
         //type: goods(al), post,excel_api
-        switch (type) {
-            case "goods":
-                return ResultUtils.success(searchService.searchGoods(keyword, page, size, categoryId));
-            case "post":
-                return ResultUtils.success();
-            default:
-                return ResultUtils.error("搜索类型错误");
-        }
+        return switch (type) {
+            case "goods" -> ResultUtils.success(searchService.searchGoods(keyword, page, size, categoryId));
+            case "post" -> ResultUtils.success();
+            default -> ResultUtils.error("搜索类型错误");
+        };
     }
 }

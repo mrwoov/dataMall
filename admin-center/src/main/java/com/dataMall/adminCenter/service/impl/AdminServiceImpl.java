@@ -10,7 +10,7 @@ import com.dataMall.adminCenter.service.RoleService;
 import com.dataMall.adminCenter.service.UserService;
 import com.dataMall.common.entity.Admin;
 import com.dataMall.common.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,9 +24,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
 
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private UserService userService;
 
     /**

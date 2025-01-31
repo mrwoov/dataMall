@@ -17,7 +17,7 @@ public interface UserService extends IService<User> {
     void forget(String email, String password);
 
     //注册
-    boolean reg(String username, String password, String email);
+    void reg(String username, String password, String email);
 
     String login(int uid);
 

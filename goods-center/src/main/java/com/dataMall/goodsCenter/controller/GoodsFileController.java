@@ -12,7 +12,6 @@ import com.dataMall.goodsCenter.feign.UserService;
 import com.dataMall.goodsCenter.service.GoodsFileService;
 import com.dataMall.goodsCenter.utils.OssUtils;
 import jakarta.annotation.Resource;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +51,7 @@ public class GoodsFileController {
 
     //用户下载商品数据
     @GetMapping("/download/{md5}")
-    public BaseResponse<String> download(@PathVariable String md5, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public BaseResponse<String> download(@PathVariable String md5, HttpServletRequest request, HttpServletResponse response) {
         QueryWrapper<GoodsFile> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("md5",md5);
         GoodsFile goodsFile = goodsFileService.getOne(queryWrapper);

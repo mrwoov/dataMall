@@ -7,13 +7,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dataMall.common.entity.ExcelApp;
+import com.dataMall.common.entity.Goods;
 import com.dataMall.common.entity.GoodsSnapshot;
 import com.dataMall.common.entity.UserOrder;
+import com.dataMall.common.enums.OrderStateTypeEnum;
 import com.dataMall.orderCenter.config.AlipayConfig;
+import com.dataMall.orderCenter.feign.ExcelAppService;
+import com.dataMall.orderCenter.feign.GoodsService;
+import com.dataMall.orderCenter.feign.UserOrderGoodsService;
 import com.dataMall.orderCenter.feign.UserService;
 import com.dataMall.orderCenter.mapper.UserOrderMapper;
-import com.dataMall.orderCenter.service.GoodsSnapshotService;
-import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
 import com.dataMall.orderCenter.utils.JSONUtils;
 import jakarta.annotation.Resource;
@@ -43,13 +47,13 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
     @Resource
     private UserService userService;
     @Resource
-    private UserOrderGoodsService userOrderGoodsService;
-
+    private GoodsService goodsService;
+    @Resource
+    private ExcelAppService excelAppService;
     @Autowired
     private AmqpTemplate amqpTemplate;
-
     @Resource
-    private GoodsSnapshotService goodsSnapshotService;
+    private UserOrderGoodsService userOrderGoodsService;
 
     @Override
     public UserOrder getOneByOption(String column, Object value) {
@@ -185,7 +189,7 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         userOrder.setGoodsSnapshots(goodsSnapshotList);
         userOrder.setUsername(userService.getById(userOrder.getAccountId()).getUsername());
         userOrder.setTradeNo(userOrder.getTradeNo());
-        Integer totalAmount = userOrder.getTotalAmount();
+        long totalAmount = userOrder.getTotalAmount();
         double money = (double) totalAmount / 100;
         userOrder.setMoney(money);
     }
@@ -264,9 +268,76 @@ public class UserOrderServiceImpl extends ServiceImpl<UserOrderMapper, UserOrder
         //逻辑：查订单是否是token用户的，查订单商品的md5
         List<GoodsSnapshot> goodsSnapshotList = userOrderGoodsService.getOrderGoodsSnapshot(orderId);
         List<String> md5List = new ArrayList<>();
-        for (GoodsSnapshot goodsSnapshot:goodsSnapshotList){
+        for (GoodsSnapshot goodsSnapshot : goodsSnapshotList) {
             md5List.add(goodsSnapshot.getFileMd5());
         }
         return md5List;
     }
+
+    @Override
+    public boolean updateOrderState(String tradeNo, Integer state) {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("trade_no", tradeNo);
+        UserOrder userOrder = getOne(queryWrapper);
+        if (userOrder == null) {
+            return false;
+        }
+        userOrder.setState(state);
+        return updateById(userOrder);
+    }
+
+    @Override
+    public UserOrder getOrderByTradeNo(String tradeNo) {
+        QueryWrapper<UserOrder> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("trade_no", tradeNo);
+        return getOne(queryWrapper);
+    }
+
+    @Override
+    public UserOrder submitOrderOfGoods(Integer uid, Integer goodsId) {
+        Goods goods = goodsService.getById(goodsId);
+        if (goods == null) {
+            return null;
+        }
+        UserOrder userOrder = new UserOrder();
+        userOrder.setAccountId(uid);
+        userOrder.setTotalAmount(goods.getPrice());
+        String tradeNo = createTradeNo();
+        userOrder.setTradeNo(tradeNo);
+        userOrder.setPayType("alipay");
+        userOrder.setState(OrderStateTypeEnum.UNPAID.getValue());
+        boolean state = save(userOrder);
+        if (!state) {
+            return null;
+        }
+        //保存订单商品快照
+        state = userOrderGoodsService.saveOrderGoods(goodsId, userOrder.getId());
+        if (!state) {
+            return null;
+        }
+        return userOrder;
+    }
+
+    @Override
+    public UserOrder submitOrderOfExcelApp(Integer uid, String appId) {
+        //1.获取app信息
+        ExcelApp app = excelAppService.getExcelApp(appId);
+        if (app == null) {
+            return null;
+        }
+        UserOrder userOrder = new UserOrder();
+        userOrder.setAccountId(uid);
+        userOrder.setTotalAmount(app.getPrice());
+        String tradeNo = createTradeNo();
+        userOrder.setTradeNo(tradeNo);
+        userOrder.setPayType("alipay");
+        userOrder.setState(OrderStateTypeEnum.UNPAID.getValue());
+        userOrder.setRemark(appId);
+        boolean state = save(userOrder);
+        if (!state) {
+            return null;
+        }
+        return userOrder;
+    }
+
 }

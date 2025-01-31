@@ -5,16 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
-import com.dataMall.common.entity.User;
 import com.dataMall.common.entity.UserOrder;
+import com.dataMall.common.enums.OrderStateTypeEnum;
 import com.dataMall.common.exception.BusinessException;
-import com.dataMall.orderCenter.feign.GoodsService;
 import com.dataMall.orderCenter.feign.UserService;
-import com.dataMall.orderCenter.service.UserOrderGoodsService;
 import com.dataMall.orderCenter.service.UserOrderService;
-import com.dataMall.orderCenter.utils.MailService;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,62 +29,9 @@ import java.util.Map;
 @RequestMapping("/order")
 public class UserOrderController {
     @Resource
-    UserOrderGoodsService userOrderGoodsService;
-    @Resource
-    private GoodsService goodsService;
-    @Resource
     private UserService userService;
     @Resource
     private UserOrderService userOrderService;
-    @Autowired
-    private MailService mailService;
-
-    //用户下载订单商品的资源
-    @GetMapping("/download/{tradeNo}")
-    public BaseResponse<List<String>> downloadGoodsSource(@PathVariable String tradeNo, @RequestHeader("token") String token) {
-        Integer accountId = userService.tokenToUid(token);
-        if (accountId == -1) {
-           throw new BusinessException(ErrorCode.NOT_LOGIN);
-        }
-        UserOrder userOrder = userOrderService.getUserPayedOrderByTradeNo(tradeNo, accountId);
-        if (userOrder == null) {
-            throw new BusinessException(ErrorCode.FAIL);
-        }
-        List<String> md5List = userOrderService.downloadByMd5List(userOrder.getId());
-        return ResultUtils.success(md5List);
-    }
-
-    //发送下载链接
-    @GetMapping("/sendDownload/{tradeNo}")
-    public BaseResponse<Object> sendDownload(@PathVariable String tradeNo, @RequestHeader("token") String token) {
-        Integer accountId = userService.tokenToUid(token);
-        if (accountId == -1) {
-            throw new BusinessException(ErrorCode.NOT_LOGIN);
-        }
-        UserOrder userOrder = userOrderService.getUserPayedOrderByTradeNo(tradeNo, accountId);
-        if (userOrder == null) {
-            throw new BusinessException(ErrorCode.FAIL);
-        }
-        List<String> md5List = userOrderService.downloadByMd5List(userOrder.getId());
-        if (md5List.isEmpty()) {
-            throw new BusinessException(ErrorCode.FAIL, "没有资源");
-        }
-        User user = userService.getById(accountId);
-        if (user == null) {
-            throw new BusinessException(ErrorCode.FAIL, "用户不存在");
-        }
-        Map<String, Object> map = new HashMap<>();
-        map.put("tradeNo", tradeNo);
-        map.put("md5List", md5List);
-        String html = "";
-        int i = 1;
-        for (String md5 : md5List) {
-            html = html + "<p>资源" + i + "：" + md5 + "</p> <a href='http://localhost:8080/order/download/" + tradeNo + "'>点击下载</a>";
-            i++;
-        }
-        mailService.sendTextMailMessage(user.getEmail(), "资源下载链接", "资源下载链接：" +html);
-        return ResultUtils.success();
-    }
 
     //用户分页查订单
     @PostMapping("/user/page")
@@ -122,7 +65,7 @@ public class UserOrderController {
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
-        List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, 0);
+        List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, OrderStateTypeEnum.UNPAID.getValue());
         return ResultUtils.success(userOrderList);
     }
 
@@ -133,8 +76,14 @@ public class UserOrderController {
         if (accountId == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
-        List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, 1);
+        List<UserOrder> userOrderList = userOrderService.getUserOrderList(accountId, OrderStateTypeEnum.TREATED.getValue());
         return ResultUtils.success(userOrderList);
+    }
+
+    //检查订单Feign,返回订单实体类
+    @GetMapping("/feign/get")
+    public UserOrder getOrderFromFeign(@RequestParam("trade_no") String tradeNo) {
+        return userOrderService.getOrderByTradeNo(tradeNo);
     }
 
     //检查订单
@@ -143,52 +92,55 @@ public class UserOrderController {
         boolean state = userOrderService.checkOrderPayState(tradeNo);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
+    //Feign更新订单状态
+    @GetMapping("/feign/updateOrderState")
+    public boolean updateOrderStateFromFeign(@RequestParam("trade_no") String tradeNo, @RequestParam("state") Integer state) {
+        return userOrderService.updateOrderState(tradeNo, state);
+    }
+
     //提交订单
-    @PostMapping("/submit")
-    public BaseResponse<Map<String, String>> submitOrder(@RequestHeader("token") String token, @RequestBody List<Integer> goodsIds) {
-        Integer accountId = userService.tokenToUid(token);
-        if (accountId == -1) {
+    @GetMapping("/submit")
+    public BaseResponse<Map<String, String>> submitOrder(@RequestHeader("token") String token,
+                                                         @RequestParam(value = "type") String type,
+                                                         @RequestParam(value = "goods_id", required = false) Integer goodsId,
+                                                         @RequestParam(value = "app_id", required = false) String appId) {
+        Integer uid = userService.tokenToUid(token);
+        if (uid == -1) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
-
-        UserOrder userOrder = new UserOrder();
-        //计算总价
-        int totalPrice = 0;
-        for (Integer i : goodsIds) {
-            Integer price = goodsService.getGoodsPrice(i);
-            if (price == null) {
-                throw new BusinessException(ErrorCode.FAIL);
-            }
-            totalPrice = totalPrice + price;
+        // 分流处理
+        if (!"goods".equals(type) && !"app".equals(type)) {
+            throw new BusinessException(ErrorCode.FAIL, "type参数错误");
         }
-        //设置其他参数
-        userOrder.setTotalAmount(totalPrice);
-        userOrder.setPayType("alipay");
-        String tradeNo = userOrderService.createTradeNo();
-        userOrder.setTradeNo(tradeNo);
-        userOrder.setAccountId(accountId);
-        userOrderService.save(userOrder);
-        //保存订单及快照
-        for (Integer i : goodsIds) {
-            boolean state = userOrderGoodsService.saveOrderGoods(i, userOrder.getId());
-            if (!state) {
-               throw new BusinessException(ErrorCode.FAIL);
+        UserOrder userOrder = new UserOrder();
+        if ("goods".equals(type)) {
+            if (goodsId == null) {
+                throw new BusinessException(ErrorCode.FAIL, "goods_id参数错误");
             }
+            userOrder = userOrderService.submitOrderOfGoods(uid, goodsId);
+        } else {
+            if (appId == null) {
+                throw new BusinessException(ErrorCode.FAIL, "app_id参数错误");
+            }
+            userOrder = userOrderService.submitOrderOfExcelApp(uid, appId);
+        }
+        if (userOrder == null) {
+            throw new BusinessException(ErrorCode.FAIL);
         }
         Map<String, String> map = new HashMap<>();
-        map.put("trade_no", tradeNo);
+        map.put("trade_no", userOrder.getTradeNo());
         return ResultUtils.success(map);
     }
 
     //支付订单
-    @GetMapping("/pay")
+    @GetMapping("/pay/alipay")
     public String pay(@RequestParam("trade_no") String tradeNo, @RequestParam("return_url") String returnUrl) throws Exception {
         UserOrder userOrder = userOrderService.getOneByOption("trade_no", tradeNo);
-        Integer total = userOrder.getTotalAmount();
+        long total = userOrder.getTotalAmount();
         double money = total / 100.0;
         return userOrderService.toPayPage(tradeNo, tradeNo, String.valueOf(money), returnUrl);
     }
@@ -203,7 +155,7 @@ public class UserOrderController {
         boolean state = userOrderService.deleteOrder(tradeNo, accountId);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 }

@@ -43,9 +43,19 @@ public class UserOrder implements Serializable {
     private String payType;
 
     /**
+     *  商品类型
+     */
+    private String type;
+
+    /**
+     * 备注，订单商品为ExcelApp时，备注为appId
+     */
+    private String remark;
+
+    /**
      * 总费用，单位分
      */
-    private Integer totalAmount;
+    private long totalAmount;
 
     /**
      * 平台订单号

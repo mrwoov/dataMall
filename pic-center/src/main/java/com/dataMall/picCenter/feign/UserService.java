@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
-@FeignClient(value = "user-center",path = "/accounts")
+@FeignClient(value = "user-center", path = "/accounts")
 public interface UserService {
     @GetMapping("/tokenToUid")
     Integer tokenToUid(@RequestHeader("token") String token);
@@ -18,5 +18,5 @@ public interface UserService {
     User getById(@PathVariable Integer id);
 
     @GetMapping("/getOneByOption")
-    User getOneByOption(@RequestParam("column")String column, @RequestParam("value") String value);
+    User getOneByOption(@RequestParam("column") String column, @RequestParam("value") String value);
 }

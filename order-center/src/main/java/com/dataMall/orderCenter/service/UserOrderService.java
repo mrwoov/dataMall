@@ -46,4 +46,12 @@ public interface UserOrderService extends IService<UserOrder> {
     UserOrder getUserPayedOrderByTradeNo(String tradeNo, Integer accountId);
 
     List<String> downloadByMd5List(Integer orderId);
+
+    boolean updateOrderState(String tradeNo, Integer state);
+
+    UserOrder getOrderByTradeNo(String tradeNo);
+
+    UserOrder submitOrderOfGoods(Integer uid, Integer goodsId);
+
+    UserOrder submitOrderOfExcelApp(Integer uid, String appId);
 }

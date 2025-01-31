@@ -136,7 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     //注册
     @Override
     @Transactional
-    public boolean reg(String username, String password, String email) {
+    public void reg(String username, String password, String email) {
         // 先判断是否已经存在
         // 1.用户表
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
@@ -172,6 +172,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         ssoOfEmail.setType(2);
         boolean ssoOfEmailState = ssoService.save(ssoOfEmail);
         ResultUtils.throwIfAndRollback(!ssoOfEmailState, ErrorCode.FAIL, "user save fail in sso email");
-        return true;
     }
 }

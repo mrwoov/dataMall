@@ -37,14 +37,14 @@ public class XlsxApiController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    //上传execl
+    //上传excel
     @PostMapping("/upload")
     public BaseResponse<String> upload(@RequestPart MultipartFile file) {
         //判断文件是否是xls或者xlsx
         if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
             throw new BusinessException(ErrorCode.FAIL, "文件格式错误");
         }
-        //将execl数据json化
+        //将excel数据json化
         List<String> jsonList = ExcelToJsonConverter.convertExcelToJson(file);
         //生成api_id,当前时间加随机数加文件名的md5
         Integer random = (int) (Math.random() * 100000);

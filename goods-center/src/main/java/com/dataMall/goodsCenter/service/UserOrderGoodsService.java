@@ -1,0 +1,28 @@
+package com.dataMall.goodsCenter.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.dataMall.common.entity.GoodsSnapshot;
+import com.dataMall.common.entity.UserOrderGoods;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 订单商品表 服务类
+ * </p>
+ *
+ * @author woov
+ * @since 2023-11-16
+ */
+public interface UserOrderGoodsService extends IService<UserOrderGoods> {
+
+    boolean orderHaveGoods(Integer orderId, Integer goodsId);
+
+    boolean saveOrderGoods(Integer goodsId, Integer orderId);
+
+    List<GoodsSnapshot> getOrderGoodsSnapshot(Integer orderId);
+
+    boolean deleteGoodsSnapshot(Integer orderId);
+
+    List<String> downloadByMd5List(Integer id);
+}

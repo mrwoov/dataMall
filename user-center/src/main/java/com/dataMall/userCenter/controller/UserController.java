@@ -139,7 +139,8 @@ public class UserController {
         if (emailCode.use(email, code)) {
             throw new BusinessException(ErrorCode.FAIL, "验证码错误");
         }
-        return ResultUtils.success(userService.reg(username, password, email));
+        userService.reg(username, password, email);
+        return ResultUtils.success();
     }
 
     //用户忘记密码-发送验证码

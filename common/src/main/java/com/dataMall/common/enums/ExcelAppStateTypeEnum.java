@@ -1,5 +1,8 @@
 package com.dataMall.common.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum ExcelAppStateTypeEnum {
     /**
      * 仅上传
@@ -30,12 +33,5 @@ public enum ExcelAppStateTypeEnum {
         this.description = description;
         this.value = value;
     }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public Integer getValue() {
-        return value;
-    }
+
 }
