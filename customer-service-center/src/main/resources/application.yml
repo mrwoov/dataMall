@@ -1,0 +1,37 @@
+#file: noinspection SpringBootApplicationYaml
+server:
+  port: 8800
+
+spring:
+  application:
+    name: customer-service-center  #服务名称
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data-mall?serverTimezone=UTC
+    username: root
+    password: ${mysql.password}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    hiddenmethod:
+      filter:
+        enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mail:
+    host: smtp.163.com
+    username: ${mail.username}
+    password: ${mail.password}
+    default-encoding: UTF-8
+  main:
+    allow-circular-references: true
+  data:
+    redis:
+      host: ${redis.host}
+      port: 6379
+      password: ${redis.password}
+# AI服务
+ai:
+  apiKey: ${ai.apiKey}
+  

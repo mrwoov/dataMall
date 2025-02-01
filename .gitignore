@@ -50,3 +50,5 @@ admin-center/Dockerfile
 *.vm
 
 application-local.yml
+
+test/

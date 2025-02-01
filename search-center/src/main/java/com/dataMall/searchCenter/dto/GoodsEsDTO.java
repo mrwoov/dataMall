@@ -105,8 +105,9 @@ public class GoodsEsDTO {
     /**
      * 包装类转对象
      *
-     * @param goodsESDTO
-     * @return
+     * @param goodsESDTO 商品包装类
+     * @return Goods 商品
+     * 
      */
     public static Goods dtoToObj(GoodsEsDTO goodsESDTO) {
         if (goodsESDTO == null) {
