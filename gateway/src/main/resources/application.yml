@@ -7,6 +7,41 @@ spring:
     gateway:
       # 路由规则
       routes:
+        - id: pic
+          uri: lb://pic-center
+          predicates:
+            - Path=/pic/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: order
+          uri: lb://order-center
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: excel
+          uri: lb://excel-center
+          predicates:
+            - Path=/excel/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: blog
+          uri: lb://blog-center
+          predicates:
+            - Path=/blog/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: search
+          uri: lb://search-center
+          predicates:
+            - Path=/search/**
+          filters:
+            - StripPrefix=1
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
         - id: admin # 路由唯一标识
           uri: lb://admin-center #nacos服务名-负载均衡
           # 断言规则
@@ -22,13 +57,6 @@ spring:
           filters:
             - StripPrefix=1
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-        - id: order
-          uri: lb://order-center
-          predicates:
-            - Path=/order/**
-          filters:
-            - StripPrefix=1
-            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
         - id: user
           uri: lb://user-center
           predicates:
@@ -36,10 +64,10 @@ spring:
           filters:
             - StripPrefix=1
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-        - id: api
-          uri: lb://api-center
+        - id: customerService
+          uri: lb://customer-service-center
           predicates:
-            - Path= /api/**
+            - Path=/customerService/**
           filters:
             - StripPrefix=1
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin

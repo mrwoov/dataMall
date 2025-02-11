@@ -70,7 +70,7 @@ public class Picture implements Serializable {
     /**
      * 唯一标识
      */
-    private String key;
+    private String picKey;
 
     /**
      * 用户 id

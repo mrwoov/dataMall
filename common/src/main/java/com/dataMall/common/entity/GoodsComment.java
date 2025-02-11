@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -58,7 +59,7 @@ public class GoodsComment implements Serializable {
     private Integer parentId;
 
     @TableField(exist = false)
-    private GoodsComment child;
+    private List<GoodsComment> child;
 
     @TableField(exist = false)
     private String username;

@@ -31,7 +31,7 @@ spring:
       port: 6379
       password: ${redis.password}
     mongodb:
-      uri: mongodb://localhost:27017/zd
+      uri: mongodb://localhost:27017/datamall
 aliyun:
   oss:
     endpoint: oss-cn-chengdu.aliyuncs.com

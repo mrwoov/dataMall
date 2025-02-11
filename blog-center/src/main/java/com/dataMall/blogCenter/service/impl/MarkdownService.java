@@ -1,7 +1,7 @@
 package com.dataMall.blogCenter.service.impl;
 
 
-import com.dataMall.blogCenter.entity.ArticleContent;
+import com.dataMall.common.entity.ArticleContent;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;

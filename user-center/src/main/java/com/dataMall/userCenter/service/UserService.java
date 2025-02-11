@@ -29,4 +29,5 @@ public interface UserService extends IService<User> {
 
     //token转accountId
     Integer tokenToUid(String token);
+    
 }

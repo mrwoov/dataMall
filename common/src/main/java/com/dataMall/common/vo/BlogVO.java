@@ -1,6 +1,6 @@
-package com.dataMall.blogCenter.vo;
+package com.dataMall.common.vo;
 
-import com.dataMall.blogCenter.entity.BlogArticle;
+import com.dataMall.common.entity.BlogArticle;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -29,19 +29,17 @@ public class BlogVO {
      * 作者ID
      */
     private Integer authorId;
-    /**
-     * 分类ID
-     */
-    private Integer categoryId;
-
-    private String categoryName;
+    
+    private String username;
+    
+    private String avatar;
 
     /**
      * 标签
      */
-    private List<String> tagNames;
-
-    private List<Integer> tagIds;
+    private String tags;
+    private List<String> tagsList;
+    
     /**
      * 状态：0-草稿 1-已发布 2-归档
      */
@@ -64,11 +62,12 @@ public class BlogVO {
 
     public BlogArticle BlogVOToBlogArticle() {
         BlogArticle blogArticle = new BlogArticle();
+        blogArticle.setCoverImage(this.coverImage);
+        blogArticle.setTags(this.tagsList.toString());
         blogArticle.setId(this.id);
         blogArticle.setTitle(this.title);
         blogArticle.setDescription(this.description);
         blogArticle.setAuthorId(this.authorId);
-        blogArticle.setCategoryId(this.categoryId);
         blogArticle.setState(this.state);
         blogArticle.setCoverImage(this.coverImage);
         return blogArticle;

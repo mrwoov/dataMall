@@ -11,17 +11,25 @@ import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.common.entity.User;
 import com.dataMall.common.exception.BusinessException;
+import com.dataMall.userCenter.config.WxConfig;
+import com.dataMall.userCenter.dto.CodeLoginKey;
 import com.dataMall.userCenter.feign.AdminFeign;
 import com.dataMall.userCenter.service.SsoService;
 import com.dataMall.userCenter.service.UserService;
 import com.dataMall.userCenter.utils.EmailCode;
+import com.dataMall.userCenter.utils.HttpClientUtils;
 import com.dataMall.userCenter.utils.MailService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
@@ -31,9 +39,11 @@ import java.util.Map;
  * @author woov
  * @since 2023-09-14
  */
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
+   
     @Resource
     private UserService userService;
     @Resource
@@ -44,6 +54,7 @@ public class UserController {
     private AdminFeign adminFeign;
     @Resource
     private SsoService ssoService;
+   
 
     //token和accountId是否为同一人
     @GetMapping("is_one/{accountId}")
@@ -172,7 +183,6 @@ public class UserController {
         return ResultUtils.success();
     }
 
-
     //校验用户token是否存在或过期
     @GetMapping("/token")
     public BaseResponse<Map<String, String>> checkToken(@RequestHeader("token") String token) {
@@ -212,6 +222,12 @@ public class UserController {
         QueryWrapper<User> accountQueryWrapper = new QueryWrapper<>();
         accountQueryWrapper.like("username", username);
         return userService.list(accountQueryWrapper);
+    }
+    
+    //UserList Feign
+    @GetMapping("/getUserList")
+    public List<User> getUserList() {
+        return userService.list();
     }
 }
 

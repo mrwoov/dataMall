@@ -31,3 +31,12 @@ spring:
       host: ${redis.host}
       port: 6379
       password: ${redis.password}
+
+wx:
+  appid: wx102041650eb0cdc2
+  secret: e0f0ef5da6cb60e34d11e7e39d29166e
+  token: woov0815@
+  qrCodeUrl: https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=TOKEN
+  tokenUrl: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=SECRET
+  openIdUrl: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=SECRET
+  userInfoUrl: https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN

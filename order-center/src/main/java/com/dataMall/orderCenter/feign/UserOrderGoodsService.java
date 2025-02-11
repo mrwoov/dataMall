@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Component
-@FeignClient(value = "goods-center",path = "/userOrderGoods")
+@FeignClient(value = "goods-center",path = "/userOrderGoods",contextId = "userOrderGoodsService")
 public interface UserOrderGoodsService {
     //Feign，快照是否有商品
     @GetMapping("/snapshotHaveGoods")

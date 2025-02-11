@@ -13,6 +13,9 @@ import com.dataMall.goodsCenter.service.GoodsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  * 商品评论表 前端控制器
@@ -43,14 +46,15 @@ public class GoodsCommentController {
         //评论逻辑：最多允许二级评论，如出现参数parentId则查其父节点是否存在父节点，如存在则为非法请求
         if (goodsComment.getParentId() != null) {
             Integer grandparentId = goodsCommentService.getById(goodsComment.getParentId()).getParentId();
-            if (grandparentId != null) {
+            if (grandparentId != null && grandparentId != 0) {
                 throw new BusinessException(ErrorCode.FAIL);
             }
         }
+        goodsComment.setState(0);
         boolean state = goodsCommentService.save(goodsComment);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
@@ -69,10 +73,13 @@ public class GoodsCommentController {
         boolean owner = goodsService.isOwner(uid, goodsId);
         //评论er删除评论逻辑
         boolean sender = goodsCommentService.isSender(uid, commentId);
+        if (!owner && !sender) {
+            throw new BusinessException(ErrorCode.FORBIDDEN);
+        }
         boolean state = goodsCommentService.removeById(commentId);
         if (!state) {
             throw new BusinessException(ErrorCode.FAIL);
-         }
+        }
         return ResultUtils.success();
     }
 
@@ -80,7 +87,37 @@ public class GoodsCommentController {
     @GetMapping("/")
     public BaseResponse<IPage<GoodsComment>> getList(@RequestParam("goodsId") Integer goodsId, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         IPage<GoodsComment> page = goodsCommentService.query(goodsId, pageNum, pageSize);
+        // 处理子评论
+        List<GoodsComment> records = page.getRecords();
+        Map<Integer, GoodsComment> commentMap = new HashMap<>();
+        Set<Integer> childCommentIds = new HashSet<>();
+        // 先将所有评论存入 Map，键为评论 ID
+        for (GoodsComment record : records) {
+            commentMap.put(record.getId(), record);
+        }
+        // 遍历评论，找到其父评论，并设置子评论
+        for (GoodsComment record : records) {
+            Integer parentId = record.getParentId();
+            if (parentId != null) {
+                GoodsComment parent = commentMap.get(parentId);
+                if (parent != null) {
+                    // 确保父评论的子评论列表不为空
+                    if (parent.getChild() == null) {
+                        parent.setChild(new ArrayList<>());
+                    }
+                    parent.getChild().add(record); // 添加到父评论的子评论列表
+                    childCommentIds.add(record.getId()); // 记录子评论 ID 
+                }
+            }
+        }
+        // 过滤掉子评论，只保留顶层评论
+        records = records.stream()
+                .filter(comment -> !childCommentIds.contains(comment.getId()))
+                .collect(Collectors.toList());
+
+        page.setRecords(records);
         return ResultUtils.success(page);
+
     }
 
 }

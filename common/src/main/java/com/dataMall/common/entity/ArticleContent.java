@@ -1,4 +1,4 @@
-package com.dataMall.blogCenter.entity;
+package com.dataMall.common.entity;
 
 import lombok.Builder;
 import lombok.Data;

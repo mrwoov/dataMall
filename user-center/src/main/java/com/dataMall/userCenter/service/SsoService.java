@@ -15,6 +15,8 @@ public interface SsoService extends IService<Sso> {
     //登录通用接口
     int login(String ssoType, String ssoUser, String ssoToken);
 
+    Integer loginByOpenId(String openId);
+
     //三方绑定账号
     boolean bind(int uid, String ssoType, String ssoUser, String ssoToken);
 }

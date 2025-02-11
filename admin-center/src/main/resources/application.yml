@@ -14,7 +14,11 @@ spring:
     time-zone: GMT+8
   main:
     allow-circular-references: true
-
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
 mybatis-plus:
   global-config:
     db-config:

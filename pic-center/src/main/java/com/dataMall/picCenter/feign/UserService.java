@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
-@FeignClient(value = "user-center", path = "/accounts")
+@FeignClient(value = "user-center", path = "/users")
 public interface UserService {
     @GetMapping("/tokenToUid")
     Integer tokenToUid(@RequestHeader("token") String token);

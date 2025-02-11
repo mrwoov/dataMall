@@ -26,7 +26,7 @@ public class SsoServiceImpl extends ServiceImpl<SsoMapper, Sso> implements SsoSe
 
     @Resource
     private SsoTypeService ssoTypeService;
-    
+
 
     //三方登录
     @Override
@@ -50,6 +50,24 @@ public class SsoServiceImpl extends ServiceImpl<SsoMapper, Sso> implements SsoSe
         return sso.getUid();
     }
 
+    @Override
+    public Integer loginByOpenId(String openId) {
+        QueryWrapper<SsoType> ssoTypeQueryWrapper = new QueryWrapper<>();
+        ssoTypeQueryWrapper.eq("type", "wechat_msg");
+        SsoType ssoType = ssoTypeService.getOne(ssoTypeQueryWrapper);
+        if (ObjectUtil.isNull(ssoType)) {
+            return null;
+        }
+        QueryWrapper<Sso> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("sso_user", openId);
+        queryWrapper.eq("type", ssoType.getId());
+        Sso sso = getOne(queryWrapper);
+        if (ObjectUtil.isNull(sso)) {
+            return null;
+        }
+        return sso.getUid();
+    }
+
     //三方绑定账号(新增或换绑)
     @Override
     public boolean bind(int uid, String ssoTypeStr, String ssoUser, String ssoToken) {
@@ -70,6 +88,9 @@ public class SsoServiceImpl extends ServiceImpl<SsoMapper, Sso> implements SsoSe
             return updateById(sso);
         }
         // 未绑定过
+        else {
+            sso = new Sso();
+        }
         sso.setUid(uid);
         sso.setSsoUser(ssoUser);
         sso.setSsoToken(ssoToken);

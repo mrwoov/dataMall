@@ -1,9 +1,14 @@
 package com.dataMall.searchCenter.service;
 
-import com.dataMall.common.entity.Goods;
-
-import java.util.List;
+import com.dataMall.searchCenter.vo.SearchResponseVo;
 
 public interface SearchService {
-    List<Goods> searchGoods(String keyword, Integer pageNum, Integer pageSize, Integer categoryId);
+
+    SearchResponseVo searchGoods(String keyword, Integer uid, Integer pageNum, Integer pageSize);
+
+    SearchResponseVo searchAll(String keyword, Integer uid, int page, int size);
+
+    SearchResponseVo searchBlog(String keyword, Integer uid, Integer page, Integer size);
+
+    SearchResponseVo searchUser(String keyword, Integer page, Integer size);
 }

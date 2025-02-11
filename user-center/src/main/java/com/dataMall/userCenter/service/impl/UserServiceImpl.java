@@ -10,15 +10,14 @@ import com.dataMall.common.exception.BusinessException;
 import com.dataMall.userCenter.mapper.UserMapper;
 import com.dataMall.userCenter.service.SsoService;
 import com.dataMall.userCenter.service.UserService;
+import com.dataMall.userCenter.utils.RedisUtils;
 import com.dataMall.userCenter.utils.Sha256;
 import jakarta.annotation.Resource;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,10 +31,12 @@ import java.util.regex.Pattern;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    //@Resource
+    //private RedisTemplate<String, String> redisTemplate;
     @Resource
     private SsoService ssoService;
+    @Resource
+    private RedisUtils redisUtils;
 
     @Override
     public String login(int uid) {
@@ -54,9 +55,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String token = Sha256.getSha256Str(user.getUsername() + user.getPassword() + System.currentTimeMillis());
         user.setToken(token);
         update(user, queryWrapper);
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.set(String.valueOf(user.getId()), token, 60 * 60 * 24, TimeUnit.SECONDS);
-        operations.set(token, user.toString(), 60 * 60 * 24, TimeUnit.SECONDS);
+        redisUtils.set("uid" + user.getId(), token, 60 * 60 * 24);
+        redisUtils.set("token" + token, user.toString(), 60 * 60 * 24);
         return token;
     }
 
@@ -71,17 +71,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     //根据redis检查token
     @Override
     public boolean checkTokenByRedis(String token) {
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        String userBaseStr = operations.get(token);
+        String userBaseStr = redisUtils.get("token"+token);
         if (userBaseStr == null || userBaseStr.isEmpty()) {
             return false;
         }
-
         int uid = findUidInStrByRegex(userBaseStr);
         if (uid == -1) {
             return false;
         }
-        String redisToken = operations.get(String.valueOf(uid));
+        String redisToken = redisUtils.get("uid"+ uid);
         return Objects.equals(redisToken, token);
     }
 
@@ -125,13 +123,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     //账号token转uid
     @Override
     public Integer tokenToUid(String token) {
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        String res = operations.get(token);
+        String res = redisUtils.get("token"+token);
         if (res == null) {
             return -1;
         }
         return findUidInStrByRegex(res);
     }
+
 
     //注册
     @Override
@@ -159,14 +157,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setState(0);
         boolean userState = save(user);
         ResultUtils.throwIfAndRollback(!userState, ErrorCode.FAIL, "user save fail in user");
+        //拿到uid
+        user = getOne(userQueryWrapper);
         //保存sso表
         Sso ssoOfUsername = new Sso();
+        ssoOfUsername.setUid(user.getId());
         ssoOfUsername.setSsoUser(username);
         ssoOfUsername.setSsoToken(password);
         ssoOfUsername.setType(1);
         boolean ssoOfUsernameState = ssoService.save(ssoOfUsername);
         ResultUtils.throwIfAndRollback(!ssoOfUsernameState, ErrorCode.FAIL, "user save fail in sso username");
         Sso ssoOfEmail = new Sso();
+        ssoOfEmail.setUid(user.getId());
         ssoOfEmail.setSsoUser(email);
         ssoOfEmail.setSsoToken(password);
         ssoOfEmail.setType(2);

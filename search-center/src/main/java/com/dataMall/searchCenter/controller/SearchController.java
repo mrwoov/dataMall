@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ResultUtils;
 import com.dataMall.searchCenter.service.SearchService;
+import com.dataMall.searchCenter.vo.SearchRequestVo;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,28 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-11-16
  */
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/")
 public class SearchController {
 
     @Resource
     private SearchService searchService;
 
-    @GetMapping()
-    public BaseResponse search(@RequestParam(value = "keyword") String keyword,
-                               @RequestParam(value = "category_id", required = false) String categoryIdStr,
-                               @RequestParam(value = "page", required = false) String pageStr,
-                               @RequestParam(value = "size", required = false) String sizeStr,
-                               @RequestParam(value = "type", required = false) String type) {
-        if (StringUtils.isBlank(keyword)) {
+    @PostMapping("/")
+    public BaseResponse search(@RequestBody SearchRequestVo requestVo) {
+        String keyword = requestVo.getKeyword();
+        Integer uid = requestVo.getUid();
+        String type = requestVo.getType();
+        String pageStr = requestVo.getPageNum();
+        String sizeStr = requestVo.getPageSize();
+        if (StringUtils.isBlank(keyword) && uid == null) {
             return ResultUtils.error("关键词不能为空");
-        }
-        int categoryId = -1;
-        if (!StringUtils.isBlank(categoryIdStr)) {
-            try {
-                categoryId = Integer.parseInt(categoryIdStr);
-            } catch (NumberFormatException e) {
-                return ResultUtils.error("分类参数错误");
-            }
         }
         int page = 1;
         if (!StringUtils.isBlank(pageStr)) {
@@ -58,13 +52,15 @@ public class SearchController {
             }
         }
         if (StringUtils.isBlank(type)) {
-            type = "goods";
+            type = "all";
         }
-
+        //type为空是综合搜索，不为空时，根据type搜索
         //type: goods(al), post,excel_api
         return switch (type) {
-            case "goods" -> ResultUtils.success(searchService.searchGoods(keyword, page, size, categoryId));
-            case "post" -> ResultUtils.success();
+            case "all" -> ResultUtils.success(searchService.searchAll(keyword, uid, page, size));
+            case "goods" -> ResultUtils.success(searchService.searchGoods(keyword, uid, page, size));
+            case "user" -> ResultUtils.success(searchService.searchUser(keyword, page, size));
+            case "blog" -> ResultUtils.success(searchService.searchBlog(keyword, uid, page, size));
             default -> ResultUtils.error("搜索类型错误");
         };
     }

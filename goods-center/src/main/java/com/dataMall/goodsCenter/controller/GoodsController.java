@@ -1,6 +1,7 @@
 package com.dataMall.goodsCenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dataMall.common.common.BaseResponse;
 import com.dataMall.common.common.ErrorCode;
 import com.dataMall.common.common.ResultUtils;
@@ -181,6 +182,9 @@ public class GoodsController {
     @GetMapping("/info/{goodsId}")
     public BaseResponse<Goods> getInfo(@PathVariable("goodsId") Integer goodsId) {
         Goods goods = goodsService.getGoodsInfoById(goodsId);
+        goods.moneyToPrice();
+        goodsService.getGoodsOtherParam(goods);
+        goods.setFileMd5("");
         if (goods.getState() == 0) {
             return ResultUtils.success(goods);
         }
@@ -272,9 +276,26 @@ public class GoodsController {
         return goodsList.stream().peek(Goods::priceToMoney)
                 .peek(goods -> goodsService.getGoodsOtherParam(goods)).toList();
     }
-    
+
     @GetMapping("/getGoodsWithFiveMinutesAgoUpdate")
     public List<Goods> getGoodsWithFiveMinutesAgoUpdate() {
         return goodsService.getGoodsWithFiveMinutesAgoUpdate();
+    }
+
+    // 首页商品列表
+    @PostMapping("/page")
+    public BaseResponse<IPage<Goods>> page(@RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum, @RequestBody Goods goods) {
+        String categoriesName = goods.getCategoriesName();
+        if (pageNum == null || pageSize == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        IPage<Goods> page = goodsService.getGoodsPage(null, categoriesName, null, pageNum, pageSize);
+        List<Goods> records = page.getRecords();
+        records = records.stream().peek(Goods::priceToMoney).peek(goodsService::getGoodsOtherParam).map(goods1 -> {
+            goods1.setFileMd5("");
+            return goods1;
+        }).filter(goods1 -> goods1.getState() == 0).toList();
+        page.setRecords(records);
+        return ResultUtils.success(page);
     }
 }
