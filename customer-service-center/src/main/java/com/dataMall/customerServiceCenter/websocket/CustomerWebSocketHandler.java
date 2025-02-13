@@ -130,7 +130,7 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
         int end = aiResponse.lastIndexOf("}");
         String json = aiResponse.substring(start, end + 1);
         AIResponse res = JSONUtil.toBean(json, AIResponse.class);
-        WSResultUtils.sendMessage(session, new ServerMessage("ai_response", res));
+        WSResultUtils.sendMessage(session, new ServerMessage("ai_response", res.getMessage()));
     }
 
     //处理转人工请求

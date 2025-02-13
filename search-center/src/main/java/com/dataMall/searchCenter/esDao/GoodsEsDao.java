@@ -18,9 +18,7 @@ public interface GoodsEsDao extends ElasticsearchRepository<GoodsEsDTO, Long> {
     Page<GoodsEsDTO> findByNameAndUid(String name, int uid, Pageable pageable);
 
     long countByNameAndUid(String name, int uid);
-
-    Page<GoodsEsDTO> findByUid(int uid);
-
+    
     Page<GoodsEsDTO> findByUid(int uid, Pageable pageable);
 
     long countByUid(int uid);
